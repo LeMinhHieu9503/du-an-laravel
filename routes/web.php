@@ -46,6 +46,9 @@ Route::get('/logout-checkout', [CheckoutController::class, 'logout_checkout']);
 Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer']);
 Route::get('/payment', [CheckoutController::class, 'payment']);
 
+//ORDER
+Route::post('/order-place', [CheckoutController::class, 'order_place']);
+
 
 //Login-Customer
 Route::post('/add-customer', [CheckoutController::class, 'add_customer']);
@@ -102,3 +105,8 @@ Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_pr
 
 Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product']);
 Route::get('/active-product/{product_id}', [ProductController::class, 'active_product']);
+
+
+//MANAGE-ORDER
+Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
+Route::get('/view-order/{order_id}', [CheckoutController::class, 'view_order']);

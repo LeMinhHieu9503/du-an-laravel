@@ -30,14 +30,14 @@
                             <!-- Mô tả sản phẩm -->
                             <div class="form-group">
                                 <label for="ProductDesc">Mô tả sản phẩm</label>
-                                <textarea name="product_desc" class="form-control" id="ProductDesc" cols="30" placeholder="Mô tả sản phẩm"
+                                <textarea name="product_desc" class="form-control" id="ckeditor" cols="30" placeholder="Mô tả sản phẩm"
                                     rows="10" required></textarea>
                             </div>
 
                             <!-- Nội dung sản phẩm -->
                             <div class="form-group">
                                 <label for="ProductContent">Nội dung sản phẩm</label>
-                                <textarea name="product_content" class="form-control" id="ProductContent" cols="30"
+                                <textarea name="product_content" class="form-control" id="ckeditor1" cols="30"
                                     placeholder= "Nội dung sản phẩm" rows="10" required></textarea>
                             </div>
 

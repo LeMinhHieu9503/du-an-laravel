@@ -12,7 +12,7 @@
             <div class="review-payment">
                 <h2>Xem lại giỏ hàng</h2>
             </div>
-            
+
             <div class="table-responsive cart_info">
                 <?php
                 $content = Cart::content();
@@ -80,15 +80,21 @@
             </div>
 
             <div class="payment-options">
-                <span>
-                    <label style="font-size: 20px;font-weight:bold" ><input name="payment_option" value="1" type="checkbox"> Thanh toán bằng thẻ ATM </label>
-                </span>
-                <span>
-                    <label style="font-size: 20px;font-weight:bold"><input name="payment_option" value="2" type="checkbox"> Thanh toán bằng tiền mặt</label>
-                </span>
-                <span>
-                    <label style="font-size: 20px;font-weight:bold"><input name="payment_option" value="3" type="checkbox" > Thanh toán Momo</label>
-                </span>
+                <form action="{{ URL::to('/order-place') }}" method="POST" class="payment-form">
+                    {{ csrf_field() }}
+                    <h2 class="form-title">Phương thức thanh toán</h2>
+                    <div class="payment-option">
+                        <label><input name="payment_option" value="1" type="checkbox"> Thanh toán bằng thẻ ATM</label>
+                    </div>
+                    <div class="payment-option">
+                        <label><input name="payment_option" value="2" type="checkbox"> Thanh toán bằng tiền mặt</label>
+                    </div>
+                    <div class="payment-option">
+                        <label><input name="payment_option" value="3" type="checkbox"> Thanh toán bằng thẻ ghi nợ</label>
+                    </div>
+                    <input type="submit" value="Đặt hàng" name="send_order_place" class="submit-btn">
+                </form>
+
             </div>
         </div>
     </section> <!--/#cart_items-->
