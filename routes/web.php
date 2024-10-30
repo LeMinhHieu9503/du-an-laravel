@@ -39,6 +39,11 @@ Route::get('/show_cart', [CartController::class, 'show_cart']);
 Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']);
 Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
 
+Route::post('/add-cart-ajax', [CartController::class, 'add_cart_ajax']);
+Route::get('/gio-hang', [CartController::class, 'gio_hang']);
+
+
+
 //CHECKOUT
 Route::get('/login-checkout', [CheckoutController::class, 'login_checkout']);
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
@@ -56,6 +61,16 @@ Route::post('/login-customer', [CheckoutController::class, 'login_customer']);
 
 //Search
 Route::post('/tim-kiem', [HomeController::class, 'search']);
+
+//Send Mail 
+Route::get('/send-mail', [HomeController::class, 'sendMail']);
+
+
+
+
+
+
+
 
 
 

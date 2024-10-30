@@ -43,6 +43,8 @@
                             <label>Số lượng:</label>
                             <input name="qty" type="number" min="1" value="1" />
                             <input name="productid_hidden" type="hidden" value="{{ $value->product_id }}" />
+                            <input type="hidden" value="{{ $value->product_quantity }}"
+                                class="cart_product_quantity_{{ $value->product_id }}">
                             <button type="submit" class="btn btn-fefault cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 Thêm giỏ hàng
@@ -51,6 +53,7 @@
                     </form>
                     <p><b>Tình trạng:</b> Còn hàng</p>
                     <p><b>Điều kiện:</b> Mới 100%</p>
+                    <p><b>Số lượng kho còn:</b> {{ $value->product_quantity }}</p>
                     <p><b>Thương hiệu:</b> {{ $value->brand_name }}</p>
                     <p><b>Danh mục:</b> {{ $value->category_name }}</p>
 

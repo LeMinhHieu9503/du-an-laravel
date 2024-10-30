@@ -16,7 +16,8 @@
                     ?>
                     <div class="position-center">
                         <!-- Form bắt đầu -->
-                        <form role="form" method="POST" action="{{ URL::to('/save-product') }}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{ URL::to('/save-product') }}"
+                            enctype="multipart/form-data">
                             <!-- Thêm token bảo mật nếu bạn dùng Laravel -->
                             {{ csrf_field() }}
 
@@ -37,8 +38,16 @@
                             <!-- Nội dung sản phẩm -->
                             <div class="form-group">
                                 <label for="ProductContent">Nội dung sản phẩm</label>
-                                <textarea name="product_content" class="form-control" id="ckeditor1" cols="30"
-                                    placeholder= "Nội dung sản phẩm" rows="10" required></textarea>
+                                <textarea name="product_content" class="form-control" id="ckeditor1" cols="30" placeholder= "Nội dung sản phẩm"
+                                    rows="10" required></textarea>
+                            </div>
+
+                            {{-- Số lượng sản phẩm --}}
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">SL sản phẩm</label>
+                                <input type="text" data-validation="number"
+                                    data-validation-error-msg="Làm ơn điền số lượng" name="product_quantity"
+                                    class="form-control" id="exampleInputEmail1" placeholder="Điền số lượng">
                             </div>
 
                             <!-- Nhập Giá sản phẩm -->

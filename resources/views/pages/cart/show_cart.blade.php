@@ -16,7 +16,7 @@
                     <thead>
                         <tr class="cart_menu">
                             <td class="image">Hình ảnh </td>
-                            <td class="description">Mô tả</td>
+                            <td style="text-align: center" class="description">Mô tả</td>
                             <td class="price">Giá</td>
                             <td class="quantity">Số lượng</td>
                             <td class="total">Tổng tiền</td>
@@ -32,7 +32,7 @@
                                             height="100" width="100" alt="" />
                                     </a>
                                 </td>
-                                <td class="cart_description">
+                                <td style="text-align: center" class="cart_description">
                                     <h4><a href="">{{ $v_content->name }}</a></h4>
                                     <p>Web ID: 1089772</p>
                                 </td>
@@ -94,11 +94,11 @@
                                 if($customer_id = NULL){
 
                         ?>
-                        <a href="{{ URL::to('/checkout') }}" class="checkout-link">Thanh toán</a>
+                        <a href="{{ URL::to('/checkout') }}" class="btn btn-default check_out">Thanh toán</a>
                         <?php
                                 }else{
                         ?>
-                        <a href="{{ URL::to('/login-checkout') }}" class="checkout-link"> Thanh toán</a>
+                        <a href="{{ URL::to('/login-checkout') }}" class="btn btn-default check_out"> Thanh toán</a>
                         <?php
                                 }
                         ?>

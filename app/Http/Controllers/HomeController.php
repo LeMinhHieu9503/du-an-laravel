@@ -7,12 +7,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\Mail;
 
 session_start();
 class HomeController extends Controller
 {
-    public function index()
+    public function sendMail(Request $request)
     {
+        $data = [
+            'name' => $request->input('name'),
+            'message' => $request->input('message'),
+        ];
+
+        Mail::to('recipient@example.com')->send(new SendMail($data)); 
+        return response()->json(['message' => 'Email sent successfully']);
+    }
+    public function index(Request $request)
+    {
+        $url_canonical = $request->url();
+
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -32,7 +46,10 @@ class HomeController extends Controller
         return view('pages.home')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('all_product', $all_product);
+            ->with('all_product', $all_product)
+            ->with('url_canonical', $url_canonical);
+
+        // return view('pages.home')->with(compact('cate_product','brand_product','all_product')); //Cách 2
     }
 
     public function search(Request $request)
@@ -54,6 +71,6 @@ class HomeController extends Controller
         return view('pages.sanpham.search')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('search_product',$search_product);
+            ->with('search_product', $search_product);
     }
 }

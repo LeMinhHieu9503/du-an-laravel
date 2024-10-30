@@ -14,6 +14,7 @@
     <link href="{{ asset('frontend/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/sweetalert.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -106,7 +107,8 @@
                                 <?php
                                  }elseif($customer_id!=NULL && $shipping_id!=NULL){
                                  ?>
-                                <li><a href="{{ URL::to('/payment') }}"><i class="fa fa-crosshairs"></i> Thanh toán</a>
+                                <li><a href="{{ URL::to('/payment') }}"><i class="fa fa-crosshairs"></i> Thanh
+                                        toán</a>
                                 </li>
                                 <?php 
                                 }else{
@@ -130,7 +132,8 @@
                                 <?php
                             }else{
                                  ?>
-                                <li><a href="{{ URL::to('/dang-nhap') }}"><i class="fa fa-lock"></i> Đăng nhập</a>
+                                <li><a href="{{ URL::to('/login-checkout') }}"><i class="fa fa-lock"></i> Đăng
+                                        nhập</a>
                                 </li>
                                 <?php 
                              }
@@ -486,6 +489,56 @@
     <script src="{{ asset('frontend/js/price-range.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    {{-- Sweet Alert --}}
+    <script src="{{ asset('frontend/js/sweetalert.min.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.add-to-cart').click(function () {
+                const id = $(this).data('id_product');
+                
+                // Lấy thông tin sản phẩm
+                const cartProduct = {
+                    id: $('.cart_product_id_' + id).val(),
+                    name: $('.cart_product_name_' + id).val(),
+                    image: $('.cart_product_image_' + id).val(),
+                    quantity: $('.cart_product_quantity_' + id).val(),
+                    price: $('.cart_product_price_' + id).val(),
+                    qty: $('.cart_product_qty_' + id).val(),
+                    _token: $('input[name="_token"]').val()
+                };
+    
+                $.ajax({
+                    url: '{{ url('/add-cart-ajax') }}',
+                    method: 'POST',
+                    data: cartProduct,
+                    success: function () {
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false
+                        }, function () {
+                            window.location.href = "{{ url('/gio-hang') }}";
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    
+
+    <script src="{{ asset('frontend/js/sweetalert.min.js') }}"></script>
+    {{--  <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+    <script>paypal.Buttons().render('body');</script> --}}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {{-- <div id="fb-root"></div> --}}
+    {{-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0&appId=2339123679735877&autoLogAppEvents=1"></script> --}}
+
 </body>
 
 </html>

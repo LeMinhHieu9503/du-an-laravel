@@ -123,7 +123,7 @@ class CategoryProduct extends Controller
 
 
     //HOME
-    public function show_category_home($category_id)
+    public function show_category_home(Request $request, $category_id)
     {
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -141,11 +141,17 @@ class CategoryProduct extends Controller
             ->where('tbl_category_product.category_id',$category_id)
             ->limit(1)
             ->get();
+            foreach($category_name as $key => $val){
+                //seo 
+                $url_canonical = $request->url();
+                //--seo
+                }
 
         return view('pages.category.show_category')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('category_by_id', $category_by_id)
-            ->with('category_name',$category_name);
+            ->with('category_name',$category_name)
+            ->with('url_canonical',$url_canonical);
     }
 }

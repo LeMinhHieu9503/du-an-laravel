@@ -43,6 +43,7 @@
                                 </label>
                             </th>
                             <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
                             <th>Giá sản phẩm</th>
                             <th>Hình sản phẩm</th>
                             <th>Danh mục sản phẩm</th>
@@ -59,10 +60,13 @@
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $pro->product_name }}</span></td>
+                                <td><span class="text-ellipsis">{{ $pro->product_quantity }}</span></td>
+
                                 <td><span class="text-ellipsis">{{ $pro->product_price }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
-                                        <img src="uploads/product/{{ $pro->product_image }}" height="100" width="100"   alt="">
+                                        <img src="uploads/product/{{ $pro->product_image }}" height="100" width="100"
+                                            alt="">
                                     </span>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $pro->category_name }}</span></td>
