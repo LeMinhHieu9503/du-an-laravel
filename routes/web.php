@@ -60,6 +60,12 @@ Route::get('/logout-checkout', [CheckoutController::class, 'logout_checkout']);
 Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer']);
 Route::get('/payment', [CheckoutController::class, 'payment']);
 
+Route::post('/select-delivery-home', [CheckoutController::class, 'select_delivery_home']);
+Route::post('/calculate-fee', [CheckoutController::class, 'calculate_fee']);
+Route::get('/del-fee', [CheckoutController::class, 'del_fee']);
+
+
+
 //ORDER
 Route::post('/order-place', [CheckoutController::class, 'order_place']);
 
@@ -148,5 +154,3 @@ Route::post('/select-delivery', [DeliveryController::class, 'select_delivery']);
 Route::post('/insert-delivery', [DeliveryController::class, 'insert_delivery']);
 Route::post('/select-feeship', [DeliveryController::class, 'select_feeship']);
 Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
-
-

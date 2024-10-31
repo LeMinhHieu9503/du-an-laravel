@@ -125,54 +125,54 @@
                             </ul>
 
 
-            </div>
-            </td>
-            <td>
-                <input type="submit" value="Cập nhật giỏ hàng" name="update_qty" class="check_out btn btn-default btn-sm">
-                <a href="{{ url('/del-all-product') }}" class="btn btn-default check_out"> Xóa tất
-                    cả sản phẩm</a>
-            </td>
-            <td>
-                @if (Session::get('coupon'))
-                    <a class="btn btn-default check_out" href="{{ url('/unset-coupon') }}">Xóa mã giảm giá</a>
+                            </td>
+                            <td>
+                                <input type="submit" value="Cập nhật giỏ hàng" name="update_qty"
+                                    class="check_out btn btn-default btn-sm">
+                                <a href="{{ url('/del-all-product') }}" class="btn btn-default check_out"> Xóa tất
+                                    cả sản phẩm</a>
+                            </td>
+                            <td>
+                                @if (Session::get('coupon'))
+                                    <a class="btn btn-default check_out" href="{{ url('/unset-coupon') }}">Xóa mã giảm
+                                        giá</a>
+                                @endif
+                            </td>
+
+                            </tr>
+                        @else
+                            <tr>
+                                <td colspan="5">
+                                    <center>
+                                        @php
+                                            echo 'Làm ơn thêm sản phẩm vào giỏ hàng';
+                                        @endphp
+                                    </center>
+                                </td>
+                            </tr>
+                            @endif
+
+                        </tbody>
+                </form>
+                <tr>
+                    <td>
+                        @if (Session::get('cart'))
+                    </td>
+                <tr>
+                    <td>
+
+                        <form method="POST" action="{{ url('/check-coupon') }}">
+                            @csrf
+                            <input type="text" class="form-control" name="coupon" placeholder="Nhập mã giảm giá"><br>
+                            <input type="submit" class="btn btn-default check_coupon" name="check_coupon"
+                                value="Tính mã giảm giá">
+
+                        </form>
+                    </td>
+                </tr>
                 @endif
-            </td>
-
-            </tr>
-        @else
-            <tr>
-                <td colspan="5">
-                    <center>
-                        @php
-                            echo 'Làm ơn thêm sản phẩm vào giỏ hàng';
-                        @endphp
-                    </center>
-                </td>
-            </tr>
-            @endif
-
-            </tbody>
-            </form>
-            <tr>
-                <td>
-                    @if (Session::get('cart'))
-            <tr>
-                <td>
-
-                    <form method="POST" action="{{ url('/check-coupon') }}">
-                        @csrf
-                        <input type="text" class="form-control" name="coupon" placeholder="Nhập mã giảm giá"><br>
-                        <input type="submit" class="btn btn-default check_coupon" name="check_coupon"
-                            value="Tính mã giảm giá">
-
-                    </form>
-                </td>
-            </tr>
-            @endif
-            </td>
-            </tr>
-            </table>
-        </div>
+                </table>
+            </div>
         </div>
     </section>
 @endsection
