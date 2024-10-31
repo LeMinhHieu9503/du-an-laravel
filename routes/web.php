@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -140,4 +141,10 @@ Route::get('/list-coupon', [CouponController::class, 'list_coupon']);
 Route::get('/delete-coupon/{coupon_id}', [CouponController::class, 'delete_coupon']);
 Route::get('/unset-coupon', [CouponController::class, 'unset_coupon']);
 Route::post('/insert-coupon-code', [CouponController::class, 'insert_coupon_code']);
+
+//Delivery
+Route::get('/delivery', [DeliveryController::class, 'delivery']);
+Route::post('/select-delivery', [DeliveryController::class, 'select_delivery']);
+Route::post('/insert-delivery', [DeliveryController::class, 'insert_delivery']);
+
 

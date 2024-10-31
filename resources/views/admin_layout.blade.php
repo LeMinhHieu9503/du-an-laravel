@@ -139,6 +139,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
+                                <span>Vận chuyển</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/delivery') }}">Quản lý vận chuyển</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
                                 <span>Coupon</span>
                             </a>
                             <ul class="sub">
@@ -181,6 +191,80 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     <script src="{{ asset('backend/js/jquery.form-validator.min.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function fetch_delivery() {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{ url('/select-delivery') }}',
+                    method: 'POST',
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#load_delivery').html(data);
+                    }
+                });
+
+            }
+            $('.add_delivery').click(function() {
+
+                var city = $('.city').val();
+                var province = $('.province').val();
+                var wards = $('.wards').val();
+                var fee_ship = $('.fee_ship').val();
+                var _token = $('input[name="_token"]').val();
+                // alert(city);
+                // alert(province);
+                // alert(wards);
+                // alert(fee_ship);
+                $.ajax({
+                    url: '{{ url('/insert-delivery') }}',
+                    method: 'POST',
+                    data: {
+                        city: city,
+                        province: province,
+                        _token: _token,
+                        wards: wards,
+                        fee_ship: fee_ship
+                    },
+                    success: function(data) {
+                        alert('Thêm thành công');
+                    }
+                });
+
+
+            });
+
+            $('.choose').on('change', function() {
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+
+
+
+                if (action === 'city') {
+                    result = 'province';
+                } else {
+                    result = 'wards';
+                }
+
+                $.ajax({
+                    url: '{{ url('/select-delivery') }}', // Đặt đường dẫn dưới dạng chuỗi
+                    method: 'POST',
+                    data: {
+                        action: action,
+                        ma_id: ma_id,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#' + result).html(data);
+                    }
+                });
+            });
+        });
+    </script>
     <script type="text/javascript">
         function ChangeToSlug() {
             var slug;
@@ -416,6 +500,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         CKEDITOR.replace('ckeditor3');
         CKEDITOR.replace('id4');
     </script>
+
+
     <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
     <script src="{{ asset('backend/js/jquery.scrollTo.js') }}"></script>
     <!-- morris JavaScript -->

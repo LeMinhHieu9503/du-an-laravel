@@ -59,3 +59,4 @@ class CouponController extends Controller
         }
     }
 }
+

@@ -32,7 +32,7 @@
                                             height="100" width="100" alt="" />
                                     </a>
                                 </td>
-                                <td style="text-align: center" class="cart_description">
+                                <td style="text-align: " class="cart_description">
                                     <h4><a href="">{{ $v_content->name }}</a></h4>
                                     <p>Web ID: 1089772</p>
                                 </td>
