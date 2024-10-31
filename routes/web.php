@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,8 +40,15 @@ Route::get('/show_cart', [CartController::class, 'show_cart']);
 Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']);
 Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
 
+//CART AJAX
 Route::post('/add-cart-ajax', [CartController::class, 'add_cart_ajax']);
+Route::post('/update-cart', [CartController::class, 'update_cart']);
 Route::get('/gio-hang', [CartController::class, 'gio_hang']);
+Route::get('/del-product/{session_id}', [CartController::class, 'del_product']);
+Route::get('/del-all-product', [CartController::class, 'del_all_product']);
+
+//COUPON
+Route::post('/check-coupon', [CartController::class, 'check_coupon']);
 
 
 
@@ -125,3 +133,6 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 //MANAGE-ORDER
 Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
 Route::get('/view-order/{order_id}', [CheckoutController::class, 'view_order']);
+
+//COUPON
+Route::post('/insert-coupon', [CouponController::class, 'insert_coupon']);

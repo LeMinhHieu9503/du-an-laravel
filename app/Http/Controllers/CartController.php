@@ -29,6 +29,7 @@ class CartController extends Controller
 
         Cart::add($data);
         return redirect('/show_cart');
+        // Cart::destroy();
     }
 
     public function show_cart()
@@ -63,7 +64,6 @@ class CartController extends Controller
 
     public function add_cart_ajax(Request $request)
     {
-        // Session::forget('cart');
         $data = $request->all();
         $session_id = substr(md5(microtime()), rand(0, 26), 5);
         $cart = Session::get('cart');
@@ -80,7 +80,6 @@ class CartController extends Controller
                     'product_name' => $data['cart_product_name'],
                     'product_id' => $data['cart_product_id'],
                     'product_image' => $data['cart_product_image'],
-                    'product_quantity' => $data['cart_product_quantity'],
                     'product_qty' => $data['cart_product_qty'],
                     'product_price' => $data['cart_product_price'],
                 );
@@ -92,24 +91,82 @@ class CartController extends Controller
                 'product_name' => $data['cart_product_name'],
                 'product_id' => $data['cart_product_id'],
                 'product_image' => $data['cart_product_image'],
-                'product_quantity' => $data['cart_product_quantity'],
                 'product_qty' => $data['cart_product_qty'],
                 'product_price' => $data['cart_product_price'],
-
             );
-            Session::put('cart', $cart);
         }
 
+        Session::put('cart', $cart);
         Session::save();
     }
 
-    public function gio_hang(Request $request){
-        
-       $url_canonical = $request->url();
-       //--seo
-       $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get(); 
-       $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
+    public function gio_hang(Request $request)
+    {
+        $url_canonical = $request->url();
 
-       return view('pages.cart.cart_ajax')->with('category',$cate_product)->with('brand',$brand_product)->with('url_canonical',$url_canonical);
-   }
+        $cate_product = DB::table('tbl_category_product')
+            ->where('category_status', '0')
+            ->orderBy('category_id', 'desc')->get();
+        $brand_product = DB::table('tbl_brand')
+            ->where('brand_status', '0')
+            ->orderBy('brand_id', 'desc')->get();
+
+        return view('pages.cart.cart_ajax')
+            ->with('category', $cate_product)
+            ->with('brand', $brand_product)
+            ->with('url_canonical', $url_canonical);
+    }
+
+    public function del_product($session_id)
+    {
+        $cart = Session::get('cart');
+        // echo '<pre>';
+        // print_r($cart);
+        // echo '</pre>';
+        if ($cart == true) {
+            foreach ($cart as $key => $val) {
+                if ($val['session_id'] == $session_id) {
+                    unset($cart[$key]);
+                }
+            }
+            Session::put('cart', $cart);
+            return redirect()->back()->with('message', 'Xóa sản phẩm thành công');
+        } else {
+            return redirect()->back()->with('message', 'Xóa sản phẩm thất bại');
+        }
+    }
+
+    public function update_cart(Request $request){
+        $data = $request->all();
+        //Đối chiếu
+        $cart = Session::get('cart');
+        if($cart==true){
+            foreach($data['cart_qty'] as $key => $qty){
+                // echo $qty.'</br>';
+                foreach($cart as $session => $val){
+                    if($val['session_id'] == $key){
+                        $cart[$session]['product_qty'] = $qty;
+                    }
+                }
+            }
+            Session::put('cart',$cart);
+            return redirect()->back()->with('message', 'Cập nhật số lượng sản phẩm thành công');
+        }else{
+            return redirect()->back()->with('message', 'Cập nhật số lượng sản phẩm thất bại');
+        }
+    }
+
+    public function del_all_product(){
+        $cart = Session::get('cart');
+        if($cart==true){
+            Session::forget('cart');
+            return redirect()->back()->with('message', 'Xóa hết sản phẩm thành công');
+
+        }
+    }
+
+    public function check_coupon(Request $request){
+        $data = $request->all();
+        print_r($data);
+    }
 }
