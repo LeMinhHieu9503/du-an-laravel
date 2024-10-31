@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
@@ -136,37 +137,71 @@ class CartController extends Controller
         }
     }
 
-    public function update_cart(Request $request){
+    public function update_cart(Request $request)
+    {
         $data = $request->all();
         //Đối chiếu
         $cart = Session::get('cart');
-        if($cart==true){
-            foreach($data['cart_qty'] as $key => $qty){
+        if ($cart == true) {
+            foreach ($data['cart_qty'] as $key => $qty) {
                 // echo $qty.'</br>';
-                foreach($cart as $session => $val){
-                    if($val['session_id'] == $key){
+                foreach ($cart as $session => $val) {
+                    if ($val['session_id'] == $key) {
                         $cart[$session]['product_qty'] = $qty;
                     }
                 }
             }
-            Session::put('cart',$cart);
+            Session::put('cart', $cart);
             return redirect()->back()->with('message', 'Cập nhật số lượng sản phẩm thành công');
-        }else{
+        } else {
             return redirect()->back()->with('message', 'Cập nhật số lượng sản phẩm thất bại');
         }
     }
 
-    public function del_all_product(){
+    public function del_all_product()
+    {
         $cart = Session::get('cart');
-        if($cart==true){
+        if ($cart == true) {
             Session::forget('cart');
-            return redirect()->back()->with('message', 'Xóa hết sản phẩm thành công');
+            Session::forget('coupon');
 
+            return redirect()->back()->with('message', 'Xóa hết sản phẩm thành công');
         }
     }
 
     public function check_coupon(Request $request){
         $data = $request->all();
-        print_r($data);
-    }
+        $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
+        if($coupon){
+            $count_coupon = $coupon->count();
+            if($count_coupon>0){
+                $coupon_session = Session::get('coupon');
+                if($coupon_session==true){
+                    $is_avaiable = 0;
+                    if($is_avaiable==0){
+                        $cou[] = array(
+                            'coupon_code' => $coupon->coupon_code,
+                            'coupon_condition' => $coupon->coupon_condition,
+                            'coupon_number' => $coupon->coupon_number,
+
+                        );
+                        Session::put('coupon',$cou);
+                    }
+                }else{
+                    $cou[] = array(
+                            'coupon_code' => $coupon->coupon_code,
+                            'coupon_condition' => $coupon->coupon_condition,
+                            'coupon_number' => $coupon->coupon_number,
+
+                        );
+                    Session::put('coupon',$cou);
+                }
+                Session::save();
+                return redirect()->back()->with('message','Thêm mã giảm giá thành công');
+            }
+
+        }else{
+            return redirect()->back()->with('error','Mã giảm giá không đúng');
+        }
+    } 
 }

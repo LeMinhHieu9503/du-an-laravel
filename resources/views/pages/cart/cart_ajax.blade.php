@@ -81,51 +81,99 @@
                                     <td>
                                         <div class="total_area " colspan="2">
                                             <ul class="total-list">
-                                                <li>Tổng tiền<span>{{ number_format($total, 0, ',', '.') }}đ</span></li>
-                                                <li>Thuế <span></span></li>
-                                                <li>Phí vận chuyển <span>Free</span></li>
-                                                <li>Thành tiền sau giảm <span></span></li>
-                                            </ul>
+                                                <li>Tổng tiền :<span>{{ number_format($total, 0, ',', '.') }}đ</span></li>
+                                                @if (Session::get('coupon'))
+                                                    <li>
+
+                                                        @foreach (Session::get('coupon') as $key => $cou)
+                                                            @if ($cou['coupon_condition'] == 1)
+                                                                Mã giảm : {{ $cou['coupon_number'] }} %
+                                                                <p>
+                                                                    @php
+                                                                        $total_coupon =
+                                                                            ($total * $cou['coupon_number']) / 100;
+                                                                        echo '<p><li>Tổng giảm:' .
+                                                                            number_format($total_coupon, 0, ',', '.') .
+                                                                            'đ</li></p>';
+                                                                    @endphp
+                                                                </p>
+                                                                <p>
+                                                    <li>Tổng đã giảm
+                                                        :{{ number_format($total - $total_coupon, 0, ',', '.') }}đ
+                                                    </li>
+                                                    </p>
+                                                @elseif($cou['coupon_condition'] == 2)
+                                                    Mã giảm : {{ number_format($cou['coupon_number'], 0, ',', '.') }} k
+                                                    <p>
+                                                        @php
+                                                            $total_coupon = $total - $cou['coupon_number'];
+
+                                                        @endphp
+                                                    </p>
+                                                    <p>
+                                                        <li>Tổng đã giảm :{{ number_format($total_coupon, 0, ',', '.') }}đ
+                                                        </li>
+                                                    </p>
+                                                @endif
+                            @endforeach
 
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="submit" value="Cập nhật giỏ hàng" name="update_qty"
-                                            class="check_out btn btn-default btn-sm">
-                                        <a href="{{ url('/del-all-product') }}" class="btn btn-default check_out"> Xóa tất
-                                            cả sản phẩm</a>
-                                    </td>
-                                    
-                                </tr>
-                            @else
-                                <tr>
-                                    <td colspan="5">
-                                        <center>
-                                            @php
-                                                echo 'Làm ơn thêm sản phẩm vào giỏ hàng';
-                                            @endphp
-                                        </center>
-                                    </td>
-                                </tr>
+
+                            </li>
                             @endif
+                            {{-- <li>Thuế <span></span></li> --}}
+                            {{-- <li>Phí vận chuyển <span>Free</span></li> --}}
+                            </ul>
 
-                        </tbody>
-                </form>
-                <tr>
-                    <td>
-                            <form method="POST" action="{{url('/check-coupon')}}">
-                                @csrf
-                                <input type="text" class="form-control" name="coupon" placeholder="Nhập mã giảm giá">
-                                <input type="submit" class="btn btn-default check_out" value="Tính mã giảm giá"
-                                    name="check_coupon">
-                            </form>
-                    </td>
-                </tr>
-                </table>
+
             </div>
+            </td>
+            <td>
+                <input type="submit" value="Cập nhật giỏ hàng" name="update_qty" class="check_out btn btn-default btn-sm">
+                <a href="{{ url('/del-all-product') }}" class="btn btn-default check_out"> Xóa tất
+                    cả sản phẩm</a>
+            </td>
+            <td>
+                @if (Session::get('coupon'))
+                    <a class="btn btn-default check_out" href="{{ url('/unset-coupon') }}">Xóa mã giảm giá</a>
+                @endif
+            </td>
+
+            </tr>
+        @else
+            <tr>
+                <td colspan="5">
+                    <center>
+                        @php
+                            echo 'Làm ơn thêm sản phẩm vào giỏ hàng';
+                        @endphp
+                    </center>
+                </td>
+            </tr>
+            @endif
+
+            </tbody>
+            </form>
+            <tr>
+                <td>
+                    @if (Session::get('cart'))
+            <tr>
+                <td>
+
+                    <form method="POST" action="{{ url('/check-coupon') }}">
+                        @csrf
+                        <input type="text" class="form-control" name="coupon" placeholder="Nhập mã giảm giá"><br>
+                        <input type="submit" class="btn btn-default check_coupon" name="check_coupon"
+                            value="Tính mã giảm giá">
+
+                    </form>
+                </td>
+            </tr>
+            @endif
+            </td>
+            </tr>
+            </table>
+        </div>
         </div>
     </section>
-
-
 @endsection
