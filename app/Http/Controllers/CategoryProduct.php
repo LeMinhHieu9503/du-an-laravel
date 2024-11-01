@@ -141,7 +141,7 @@ class CategoryProduct extends Controller
             ->where('tbl_category_product.category_id',$category_id)
             ->limit(1)
             ->get();
-            foreach($category_name as $key => $val){
+            foreach($cate_product as $key => $val){
                 //seo 
                 $url_canonical = $request->url();
                 //--seo
