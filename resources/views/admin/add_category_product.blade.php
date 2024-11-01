@@ -39,8 +39,8 @@
                                 <label for="categoryProductDisplay">Hiển thị</label>
                                 <select name="category_product_status" class="form-control input-sm m-bot15"
                                     id="categoryProductDisplay" required>
-                                    <option value="0">Ẩn</option>
-                                    <option value="1">Hiển thị</option>
+                                    <option value="1">Ẩn</option>
+                                    <option value="0">Hiển thị</option>
                                 </select>
                             </div>
                             <!-- Nút Thêm -->

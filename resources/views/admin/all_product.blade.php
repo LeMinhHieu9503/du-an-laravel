@@ -48,8 +48,6 @@
                             <th>Hình sản phẩm</th>
                             <th>Danh mục sản phẩm</th>
                             <th>Thương hiệu sản phẩm</th>
-                            {{-- <th>Mô tả</th> --}}
-                            {{-- <th>Nội dung</th> --}}
                             <th>Hiển thị</th>
                             <th style="width:30px;"></th>
                         </tr>
@@ -71,8 +69,6 @@
                                 </td>
                                 <td><span class="text-ellipsis">{{ $pro->category_name }}</span></td>
                                 <td><span class="text-ellipsis">{{ $pro->brand_name }}</span></td>
-                                {{-- <td><span class="text-ellipsis">{{ $pro->product_desc }}</span></td> --}}
-                                {{-- <td><span class="text-ellipsis">{{ $pro->product_content }}</span></td> --}}
                                 <td>
                                     <span class="text-ellipsis">
                                         <?php

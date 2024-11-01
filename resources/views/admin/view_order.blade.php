@@ -181,8 +181,6 @@
                         
                     </tbody>
                 </table>
-                {{-- In đơn hàng --}}
-                <a href="{{url('/print-order')}}">in đơn hàng</a>
             </div>
 
         </div>

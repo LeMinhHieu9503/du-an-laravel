@@ -58,6 +58,7 @@ class ProductController extends Controller
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
+        $data['product_quantity'] = $request->product_quantity;
         $data['category_id'] = $request->category_id;
         $data['brand_id'] = $request->brand_id;
         $data['product_status'] = $request->product_status;
