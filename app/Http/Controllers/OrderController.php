@@ -56,4 +56,5 @@ class OrderController extends Controller
         $order = Order::orderBy('created_at', 'DESC')->get();
         return view('admin.manage_order')->with(compact('order'));
     }
+
 }

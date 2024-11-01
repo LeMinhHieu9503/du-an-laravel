@@ -115,6 +115,7 @@
                             <th>Số thứ tự</th>
                             <th>Tên sản phẩm</th>
                             <th>Mã giảm giá</th>
+                            <th>Phí ship hàng</th>
                             <th>Số lượng</th>
                             <th>Giá sản phẩm</th>
                             <th>Tổng tiền</th>
@@ -143,6 +144,7 @@
                                             Không mã
                                         @endif
                                     </span></td>
+                                <td>{{ number_format($details->product_feeship, 0, ',', '.') }}đ</td>
                                 <td><span class="text-ellipsis">{{ $details->product_sales_quantity }}</span></td>
                                 <td><span
                                         class="text-ellipsis">{{ number_format($details->product_price, 0, ',', '.') }}đ</span>
@@ -153,27 +155,34 @@
                             </tr>
                         @endforeach
                         <tr>
-                            <td colspan="2">Thanh toán:
+                            <td colspan="2">
                                 @php
                                     $total_coupon = 0;
                                 @endphp
-                                @if (isset($coupon_condition) && $coupon_condition == 1)
+                                
+                                @if ($coupon_condition == 1)
                                     @php
                                         $total_after_coupon = ($total * $coupon_number) / 100;
-
-                                        $total_coupon = $total - $total_after_coupon;
+                                        $total_coupon = $total - $total_after_coupon + $details->product_feeship ;
                                     @endphp
                                 @else
                                     @php
-                                        $total_coupon = $total - ($coupon_number ?? 0);
+                                        $total_coupon = $total - $coupon_number + $details->product_feeship ;
                                     @endphp
                                 @endif
-
-                                {{ number_format($total_coupon, 0, ',', '.') }}đ
+                        
+                                Tiền coupon: {{ number_format($coupon_number ?? 0, 0, ',', '.') }}đ
+                                <br>
+                                Phí ship: {{ number_format($details->product_feeship ?? 0, 0, ',', '.') }}đ
+                                <br>
+                                Thanh toán: {{ number_format($total_coupon, 0, ',', '.') }}đ
                             </td>
                         </tr>
+                        
                     </tbody>
                 </table>
+                {{-- In đơn hàng --}}
+                <a href="{{url('/print-order')}}">in đơn hàng</a>
             </div>
 
         </div>

@@ -158,3 +158,4 @@ Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
 
 //Checkout
 Route::post('/confirm_order', [CheckoutController::class, 'confirm_order']);
+
