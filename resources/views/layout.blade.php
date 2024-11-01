@@ -113,7 +113,7 @@
                                 <?php 
                                 }else{
                                 ?>
-                                <li><a href="{{ URL::to('/dang-nhap') }}"><i class="fa fa-crosshairs"></i> Thanh
+                                <li><a href="{{ URL::to('/login-checkout') }}"><i class="fa fa-crosshairs"></i> Thanh
                                         toán</a></li>
                                 <?php
                                  }

@@ -37,20 +37,35 @@
                     <img src="images/product-details/rating.png" alt="" />
 
                     <form action="{{ URL::to('/save-cart') }}" method="POST">
-                        {{ csrf_field() }}
+                        @csrf
+                        <input type="hidden" value="{{ $value->product_id }}"
+                            class="cart_product_id_{{ $value->product_id }}">
+
+                        <input type="hidden" value="{{ $value->product_name }}"
+                            class="cart_product_name_{{ $value->product_id }}">
+
+                        <input type="hidden" value="{{ $value->product_image }}"
+                            class="cart_product_image_{{ $value->product_id }}">
+
+                        <input type="hidden" value="{{ $value->product_quantity }}"
+                            class="cart_product_quantity_{{ $value->product_id }}">
+
+                        <input type="hidden" value="{{ $value->product_price }}"
+                            class="cart_product_price_{{ $value->product_id }}">
+
                         <span>
-                            <span>{{ number_format($value->product_price, 0, ',', '.') . ' ' . 'VNĐ' }}</span>
+                            <span>{{ number_format($value->product_price, 0, ',', '.') . 'VNĐ' }}</span>
+
                             <label>Số lượng:</label>
-                            <input name="qty" type="number" min="1" value="1" />
+                            <input name="qty" type="number" min="1"
+                                class="cart_product_qty_{{ $value->product_id }}" value="1" />
                             <input name="productid_hidden" type="hidden" value="{{ $value->product_id }}" />
-                            <input type="hidden" value="{{ $value->product_quantity }}"
-                                class="cart_product_quantity_{{ $value->product_id }}">
-                            <button type="submit" class="btn btn-fefault cart">
-                                <i class="fa fa-shopping-cart"></i>
-                                Thêm giỏ hàng
-                            </button>
                         </span>
+                        <input type="button" value="Thêm giỏ hàng" class="btn btn-primary btn-sm add-to-cart"
+                            data-id_product="{{ $value->product_id }}" name="add-to-cart">
                     </form>
+
+                    
                     <p><b>Tình trạng:</b> Còn hàng</p>
                     <p><b>Điều kiện:</b> Mới 100%</p>
                     <p><b>Số lượng kho còn:</b> {{ $value->product_quantity }}</p>
@@ -129,7 +144,7 @@
                                 <div class="single-products">
                                     <div class="productinfo text-center">
                                         <img src="{{ URL::to('uploads/product/' . $lienquan->product_image) }}"
-                                            height="200" width="200" alt="" />
+                                            height="100%" width="100px" alt="" />
                                         <h2>{{ number_format($lienquan->product_price) . '  ' . 'VNĐ' }}</h2>
                                         <p>{{ $lienquan->product_name }}</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i

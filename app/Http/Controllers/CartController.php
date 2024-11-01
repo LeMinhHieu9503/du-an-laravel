@@ -104,7 +104,7 @@ class CartController extends Controller
 
     public function gio_hang(Request $request)
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
 
         $url_canonical = $request->url();
 

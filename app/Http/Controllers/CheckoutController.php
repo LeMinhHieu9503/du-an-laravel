@@ -33,7 +33,7 @@ class CheckoutController extends Controller
     }
     public function login_checkout()
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -65,7 +65,7 @@ class CheckoutController extends Controller
 
     public function checkout()
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')

@@ -5,8 +5,12 @@
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
-				  <li><a href="{{URL::to('/')}}">Trang chủ</a></li>
-				  <li class="active">Thanh toán giỏ hàng</li>
+				  <li style="    background-color: orange; 
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px; 
+    border-radius: 5px; 
+" class="active">Thanh toán giỏ hàng</li>
 				</ol>
 			</div>
 
@@ -146,11 +150,7 @@
 										</td>
 										<td class="cart_quantity">
 											<div class="cart_quantity_button">
-											
-											
 												<input class="cart_quantity" type="number" min="1" name="cart_qty[{{$cart['session_id']}}]" value="{{$cart['product_qty']}}"  >
-											
-												
 											</div>
 										</td>
 										<td class="cart_total">
