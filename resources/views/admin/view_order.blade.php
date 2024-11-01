@@ -114,6 +114,7 @@
                         <tr>
                             <th>Số thứ tự</th>
                             <th>Tên sản phẩm</th>
+                            <th>Mã giảm giá</th>
                             <th>Số lượng</th>
                             <th>Giá sản phẩm</th>
                             <th>Tổng tiền</th>
@@ -123,31 +124,53 @@
                     <tbody>
                         @php
                             $i = 0;
-                            $total =0;
+                            $total = 0;
                         @endphp
                         @foreach ($order_details as $key => $details)
                             @php
                                 $i++;
                                 $subtotal = $details->product_price * $details->product_sales_quantity;
-                                $total +=$subtotal;
+                                $total += $subtotal;
                             @endphp
                             <tr>
                                 <td><label><i>{{ $i }}</i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $details->product_name }}</span></td>
+                                <td><span class="text-ellipsis">
+                                        @if ($details->product_coupon != 'no')
+                                            {{ $details->product_coupon }}
+                                        @else
+                                            Không mã
+                                        @endif
+                                    </span></td>
                                 <td><span class="text-ellipsis">{{ $details->product_sales_quantity }}</span></td>
                                 <td><span
                                         class="text-ellipsis">{{ number_format($details->product_price, 0, ',', '.') }}đ</span>
                                 </td>
-                                <td><span
-                                        class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}đ</span>
+                                <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}đ</span>
                                 </td>
 
                             </tr>
                         @endforeach
-
                         <tr>
-                            <td>Thanh toán: {{number_format($total)}}</td>
+                            <td colspan="2">Thanh toán:
+                                @php
+                                    $total_coupon = 0;
+                                @endphp
+                                @if (isset($coupon_condition) && $coupon_condition == 1)
+                                    @php
+                                        $total_after_coupon = ($total * $coupon_number) / 100;
+
+                                        $total_coupon = $total - $total_after_coupon;
+                                    @endphp
+                                @else
+                                    @php
+                                        $total_coupon = $total - ($coupon_number ?? 0);
+                                    @endphp
+                                @endif
+
+                                {{ number_format($total_coupon, 0, ',', '.') }}đ
+                            </td>
                         </tr>
                     </tbody>
                 </table>
