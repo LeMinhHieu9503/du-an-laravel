@@ -10,6 +10,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -158,4 +159,9 @@ Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
 
 //Checkout
 Route::post('/confirm_order', [CheckoutController::class, 'confirm_order']);
+
+//Slider 
+Route::get('/manage-slider', [SliderController::class, 'manage_slider']);
+Route::get('/add-slider', [SliderController::class, 'add_slider']);
+Route::post('/insert-slider', [SliderController::class, 'insert_slider']);
 
