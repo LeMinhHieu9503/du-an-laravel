@@ -8,6 +8,7 @@ use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -138,8 +139,10 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 
 
 //MANAGE-ORDER
-Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
-Route::get('/view-order/{order_id}', [CheckoutController::class, 'view_order']);
+Route::get('/manage-order', [OrderController::class, 'manage_order']);
+
+// Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
+// Route::get('/view-order/{order_id}', [CheckoutController::class, 'view_order']);
 
 //COUPON
 Route::get('/insert-coupon', [CouponController::class, 'insert_coupon']);
