@@ -59,6 +59,8 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $keywords = $request->keywords_submit;
 
 
@@ -76,6 +78,7 @@ class HomeController extends Controller
         return view('pages.sanpham.search')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('search_product', $search_product);
+            ->with('search_product', $search_product)
+            ->with('slider',$slider);
     }
 }

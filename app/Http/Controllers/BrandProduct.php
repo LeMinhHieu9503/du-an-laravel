@@ -9,6 +9,7 @@ use App\Models\Brand;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Slider;
 
 session_start();
 
@@ -142,6 +143,8 @@ class BrandProduct extends Controller
     //HOME
     public function show_brand_home(Request $request, $brand_id)
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -164,6 +167,7 @@ class BrandProduct extends Controller
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('brand_by_id', $brand_by_id)
-            ->with('brand_name', $brand_name);
+            ->with('brand_name', $brand_name)
+            ->with('slider',$slider);
     }
 }

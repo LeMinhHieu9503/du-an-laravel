@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
@@ -103,6 +104,8 @@ class CartController extends Controller
 
     public function gio_hang(Request $request)
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $url_canonical = $request->url();
 
         $cate_product = DB::table('tbl_category_product')
@@ -115,7 +118,8 @@ class CartController extends Controller
         return view('pages.cart.cart_ajax')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('url_canonical', $url_canonical);
+            ->with('url_canonical', $url_canonical)
+            ->with('slider',$slider);
     }
 
     public function del_product($session_id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -186,8 +187,10 @@ class ProductController extends Controller
 
 
     //HOME
-    public function details_product($product_id)
+    public function details_product(Request $request, $product_id)
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -215,6 +218,7 @@ class ProductController extends Controller
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('product_details', $details_product)
-            ->with('relate', $related_product);
+            ->with('relate', $related_product)
+            ->with('slider',$slider);
     }
 }

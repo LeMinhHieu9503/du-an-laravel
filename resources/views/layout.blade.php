@@ -204,30 +204,26 @@
                             <li data-target="#slider-carousel" data-slide-to="1"></li>
                             <li data-target="#slider-carousel" data-slide-to="2"></li>
                         </ol>
-                        <style type="text/css">
-                            img.img.img-responsive.img-slider {
-                                height: 350px;
-                            }
-                        </style>
                         <div class="carousel-inner">
-                            @php
-                                $i = 0;
+                        @php 
+                            $i = 0;
+                        @endphp
+                        @foreach($slider as $key => $slide)
+                            @php 
+                                $i++;
                             @endphp
-                            @foreach ($slider as $key => $slide)
-                                @php
-                                    $i++;
-                                @endphp
-                                <div class="item {{ $i == 1 ? 'active' : '' }}">
-                                    <div class="col-sm-12">
-                                        <img src="uploads/slider/{{ $slide->slider_image }}"
-                                            alt="{{ $slide->slider_desc }}" height="100%" width="100%"
-                                            class="img img-responsive">
-                                    </div>
+                            <div class="item {{$i==1 ? 'active' : '' }}">
+                                
+                                <div class="col-sm-12">
+                                    <img alt="{{$slide->slider_desc}}" src="{{asset('uploads/slider/'.$slide->slider_image)}}" height="100%" width="100%" class="img img-responsive img-slider">
+                                   
                                 </div>
-                            @endforeach
-
+                            </div>
+                        @endforeach  
+                          
+                            
                         </div>
-
+                        
                         <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                             <i class="fa fa-angle-left"></i>
                         </a>
@@ -235,7 +231,7 @@
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </div>
-
+                    
                 </div>
             </div>
         </div>

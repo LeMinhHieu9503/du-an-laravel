@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Slider;
 
 session_start();
 
@@ -125,6 +126,8 @@ class CategoryProduct extends Controller
     //HOME
     public function show_category_home(Request $request, $category_id)
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -152,6 +155,7 @@ class CategoryProduct extends Controller
             ->with('brand', $brand_product)
             ->with('category_by_id', $category_by_id)
             ->with('category_name',$category_name)
-            ->with('url_canonical',$url_canonical);
+            ->with('url_canonical',$url_canonical)
+            ->with('slider',$slider);
     }
 }

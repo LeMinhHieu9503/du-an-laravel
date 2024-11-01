@@ -16,6 +16,7 @@ use App\Models\Feeship;
 use App\Models\Shipping;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\Slider;
 
 session_start();
 
@@ -32,6 +33,8 @@ class CheckoutController extends Controller
     }
     public function login_checkout()
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -41,7 +44,8 @@ class CheckoutController extends Controller
 
         return view('pages.checkout.login_checkout')
             ->with('category', $cate_product)
-            ->with('brand', $brand_product);
+            ->with('brand', $brand_product)
+            ->with('slider',$slider);
     }
 
     public function add_customer(Request $request)
@@ -61,6 +65,8 @@ class CheckoutController extends Controller
 
     public function checkout()
     {
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -74,7 +80,8 @@ class CheckoutController extends Controller
         return view('pages.checkout.show_checkout')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('city', $city);
+            ->with('city', $city)
+            ->with('slider',$slider);
     }
 
     public function save_checkout_customer(Request $request)
