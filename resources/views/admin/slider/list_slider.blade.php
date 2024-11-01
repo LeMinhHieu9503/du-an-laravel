@@ -55,20 +55,22 @@
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $slide->slider_name }}</span></td>
-                                <td><span class="text-ellipsis">{{ $slide->slider_image }}</span></td>
+                                <td><span class="text-ellipsis">
+                                    <img src="uploads/slider/{{ $slide->slider_image }}"  alt="">    
+                                </span></td>
                                 <td><span class="text-ellipsis">{{ $slide->slider_desc }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
                                         <?php
-                                            if($slide->slide_status ==1){
+                                            if($slide->slider_status ==1){
                                         ?>
-                                        <a href="{{ URL::to('/unactive-slide-product/' . $slide->slider_id) }}">
+                                        <a href="{{ URL::to('/unactive-slide/' . $slide->slider_id) }}">
                                             <span style="color:red;font-size:30px" class="fa fa-thumbs-down"></span>
                                         </a>
                                         <?php
                                         }else{
                                         ?>
-                                        <a href="{{ URL::to('/active-slide-product/' . $slide->slider_id) }}">
+                                        <a href="{{ URL::to('/active-slide/' . $slide->slider_id) }}">
                                             <span style="color:green;font-size:30px" class="fa fa-thumbs-up"></span>
                                         </a>
                                         <?php
@@ -77,7 +79,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')" href="{{ URL::to('/delete-slide-product/' . $slide->slider_id) }}"
+                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')" href="{{ URL::to('/delete-slide/' . $slide->slider_id) }}"
                                         class="active styling-delete" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>

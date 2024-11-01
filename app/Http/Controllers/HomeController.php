@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\Mail;
-
+use App\Models\Slider;
 session_start();
 class HomeController extends Controller
 {
@@ -25,6 +25,10 @@ class HomeController extends Controller
     }
     public function index(Request $request)
     {
+        //slider
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+
+        
         $url_canonical = $request->url();
 
         $cate_product = DB::table('tbl_category_product')
@@ -47,7 +51,8 @@ class HomeController extends Controller
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('all_product', $all_product)
-            ->with('url_canonical', $url_canonical);
+            ->with('url_canonical', $url_canonical)
+            ->with('slider',$slider);
 
         // return view('pages.home')->with(compact('cate_product','brand_product','all_product')); //Cách 2
     }

@@ -204,24 +204,27 @@
                             <li data-target="#slider-carousel" data-slide-to="1"></li>
                             <li data-target="#slider-carousel" data-slide-to="2"></li>
                         </ol>
-
+                        <style type="text/css">
+                            img.img.img-responsive.img-slider {
+                                height: 350px;
+                            }
+                        </style>
                         <div class="carousel-inner">
-                            
-                            <div class="item active">
-                                <div class="col-sm-6">
-                                    <h1><span>E</span>-SHOPPER</h1>
-                                    <h2>Free E-Commerce Template</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. </p>
-                                    <button type="button" class="btn btn-default get">Get it now</button>
+                            @php
+                                $i = 0;
+                            @endphp
+                            @foreach ($slider as $key => $slide)
+                                @php
+                                    $i++;
+                                @endphp
+                                <div class="item {{ $i == 1 ? 'active' : '' }}">
+                                    <div class="col-sm-12">
+                                        <img src="uploads/slider/{{ $slide->slider_image }}"
+                                            alt="{{ $slide->slider_desc }}" height="100%" width="100%"
+                                            class="img img-responsive">
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <img src="{{ 'frontend/images/girl1.jpg' }}" class="girl img-responsive"
-                                        alt="" />
-                                    <img src="{{ 'frontend/images/pricing.png' }}" class="pricing" alt="" />
-                                </div>
-                            </div>
-
+                            @endforeach
 
                         </div>
 

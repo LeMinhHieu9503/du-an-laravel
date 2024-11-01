@@ -165,3 +165,7 @@ Route::get('/manage-slider', [SliderController::class, 'manage_slider']);
 Route::get('/add-slider', [SliderController::class, 'add_slider']);
 Route::post('/insert-slider', [SliderController::class, 'insert_slider']);
 
+Route::get('/unactive-slide/{slider_id}', [SliderController::class, 'unactive_slide']);
+Route::get('/active-slide/{slider_id}', [SliderController::class, 'active_slide']);
+
+Route::get('/delete-slide/{slider_id}',[SliderController::class, 'delete_slide']);

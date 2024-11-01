@@ -16,7 +16,7 @@
                     ?>
                     <div class="position-center">
                         <!-- Form bắt đầu -->
-                        <form role="form" method="POST" action="{{ URL::to('/insert-slider') }}">
+                        <form role="form" method="POST" action="{{ URL::to('/insert-slider') }}" enctype="multipart/form-data">
                             <!-- Thêm token bảo mật nếu bạn dùng Laravel -->
                             {{ csrf_field() }}
 
