@@ -40,10 +40,15 @@ class OrderController extends Controller
         foreach ($order_details as $key => $order_d) {
             $product_coupon = $order_d->product_coupon;
         }
-        $coupon = Coupon::where('coupon_code', $product_coupon)->first();
-        $coupon_condition = $coupon->coupon_condition;
-        $coupon_number = $coupon->coupon_number;
 
+        if ($product_coupon != 'no') {
+            $coupon = Coupon::where('coupon_code', $product_coupon)->first();
+            $coupon_condition = $coupon->coupon_condition;
+            $coupon_number = $coupon->coupon_number;
+        } else {
+            $coupon_condition  = 2;
+            $coupon_number = 0;
+        }
         return view('admin.view_order')->with(compact('order_details', 'customer', 'shipping', 'order_details', 'coupon_condition', 'coupon_number'));
     }
     public function manage_order()
