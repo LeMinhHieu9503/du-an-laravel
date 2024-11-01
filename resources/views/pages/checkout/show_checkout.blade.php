@@ -21,7 +21,7 @@
 						<div class="bill-to">
 							<p>Điền thông tin gửi hàng</p>
 							<div class="form-one">
-								<form method="POST">
+								<form method="POST" >
 									@csrf
 									<input type="text" name="shipping_email" class="shipping_email" placeholder="Điền email">
 									<input type="text" name="shipping_name" class="shipping_name" placeholder="Họ và tên người gửi">
@@ -29,12 +29,13 @@
 									<input type="text" name="shipping_phone" class="shipping_phone" placeholder="Số điện thoại">
 									<textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>
 									
+                                    {{-- Fee --}}
 									@if(Session::get('fee'))
 										<input type="hidden" name="order_fee" class="order_fee" value="{{Session::get('fee')}}">
 									@else 
-										<input type="hidden" name="order_fee" class="order_fee" value="10000">
+										<input type="hidden" name="order_fee" class="order_fee" value="20000">
 									@endif
-
+                                    {{-- Coupon --}}
 									@if(Session::get('coupon'))
 										@foreach(Session::get('coupon') as $key => $cou)
 											<input type="hidden" name="order_coupon" class="order_coupon" value="{{$cou['coupon_code']}}">
@@ -56,6 +57,8 @@
 									</div>
 									<input type="button" value="Xác nhận đơn hàng" name="send_order" class="btn btn-primary btn-sm send_order">
 								</form>
+
+
 								<form>
                                     @csrf 
                              

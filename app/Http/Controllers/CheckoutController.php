@@ -13,6 +13,9 @@ use App\Models\Province;
 use App\Models\Wards;
 use App\Models\Feeship;
 
+use App\Models\Shipping;
+use App\Models\Order;
+use App\Models\OrderDetails;
 session_start();
 
 class CheckoutController extends Controller
@@ -243,14 +246,49 @@ class CheckoutController extends Controller
         $data = $request->all();
         if ($data['matp']) {
             $feeship = Feeship::where('fee_matp', $data['matp'])->where('fee_maqh', $data['maqh'])->where('fee_xaid', $data['xaid'])->get();
-            foreach ($feeship as $key => $fee) {
-                Session::put('fee', $fee->fee_feeship);
-                Session::save();
+            if ($feeship) {
+                $count_feeship = $feeship->count();
+                if ($count_feeship > 0) {
+                    foreach ($feeship as $key => $fee) {
+                        Session::put('fee', $fee->fee_feeship);
+                        Session::save();
+                    }
+                } else {
+                    Session::put('fee', 20000);
+                    Session::save();
+                }
             }
         }
     }
-    public function del_fee(){
+    public function del_fee()
+    {
         Session::forget('fee');
         return redirect()->back();
     }
+
+    public function confirm_order(Request $request){
+        $data = $request->all();
+        $shipping = new Shipping();
+    
+        $shipping->shipping_name = $data['shipping_name'];
+        $shipping->shipping_email = $data['shipping_email'];
+        $shipping->shipping_phone = $data['shipping_phone'];
+        $shipping->shipping_address = $data['shipping_address'];
+        $shipping->shipping_notes = $data['shipping_notes'];
+        $shipping->shipping_method = $data['shipping_method'];
+    
+        $shipping->save();
+    
+        $shipping_id = $shipping->shipping_id;
+
+        $checkout_code = substr(md5(microtime()),rand(0,26),5);
+
+        $order = new Order();
+        $order->customer_id = Session::get('customer_id');
+        $order->shipping_id = $shipping_id;
+        $order->order_status = 1;
+        $order->order_code = $checkout_code;
+        $order->save();
+    }
+    
 }

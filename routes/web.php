@@ -154,3 +154,8 @@ Route::post('/select-delivery', [DeliveryController::class, 'select_delivery']);
 Route::post('/insert-delivery', [DeliveryController::class, 'insert_delivery']);
 Route::post('/select-feeship', [DeliveryController::class, 'select_feeship']);
 Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
+
+//Checkout
+Route::post('/confirm_order', [CheckoutController::class, 'confirm_order']);
+
+

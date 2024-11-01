@@ -491,6 +491,43 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     {{-- Sweet Alert --}}
     <script src="{{ asset('frontend/js/sweetalert.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.send_order').click(function() {
+                var shipping_email = $('.shipping_email').val();
+                var shipping_name = $('.shipping_name').val();
+                var shipping_address = $('.shipping_address').val();
+                var shipping_phone = $('.shipping_phone').val();
+                var shipping_notes = $('.shipping_notes').val();
+                var shipping_method = $('.payment_select').val();
+                var order_fee = $('.order_fee').val();
+                var order_coupon = $('.order_coupon').val();
+                var _token = $('input[name="_token"]').val();
+    
+                $.ajax({
+                    url: '{{ url('/confirm_order') }}',
+                    method: 'POST',
+                    data: {
+                        shipping_email: shipping_email,
+                        shipping_name: shipping_name,
+                        shipping_address: shipping_address,
+                        shipping_phone: shipping_phone,
+                        shipping_notes: shipping_notes,
+                        shipping_method: shipping_method,
+                        order_fee: order_fee,
+                        order_coupon: order_coupon,  // Sửa thành order_coupon
+                        _token: _token
+                    },
+                    success: function() {
+                        alert('Đặt hàng thành công');
+                    }
+                });
+            });
+        });
+    </script>
+    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.add-to-cart').click(function() {

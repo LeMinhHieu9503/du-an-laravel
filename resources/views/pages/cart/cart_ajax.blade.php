@@ -139,6 +139,14 @@
                                 @endif
                             </td>
 
+                            <td>
+                                @if (Session::get('customer'))
+                                    <a class="btn btn-default check_out" href="{{ url('/checkout') }}">Đặt hàng</a>
+                                @else
+                                    <a class="btn btn-default check_out" href="{{ url('/login-checkout') }}">Đặt hàng</a>
+                                @endif
+                            </td>
+
                             </tr>
                         @else
                             <tr>
