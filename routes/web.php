@@ -140,9 +140,7 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 
 //MANAGE-ORDER
 Route::get('/manage-order', [OrderController::class, 'manage_order']);
-
-// Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
-// Route::get('/view-order/{order_id}', [CheckoutController::class, 'view_order']);
+Route::get('/view-order/{order_code}', [OrderController::class, 'view_order']);
 
 //COUPON
 Route::get('/insert-coupon', [CouponController::class, 'insert_coupon']);
@@ -160,5 +158,3 @@ Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
 
 //Checkout
 Route::post('/confirm_order', [CheckoutController::class, 'confirm_order']);
-
-

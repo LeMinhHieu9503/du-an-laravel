@@ -20,4 +20,8 @@ class OrderDetails extends Model
         'product_coupon',
         'product_feeship'
     ];
+
+    public function product(){
+        return $this->belongsTo('App\Models\Product','product_id');
+    }
 }
