@@ -113,4 +113,13 @@ class OrderController extends Controller
         $order_details->product_sales_quantity = $data['order_qty'];
         $order_details->save();
     }
+
+    // Xóa đơn hàng
+    public function order_code(Request $request ,$order_code){
+		$order = Order::where('order_code',$order_code)->first();
+		$order->delete();
+		 Session::put('message','Xóa đơn hàng thành công');
+        return redirect()->back();
+
+	}
 }

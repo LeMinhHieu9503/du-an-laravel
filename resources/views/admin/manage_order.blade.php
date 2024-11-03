@@ -36,15 +36,17 @@
                             @endphp
 
                             <tr>
-                                <td><label ><i>{{ $i }}</i></label>
+                                <td><label><i>{{ $i }}</i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $ord->order_code }}</span></td>
                                 <td><span class="text-ellipsis">{{ $ord->created_at }}</span></td>
                                 <td><span class="text-ellipsis">
                                         @if ($ord->order_status == 1)
-                                            Đơn hàng mới
+                                            Đơn hàng chưa xử lý
+                                        @elseif($ord->order_status == 2)
+                                            Đơn hàng đã xử lý
                                         @else
-                                            Đã xử lý
+                                            Đơn hàng đã hủy - tạm giữ
                                         @endif
                                     </span></td>
 
@@ -53,9 +55,9 @@
                                         ui-toggle-class="">
                                         <i class="fa fa-eye text-success text-active"></i>
                                     </a>
-                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')"
-                                        href="{{ URL::to('/delete-order/' . $ord->order_code) }}"
-                                        class="active styling-delete" ui-toggle-class="">
+                                    <a onclick="return confirm('Bạn có chắc là muốn xóa đơn hàng này ko?')"
+                                        href="{{ URL::to('/delete-order/' . $ord->order_code) }}" class="active styling-edit"
+                                        ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>
                                 </td>

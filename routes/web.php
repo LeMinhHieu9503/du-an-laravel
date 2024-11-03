@@ -173,4 +173,5 @@ Route::get('/delete-slide/{slider_id}',[SliderController::class, 'delete_slide']
 //ORDER-Hàng tồn
 Route::post('/update-order-qty', [OrderController::class, 'update_order_qty']);
 Route::post('/update-qty', [OrderController::class, 'update_qty']);
+Route::get('/delete-order/{order_code}', [OrderController::class, 'order_code']);
 
