@@ -134,7 +134,7 @@
                                 $subtotal = $details->product_price * $details->product_sales_quantity;
                                 $total += $subtotal;
                             @endphp
-                            <tr>
+                            <tr class="color_qty_{{$details->product_id}}">
                                 <td><label><i>{{ $i }}</i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $details->product_name }}</span></td>
@@ -148,18 +148,23 @@
                                     </span></td>
                                 <td>{{ number_format($details->product_feeship, 0, ',', '.') }}đ</td>
                                 <td>
-                                    <span class="text-ellipsis">
-                                        <input type="number" min="1" value="{{ $details->product_sales_quantity }}"
+                                        <input type="number" min="1" {{$order_status == 2 ? 'disabled' : ''}} value="{{ $details->product_sales_quantity }}"
                                             name="product_sales_quantity" class="order_qty_{{ $details->product_id }}">
+
+                                        <input type="hidden" name="order_qty_storage"
+                                            value="{{ $details->product->product_quantity }}"
+                                            class="order_qty_storage_{{ $details->product_id }}">
+
                                         <input type="hidden" name="order_code" value="{{ $details->order_code }}"
                                             class="order_code">
 
                                         <input type="hidden" name="order_product_id" value="{{ $details->product_id }}"
                                             class="order_product_id">
+                                @if($order_status != 2)
                                         <button class="btn btn-default update_quantity_order"
                                             data-product_id="{{ $details->product_id }}" name="update_quantity_order">Cập
                                             nhật</button>
-                                    </span>
+                                @endif
                                 </td>
                                 <td><span
                                         class="text-ellipsis">{{ number_format($details->product_price, 0, ',', '.') }}đ</span>

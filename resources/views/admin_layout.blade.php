@@ -251,23 +251,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             $("input[name='order_product_id']").each(function() {
                 order_product_id.push($(this).val());
             });
-            // alert(order_product_id);
-            $.ajax({
-                url: '{{ url('/update-order-qty') }}',
-                method: 'POST',
-                data: {
-                    _token: _token,
-                    order_status: order_status,
-                    order_id: order_id,
-                    quantity: quantity,
-                    order_product_id: order_product_id
-                },
-                success: function(data) {
-                    // $('#load_delivery').html(data);
-                    alert('Thay đổi tình trạng đơn hàng thành công');
-                    location.reload();
+            j = 0;
+            //So sánh số lượng tồn kho với số lượng đặt hàng của đơn
+            for (i = 0; i < order_product_id.length; i++) {
+                // alert(order_product_id[i]);
+                // Số lượng khách đặt
+                var order_qty = $('.order_qty_' + order_product_id[i]).val();
+                // Số lượng tồn kho
+                var order_qty_storage = $('.order_qty_storage_' + order_product_id[i]).val();
+                // alert(order_qty);
+                // alert(order_qty_storage);
+                if (parseInt(order_qty) > parseInt(order_qty_storage)) {
+                    j = j + 1;
+                    if (j = 1) {
+                        alert('Số lượng bán trong kho không đủ');
+                    }
+                    $('.color_qty_' + order_product_id[i]).css('background', '#000');
                 }
-            });
+            }
+            // alert(j);
+            if (j == 0) {
+                $.ajax({
+                    url: '{{ url('/update-order-qty') }}',
+                    method: 'POST',
+                    data: {
+                        _token: _token,
+                        order_status: order_status,
+                        order_id: order_id,
+                        quantity: quantity,
+                        order_product_id: order_product_id
+                    },
+                    success: function(data) {
+                        // $('#load_delivery').html(data);
+                        alert('Thay đổi tình trạng đơn hàng thành công');
+                        location.reload();
+                    }
+                });
+
+            }
 
         });
     </script>
