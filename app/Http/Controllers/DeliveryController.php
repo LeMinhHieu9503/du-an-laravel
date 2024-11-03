@@ -19,7 +19,7 @@ class DeliveryController extends Controller
     public function delivery()
     {
         $city = City::orderBy('matp', 'ASC')->get();
-        return view('admin.delivery.add_delivery')->with(compact('city'));
+        return view('admin.delivery.add_delivery')->with(key: compact('city'));
     }
 
     public function select_delivery(Request $request)

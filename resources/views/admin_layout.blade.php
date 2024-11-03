@@ -203,6 +203,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('backend/js/jquery.form-validator.min.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript">
+        $('.order_details').change(function() {
+            var order_status = $(this).val();
+            var order_id = $(this).children(":selected").attr("id");
+            var _token = $('input[name="_token"]').val();
+            // alert(order_status);
+            // alert(order_id);
+            // alert(_token);
+
+            //Lấy ra số lượng sản phẩm
+            quantity = [];
+            $("input[name='product_sales_quantity']").each(function() {
+                quantity.push($(this).val());
+            });
+            //Lấy ra product_id để đem đi so sánh
+            order_product_id = [];
+            $("input[name='order_product_id']").each(function() {
+                order_product_id.push($(this).val());
+            });
+            // alert(order_product_id);
+            $.ajax({
+                    url: '{{ url('/select-feeship') }}',
+                    method: 'POST',
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#load_delivery').html(data);
+                    }
+                });
+
+        });
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
 
             fetch_delivery();

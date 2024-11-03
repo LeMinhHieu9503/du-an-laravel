@@ -169,3 +169,7 @@ Route::get('/unactive-slide/{slider_id}', [SliderController::class, 'unactive_sl
 Route::get('/active-slide/{slider_id}', [SliderController::class, 'active_slide']);
 
 Route::get('/delete-slide/{slider_id}',[SliderController::class, 'delete_slide']);
+
+//ORDER-Hàng tồn
+Route::post('/update-order-qty', [OrderController::class, 'update_order_qty']);
+
