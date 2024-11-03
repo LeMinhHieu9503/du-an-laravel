@@ -18,6 +18,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Customer;
 use App\Models\Coupon;
+use App\Models\Product;
 
 session_start();
 
@@ -49,12 +50,47 @@ class OrderController extends Controller
             $coupon_condition  = 2;
             $coupon_number = 0;
         }
-        return view('admin.view_order')->with(compact('order_details', 'customer', 'shipping', 'order_details', 'coupon_condition', 'coupon_number','order'));
+        return view('admin.view_order')->with(compact('order_details', 'customer', 'shipping', 'order_details', 'coupon_condition', 'coupon_number', 'order'));
     }
     public function manage_order()
     {
         $order = Order::orderBy('created_at', 'DESC')->get();
         return view('admin.manage_order')->with(compact('order'));
     }
+
+    // Update hàng tồn kho
+    public function update_order_qty(Request $request)
+{
+    // Lấy tất cả dữ liệu từ request
+    $data = $request->all();
+
+    // Cập nhật trạng thái đơn hàng
+    $order = Order::find($data['order_id']);
+    $order->order_status = $data['order_status'];
+    $order->save();
+
+    // Nếu trạng thái đơn hàng là "Đã xử lý"
+    if ($order->order_status == 2) {
+        foreach ($data['order_product_id'] as $key => $product_id) {
+            // Tìm sản phẩm theo ID
+            $product = Product::find($product_id);
+            $product_quantity = $product->product_quantity;
+            $product_sold = $product->product_sold;
+
+            foreach ($data['quantity'] as $key2 => $qty) {
+                // Kiểm tra nếu ID sản phẩm khớp với số lượng
+                if ($key == $key2) {
+                    // Tính số lượng còn lại
+                    $pro_remin = $product_quantity - $qty;
+                    $product->product_quantity = $pro_remin;
+
+                    // Tính tổng số lượng đã bán
+                    $product->product_sold = $product_sold + $qty;
+                    $product->save();
+                }
+            }
+        }
+    }
+}
 
 }
