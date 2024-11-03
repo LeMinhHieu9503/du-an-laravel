@@ -82,6 +82,7 @@ class CartController extends Controller
                     'product_name' => $data['cart_product_name'],
                     'product_id' => $data['cart_product_id'],
                     'product_image' => $data['cart_product_image'],
+                    'product_quantity' => $data['cart_product_quantity'],
                     'product_qty' => $data['cart_product_qty'],
                     'product_price' => $data['cart_product_price'],
                 );
@@ -93,6 +94,7 @@ class CartController extends Controller
                 'product_name' => $data['cart_product_name'],
                 'product_id' => $data['cart_product_id'],
                 'product_image' => $data['cart_product_image'],
+                'product_quantity' => $data['cart_product_quantity'],
                 'product_qty' => $data['cart_product_qty'],
                 'product_price' => $data['cart_product_price'],
             );
@@ -104,7 +106,7 @@ class CartController extends Controller
 
     public function gio_hang(Request $request)
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '0')->take(4)->get();
 
         $url_canonical = $request->url();
 
@@ -119,7 +121,7 @@ class CartController extends Controller
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('url_canonical', $url_canonical)
-            ->with('slider',$slider);
+            ->with('slider', $slider);
     }
 
     public function del_product($session_id)
@@ -144,23 +146,32 @@ class CartController extends Controller
     public function update_cart(Request $request)
     {
         $data = $request->all();
-        //Đối chiếu
         $cart = Session::get('cart');
-        if ($cart == true) {
+
+        if ($cart) {
+            $message = '';
+
             foreach ($data['cart_qty'] as $key => $qty) {
-                // echo $qty.'</br>';
                 foreach ($cart as $session => $val) {
+                    // Check if session ID matches and update quantities
                     if ($val['session_id'] == $key) {
-                        $cart[$session]['product_qty'] = $qty;
+                        if ($qty <= $val['product_quantity']) {
+                            $cart[$session]['product_qty'] = $qty;
+                            $message .= '<p style="color:green">Số lượng sản phẩm: ' . $val['product_name'] . ' -> thành công</p>';
+                        } else {
+                            $message .= '<p style="color:red">Số lượng sản phẩm: ' . $val['product_name'] . ' -> thất bại do không đủ hàng.</p>';
+                        }
                     }
                 }
             }
             Session::put('cart', $cart);
-            return redirect()->back()->with('message', 'Cập nhật số lượng sản phẩm thành công');
+            return redirect()->back()->with('message', $message);
         } else {
             return redirect()->back()->with('message', 'Cập nhật số lượng sản phẩm thất bại');
         }
     }
+
+
 
     public function del_all_product()
     {
@@ -173,39 +184,39 @@ class CartController extends Controller
         }
     }
 
-    public function check_coupon(Request $request){
+    public function check_coupon(Request $request)
+    {
         $data = $request->all();
-        $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
-        if($coupon){
+        $coupon = Coupon::where('coupon_code', $data['coupon'])->first();
+        if ($coupon) {
             $count_coupon = $coupon->count();
-            if($count_coupon>0){
+            if ($count_coupon > 0) {
                 $coupon_session = Session::get('coupon');
-                if($coupon_session==true){
+                if ($coupon_session == true) {
                     $is_avaiable = 0;
-                    if($is_avaiable==0){
+                    if ($is_avaiable == 0) {
                         $cou[] = array(
                             'coupon_code' => $coupon->coupon_code,
                             'coupon_condition' => $coupon->coupon_condition,
                             'coupon_number' => $coupon->coupon_number,
 
                         );
-                        Session::put('coupon',$cou);
+                        Session::put('coupon', $cou);
                     }
-                }else{
+                } else {
                     $cou[] = array(
-                            'coupon_code' => $coupon->coupon_code,
-                            'coupon_condition' => $coupon->coupon_condition,
-                            'coupon_number' => $coupon->coupon_number,
+                        'coupon_code' => $coupon->coupon_code,
+                        'coupon_condition' => $coupon->coupon_condition,
+                        'coupon_number' => $coupon->coupon_number,
 
-                        );
-                    Session::put('coupon',$cou);
+                    );
+                    Session::put('coupon', $cou);
                 }
                 Session::save();
-                return redirect()->back()->with('message','Thêm mã giảm giá thành công');
+                return redirect()->back()->with('message', 'Thêm mã giảm giá thành công');
             }
-
-        }else{
-            return redirect()->back()->with('error','Mã giảm giá không đúng');
+        } else {
+            return redirect()->back()->with('error', 'Mã giảm giá không đúng');
         }
-    } 
+    }
 }

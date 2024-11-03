@@ -205,25 +205,27 @@
                             <li data-target="#slider-carousel" data-slide-to="2"></li>
                         </ol>
                         <div class="carousel-inner">
-                        @php 
-                            $i = 0;
-                        @endphp
-                        @foreach($slider as $key => $slide)
-                            @php 
-                                $i++;
+                            @php
+                                $i = 0;
                             @endphp
-                            <div class="item {{$i==1 ? 'active' : '' }}">
-                                
-                                <div class="col-sm-12">
-                                    <img alt="{{$slide->slider_desc}}" src="{{asset('uploads/slider/'.$slide->slider_image)}}" height="100%" width="100%" class="img img-responsive img-slider">
-                                   
+                            @foreach ($slider as $key => $slide)
+                                @php
+                                    $i++;
+                                @endphp
+                                <div class="item {{ $i == 1 ? 'active' : '' }}">
+
+                                    <div class="col-sm-12">
+                                        <img alt="{{ $slide->slider_desc }}"
+                                            src="{{ asset('uploads/slider/' . $slide->slider_image) }}" height="100%"
+                                            width="100%" class="img img-responsive img-slider">
+
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach  
-                          
-                            
+                            @endforeach
+
+
                         </div>
-                        
+
                         <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                             <i class="fa fa-angle-left"></i>
                         </a>
@@ -231,7 +233,7 @@
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -557,38 +559,44 @@
                 var cart_product_id = $('.cart_product_id_' + id).val();
                 var cart_product_name = $('.cart_product_name_' + id).val();
                 var cart_product_image = $('.cart_product_image_' + id).val();
+                var cart_product_quantity = $('.cart_product_quantity_' + id).val();
                 var cart_product_price = $('.cart_product_price_' + id).val();
                 var cart_product_qty = $('.cart_product_qty_' + id).val();
                 var _token = $('input[name="_token"]').val();
+                //Kiểm tra số lượng user đặt với số lượng hàng trong kho có
+                if (parseInt(cart_product_qty) > parseInt(cart_product_quantity)) {
+                    alert('Kho không đủ số lượng bạn mong muốn, mong bạn đặt ít hơn ' + cart_product_quantity);
+                } else {
+                    $.ajax({
+                        url: '{{ url('/add-cart-ajax') }}',
+                        method: 'POST',
+                        data: {
+                            cart_product_id: cart_product_id,
+                            cart_product_name: cart_product_name,
+                            cart_product_image: cart_product_image,
+                            cart_product_price: cart_product_price,
+                            cart_product_quantity: cart_product_quantity,
+                            cart_product_qty: cart_product_qty,
+                            _token: _token
+                        },
+                        success: function() {
+                            swal({
+                                    title: "Đã thêm sản phẩm vào giỏ hàng",
+                                    text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
 
-                $.ajax({
-                    url: '{{ url('/add-cart-ajax') }}',
-                    method: 'POST',
-                    data: {
-                        cart_product_id: cart_product_id,
-                        cart_product_name: cart_product_name,
-                        cart_product_image: cart_product_image,
-                        cart_product_price: cart_product_price,
-                        cart_product_qty: cart_product_qty,
-                        _token: _token
-                    },
-                    success: function() {
-                        swal({
-                                title: "Đã thêm sản phẩm vào giỏ hàng",
-                                text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                                    showCancelButton: true,
+                                    cancelButtonText: "Xem tiếp",
+                                    confirmButtonClass: "btn-success",
+                                    confirmButtonText: "Đi đến giỏ hàng",
+                                    closeOnConfirm: false
 
-                                showCancelButton: true,
-                                cancelButtonText: "Xem tiếp",
-                                confirmButtonClass: "btn-success",
-                                confirmButtonText: "Đi đến giỏ hàng",
-                                closeOnConfirm: false
-
-                            },
-                            function() {
-                                window.location.href = "{{ url('/gio-hang') }}";
-                            });
-                    }
-                });
+                                },
+                                function() {
+                                    window.location.href = "{{ url('/gio-hang') }}";
+                                });
+                        }
+                    });
+                }
             });
         });
     </script>

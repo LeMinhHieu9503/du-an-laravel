@@ -25,6 +25,7 @@
                             <tr class="cart_menu">
                                 <td class="image">Hình ảnh </td>
                                 <td style="text-align: center" class="description">Tên sản phẩm</td>
+                                <td style="text-align: center" class="description">Số lượng tồn</td>
                                 <td class="price">Giá sản phẩm</td>
                                 <td class="quantity">Số lượng</td>
                                 <td class="total">Thành tiền</td>
@@ -51,6 +52,11 @@
                                             <h4><a href=""></a></h4>
                                             <p>{{ $cart['product_name'] }}</p>
                                         </td>
+                                        <td class="cart_description">
+                                            <h4><a href=""></a></h4>
+                                            <p>{{ $cart['product_quantity'] }}</p>
+                                        </td>
+                                        
                                         <td class="cart_price">
                                             <p>{{ number_format($cart['product_price'], 0, ',', '.') }}đ</p>
 

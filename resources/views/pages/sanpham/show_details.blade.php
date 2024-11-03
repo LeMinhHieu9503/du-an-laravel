@@ -65,7 +65,7 @@
                             data-id_product="{{ $value->product_id }}" name="add-to-cart">
                     </form>
 
-                    
+
                     <p><b>Tình trạng:</b> Còn hàng</p>
                     <p><b>Điều kiện:</b> Mới 100%</p>
                     <p><b>Số lượng kho còn:</b> {{ $value->product_quantity }}</p>
