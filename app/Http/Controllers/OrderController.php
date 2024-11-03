@@ -58,39 +58,48 @@ class OrderController extends Controller
         return view('admin.manage_order')->with(compact('order'));
     }
 
+
+    // --------------------------------------------------------------
     // Update hàng tồn kho
     public function update_order_qty(Request $request)
-{
-    // Lấy tất cả dữ liệu từ request
-    $data = $request->all();
+    {
+        // Lấy tất cả dữ liệu từ request
+        $data = $request->all();
 
-    // Cập nhật trạng thái đơn hàng
-    $order = Order::find($data['order_id']);
-    $order->order_status = $data['order_status'];
-    $order->save();
+        // Cập nhật trạng thái đơn hàng
+        $order = Order::find($data['order_id']);
+        $order->order_status = $data['order_status'];
+        $order->save();
 
-    // Nếu trạng thái đơn hàng là "Đã xử lý"
-    if ($order->order_status == 2) {
-        foreach ($data['order_product_id'] as $key => $product_id) {
-            // Tìm sản phẩm theo ID
-            $product = Product::find($product_id);
-            $product_quantity = $product->product_quantity;
-            $product_sold = $product->product_sold;
+        // Nếu trạng thái đơn hàng là "Đã xử lý"
+        if ($order->order_status == 2) {
+            foreach ($data['order_product_id'] as $key => $product_id) {
+                // Tìm sản phẩm theo ID
+                $product = Product::find($product_id);
+                $product_quantity = $product->product_quantity;
+                $product_sold = $product->product_sold;
 
-            foreach ($data['quantity'] as $key2 => $qty) {
-                // Kiểm tra nếu ID sản phẩm khớp với số lượng
-                if ($key == $key2) {
-                    // Tính số lượng còn lại
-                    $pro_remin = $product_quantity - $qty;
-                    $product->product_quantity = $pro_remin;
+                foreach ($data['quantity'] as $key2 => $qty) {
+                    // Kiểm tra nếu ID sản phẩm khớp với số lượng
+                    if ($key == $key2) {
+                        // Tính số lượng còn lại
+                        $pro_remin = $product_quantity - $qty;
+                        $product->product_quantity = $pro_remin;
 
-                    // Tính tổng số lượng đã bán
-                    $product->product_sold = $product_sold + $qty;
-                    $product->save();
+                        // Tính tổng số lượng đã bán
+                        $product->product_sold = $product_sold + $qty;
+                        $product->save();
+                    }
                 }
             }
         }
     }
-}
-
+    // Update số lượng đặt hàng admin
+    public function update_qty(Request $request)
+    {
+        $data = $request->all();
+        $order_details = OrderDetails::where('product_id', $data['order_product_id'])->where('order_code', $data['order_code'])->first();
+        $order_details->product_sales_quantity = $data['order_qty'];
+        $order_details->save();
+    }
 }

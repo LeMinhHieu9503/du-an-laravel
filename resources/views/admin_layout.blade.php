@@ -202,8 +202,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     <script src="{{ asset('backend/js/jquery.form-validator.min.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.dataTables.min.js') }}"></script>
+    {{-- Button update chi tiết đơn hàng --}}
     <script type="text/javascript">
-    // Update số lượng hàng hóa trong view_order admin
+        $('.update_quantity_order').click(function() {
+            // alert('đã click');
+            var order_product_id = $(this).data('product_id');
+            var order_qty = $('.order_qty_' + order_product_id).val();
+            var order_code = $('.order_code').val();
+            var _token = $('input[name="_token"]').val();
+
+            // alert(order_product_id);
+            // alert(order_qty);
+            // alert(order_code);
+            $.ajax({
+                url: '{{ url('/update-qty') }}',
+                method: 'POST',
+                data: {
+                    _token: _token,
+                    order_product_id: order_product_id,
+                    order_qty: order_qty,
+                    order_code: order_code
+                },
+                success: function(data) {
+                    alert('Cập nhật số lượng thành công');
+                    location.reload();
+                }
+            });
+
+        })
+    </script>
+    <script type="text/javascript">
+        // Update số lượng hàng hóa trong view_order admin
         $('.order_details').change(function() {
             var order_status = $(this).val();
             var order_id = $(this).children(":selected").attr("id");
@@ -235,7 +264,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 },
                 success: function(data) {
                     // $('#load_delivery').html(data);
-                    alert('Cập nhật số lượng thành công');
+                    alert('Thay đổi tình trạng đơn hàng thành công');
                     location.reload();
                 }
             });
