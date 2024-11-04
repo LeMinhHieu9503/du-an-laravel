@@ -12,6 +12,7 @@ use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -169,7 +170,7 @@ Route::post('/insert-slider', [SliderController::class, 'insert_slider']);
 Route::get('/unactive-slide/{slider_id}', [SliderController::class, 'unactive_slide']);
 Route::get('/active-slide/{slider_id}', [SliderController::class, 'active_slide']);
 
-Route::get('/delete-slide/{slider_id}',[SliderController::class, 'delete_slide']);
+Route::get('/delete-slide/{slider_id}', [SliderController::class, 'delete_slide']);
 
 //ORDER-Hàng tồn
 Route::post('/update-order-qty', [OrderController::class, 'update_order_qty']);
@@ -182,3 +183,12 @@ Route::get('/login-auth', [AuthController::class, 'login_auth']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
+
+//User
+Route::get('/add-users', [UserController::class, 'add_users']);
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/store-users', [UserController::class, 'store_users']);
+Route::post('/assign-roles', [UserController::class, 'assign_roles']);
+// Route::get('users', [UserController::class, 'index'])
+//     ->name('Users')
+//     ->middleware(['roles']); 
