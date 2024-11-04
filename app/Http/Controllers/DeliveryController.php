@@ -12,10 +12,19 @@ use App\Models\City;
 use App\Models\Province;
 use App\Models\Wards;
 use App\Models\Feeship;
+use Illuminate\Support\Facades\Auth;
 
 session_start();
 class DeliveryController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function delivery()
     {
         $city = City::orderBy('matp', 'ASC')->get();

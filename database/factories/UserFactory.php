@@ -1,44 +1,33 @@
 <?php
 
-namespace Database\Factories;
-
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+// /** @var \Illuminate\Database\Eloquent\Factory $factory */
+use App\Models\Admin;
+use App\Models\Roles;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
-class UserFactory extends Factory
-{
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+/*
+|--------------------------------------------------------------------------
+| Model Factories
+|--------------------------------------------------------------------------
+|
+| This directory should contain each of the model factory definitions for
+| your application. Factories provide a convenient way to generate new
+| model instances for testing / seeding your application's database.
+|
+*/
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-        ];
-    }
+$factory->define(Admin::class, function (Faker $faker) {
+    return [
+        'admin_name' => $faker->name,
+        'admin_email' => $faker->unique()->safeEmail,
+        'admin_phone' => '1234567890',
+        'admin_password' => 'e10adc3949ba59abbe56e057f20f883e', // password
+        'remember_token' => Str::random(10),
+    ];
+});
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
-    }
-}
+$factory->afterCreating(Admin::class,function($admin,$faker){
+    $roles = Roles::where('name','user')->get();
+    $admin->roles()->sync($roles->pluck('id_roles')->toArray());
+});

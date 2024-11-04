@@ -19,11 +19,20 @@ use App\Models\OrderDetails;
 use App\Models\Customer;
 use App\Models\Coupon;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 session_start();
 
 class OrderController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function view_order($order_code)
     {
         $order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();

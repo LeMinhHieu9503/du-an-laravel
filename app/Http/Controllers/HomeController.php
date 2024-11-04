@@ -10,9 +10,19 @@ use Illuminate\Support\Facades\Redirect;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Slider;
+use Illuminate\Support\Facades\Auth;
+
 session_start();
 class HomeController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function sendMail(Request $request)
     {
         $data = [

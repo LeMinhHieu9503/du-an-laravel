@@ -10,11 +10,20 @@ use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 
 session_start();
 
 class CartController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function save_cart(Request $request)
     {
         // $productId = $request->productid_hidden;

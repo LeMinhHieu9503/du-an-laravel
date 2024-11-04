@@ -12,9 +12,18 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 session_start();
 
 use App\Models\Coupon;
+use Illuminate\Support\Facades\Auth;
 
 class CouponController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function insert_coupon()
     {
         return view('admin.coupon.insert_coupon');
