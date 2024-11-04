@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\HomeController;
@@ -175,3 +176,6 @@ Route::post('/update-order-qty', [OrderController::class, 'update_order_qty']);
 Route::post('/update-qty', [OrderController::class, 'update_qty']);
 Route::get('/delete-order/{order_code}', [OrderController::class, 'order_code']);
 
+//Authentication Roles - Admin
+Route::get('/register-auth', [AuthController::class, 'register_auth']);
+Route::post('/register', [AuthController::class, 'register']);
