@@ -62,7 +62,10 @@
                
                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                 <td>{{ $user->admin_name }}</td>
-                <td>{{ $user->admin_email }} <input type="hidden" name="admin_email" value="{{ $user->admin_email }}"></td>
+                <td>{{ $user->admin_email }} 
+                  <input type="hidden" name="admin_email" value="{{ $user->admin_email }}">
+                  <input type="hidden" name="admin_id" value="{{ $user->admin_id }}">
+                </td>
                 <td>{{ $user->admin_phone }}</td>
                 <td>{{ $user->admin_password }}</td>
                 <td><input type="checkbox" name="author_role" {{$user->hasRole('author') ? 'checked' : ''}}></td>
@@ -70,10 +73,9 @@
                 <td><input type="checkbox" name="user_role"  {{$user->hasRole('user') ? 'checked' : ''}}></td>
 
               <td>
-                  
-                    
-                 <input type="submit" value="Assign roles" class="btn btn-sm btn-default">
-                
+                <input type="submit" value="Phân quyền" class="btn btn-sm btn-info" style="">
+                <a href="{{url('/delete-user-roles/'.$user->admin_id)}}" class="btn btn-sm btn-danger">Xóa user</a>
+                <a href="{{url('/impersonate/'.$user->admin_id)}}" style="color:white;font-size:15px" class="btn btn-sm btn-success">Chuyển user</a>
               </td> 
 
               </tr>

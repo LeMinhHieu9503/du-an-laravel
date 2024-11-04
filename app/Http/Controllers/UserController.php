@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Roles;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -41,6 +42,11 @@ class UserController extends Controller
 
     public function assign_roles(Request $request)
     {
+        // Không được phân quyền chính mình khi đang ở trong dashboard
+        if (Auth::id() == $request->admin_id) {
+            return redirect()->back()->with('message', 'Bạn không thể phân quyền chính mình');
+        }
+
         // $data = $request->all();
         $user = Admin::where('admin_email', $request->admin_email)->first();
         $user->roles()->detach();
@@ -53,8 +59,35 @@ class UserController extends Controller
         if ($request['admin_role']) {
             $user->roles()->attach(Roles::where('name', 'admin')->first());
         }
-        return redirect()->back()->with('message','Cấp quyền thành công');
+        return redirect()->back()->with('message', 'Cấp quyền thành công');
     }
 
-    
+    public function impersonate($admin_id)
+    {
+        $user = Admin::where('admin_id', $admin_id)->first();
+        if ($user) {
+            session()->put('impersonate', $user->admin_id);
+        }
+        return redirect('/dashboard')->with('message', 'Chuyển user thành công');
+    }
+
+    public function impersonate_destroy(){
+        session()->forget('impersonate');
+        return redirect('/users');
+    }
+    public function delete_user_roles($admin_id)
+    {
+        // Không được xóa chính mình khi đang ở trong dashboard
+        if (Auth::id() == $admin_id) {
+            return redirect()->back()->with('message', 'Bạn không thể xóa chính mình');
+        }
+
+        $admin = Admin::find($admin_id);
+        // Xóa user (Xóa cả quyền trong database-tbl_roles)
+        if ($admin) {
+            $admin->roles()->detach();
+            $admin->delete();
+        }
+        return redirect()->back()->with('message', 'Xóa user thành công');
+    }
 }

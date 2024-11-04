@@ -167,7 +167,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li><a href="{{ URL::to('add-slider') }}">Thêm slider</a></li>
                             </ul>
                         </li>
-                        @hasrole(['admin','author'])
+                        @impersonate
+                            <li>
+                                <span>
+                                    <a href="{{ URL::to('/impersonate-destroy') }}">Stop chuyển quyền</a>
+                                </span>
+                            </li>
+                        @endimpersonate
+
+                        @hasrole(['admin', 'author'])
                             <li class="sub-menu">
                                 <a href="javascript:;">
                                     <i class="fa fa-book"></i>
@@ -180,6 +188,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </ul>
                             </li>
                         @endhasrole
+
+
 
                     </ul>
                 </div>

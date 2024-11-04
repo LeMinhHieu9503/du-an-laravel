@@ -196,18 +196,19 @@ Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']]
     // Route::post('/login', [AuthController::class, 'login']);
     // Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 
+    //User
 
-    // Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
     Route::get('/add-users', [UserController::class, 'add_users']);
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/delete-user-roles/{admin_id}', [UserController::class, 'delete_user_roles']);
     Route::post('/store-users', [UserController::class, 'store_users']);
     Route::post('/assign-roles', [UserController::class, 'assign_roles']);
+
 });
-//User
-// Route::get('/add-users', [UserController::class, 'add_users']);
-// Route::get('/users', [UserController::class, 'index']);
-// Route::post('/store-users', [UserController::class, 'store_users']);
-// Route::post('/assign-roles', [UserController::class, 'assign_roles']);
+// Không để middleware vì có thể chuyển sang user
+Route::get('/impersonate/{admin_id}', [UserController::class, 'impersonate']);
+Route::get('/impersonate-destroy', [UserController::class, 'impersonate_destroy']);
+ 
 
 
 // Route::get('users', [UserController::class, 'index'])
