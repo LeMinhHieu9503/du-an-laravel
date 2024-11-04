@@ -58,12 +58,15 @@ class ProductController extends Controller
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_price'] = $request->product_price;
+        $data['product_slug'] = $request->product_slug;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
         $data['product_quantity'] = $request->product_quantity;
         $data['category_id'] = $request->category_id;
         $data['brand_id'] = $request->brand_id;
         $data['product_status'] = $request->product_status;
+        $data['product_sold'] = 0;
+
         $get_image = $request->file('product_image');
         if ($get_image) {
             $get_name_image = $get_image->getClientOriginalName();
@@ -145,6 +148,7 @@ class ProductController extends Controller
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
+        $data['product_slug'] = $request->product_slug;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;

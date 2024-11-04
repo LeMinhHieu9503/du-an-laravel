@@ -25,11 +25,14 @@
 
                                 <!-- Nhập tên danh mục -->
                                 <div class="form-group">
-                                    <label for="categoryProductName">Tên danh mục</label>
-                                    <input type="text" name="category_product_name" class="form-control"
-                                        id="categoryProductName" value="{{ $edit_value->category_name }}" required>
+                                    <label for="exampleInputEmail1">Tên danh mục</label>
+                                    <input type="text" value="{{$edit_value->category_name}}" onkeyup="ChangeToSlug();" name="category_product_name" class="form-control" id="slug" >
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Slug</label>
+                                    <input type="text" value="{{ $edit_value->slug_category_product }}"
+                                        name="slug_category_product" class="form-control" id="convert_slug">
+                                </div>
                                 <!-- Mô tả danh mục -->
                                 <div class="form-group">
                                     <label for="categoryProductDesc">Mô tả danh mục</label>

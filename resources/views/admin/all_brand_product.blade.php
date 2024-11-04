@@ -43,6 +43,7 @@
                                 </label>
                             </th>
                             <th>Tên thương hiệu</th>
+                            <th>Brand Slug</th>
                             <th>Mô tả</th>
                             <th>Hiển thị</th>
                             <th style="width:30px;"></th>
@@ -54,6 +55,8 @@
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $brand_pro->brand_name }}</span></td>
+                                <td><span class="text-ellipsis">{{ $brand_pro->brand_slug }}</span></td>
+                                
                                 <td><span class="text-ellipsis">{{ $brand_pro->brand_desc }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
@@ -79,7 +82,8 @@
                                         class="active styling-edit" ui-toggle-class="">
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
-                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')" href="{{ URL::to('/delete-brand-product/' . $brand_pro->brand_id) }}"
+                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')"
+                                        href="{{ URL::to('/delete-brand-product/' . $brand_pro->brand_id) }}"
                                         class="active styling-delete" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>

@@ -50,6 +50,7 @@ class CategoryProduct extends Controller
         // Lấy dữ liệu từ form gửi lên và lưu vào mảng $data
         $data = array();
         $data['category_name'] = $request->category_product_name;
+        $data['slug_category_product'] = $request->slug_category_product;
         $data['category_desc'] = $request->category_product_desc;
         $data['category_status'] = $request->category_product_status;
 
@@ -101,6 +102,7 @@ class CategoryProduct extends Controller
 
         $data = array();
         $data['category_name'] = $request->category_product_name;
+        $data['slug_category_product'] = $request->slug_category_product;
         $data['category_desc'] = $request->category_product_desc;
 
         DB::table('tbl_category_product')

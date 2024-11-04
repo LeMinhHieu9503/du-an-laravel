@@ -24,9 +24,9 @@
 
                                 <!-- Nhập tên sản phẩm -->
                                 <div class="form-group">
-                                    <label for="ProductName">Tên sản phẩm</label>
-                                    <input type="text" name="product_name" class="form-control" id="ProductName"
-                                        value="{{ $pro->product_name }}">
+                                    <label for="exampleInputEmail1">Tên sản phẩm</label>
+                                    <input type="text" name="product_name" class="form-control" onkeyup="ChangeToSlug();"
+                                        id="slug" value="{{ $pro->product_name }}">
                                 </div>
 
                                 <!-- Nhập Giá sản phẩm -->
@@ -42,6 +42,12 @@
                                     <input type="text" data-validation="number"
                                         data-validation-error-msg="Làm ơn điền số lượng" name="product_quantity"
                                         class="form-control" id="convert_slug" value="{{ $pro->product_quantity }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Slug</label>
+                                    <input type="text" name="product_slug" class="form-control" id="exampleInputEmail1"
+                                        value="{{ $pro->product_slug }}">
                                 </div>
 
                                 <!-- Nhập Hình ảnh sản phẩm -->

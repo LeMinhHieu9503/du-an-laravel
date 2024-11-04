@@ -48,6 +48,8 @@ class Admin extends Authenticatable
     //     return false;
     // }
 
+    
+
     public function hasAnyRoles($roles){
         return null != $this->roles()->whereIn('name',$roles)->first();
     }

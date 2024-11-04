@@ -25,11 +25,15 @@
 
                                 <!-- Nhập tên thương hiệu -->
                                 <div class="form-group">
-                                    <label for="brandProductName">Tên thương hiệu</label>
-                                    <input type="text" name="brand_product_name" class="form-control"
-                                        id="brandProductName" value="{{ $edit_value->brand_name }}" required>
+                                    <label for="exampleInputEmail1">Tên thương hiệu</label>
+                                    <input type="text" value="{{$edit_value->brand_name}}"  onkeyup="ChangeToSlug();" name="brand_product_name" class="form-control" id="slug" >
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Slug</label>
+                                    <input type="text" value="{{$edit_value->brand_slug}}" name="brand_product_slug" class="form-control" id="convert_slug" >
+                                </div>
+                                
                                 <!-- Mô tả thương hiệu -->
                                 <div class="form-group">
                                     <label for="brandProductDesc">Mô tả thương hiệu</label>
@@ -37,6 +41,15 @@
                                         placeholder="Mô tả thương hiệu" rows="10" required>{{ $edit_value->brand_desc }}</textarea>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Hiển thị</label>
+                                      <select name="brand_product_status" class="form-control input-sm m-bot15">
+                                            <option value="0">Ẩn</option>
+                                            <option value="1">Hiển thị</option>
+                                            
+                                    </select>
+                                </div>
+                                
                                 <!-- Nút Cập nhật -->
                                 <button type="submit" name="update_brand_product" class="btn btn-info">Cập nhật danh
                                     mục</button>

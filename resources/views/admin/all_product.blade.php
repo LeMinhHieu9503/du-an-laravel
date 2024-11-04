@@ -44,6 +44,7 @@
                             </th>
                             <th>Tên sản phẩm</th>
                             <th>Số lượng</th>
+                            <th>Slug</th>
                             <th>Giá sản phẩm</th>
                             <th>Hình sản phẩm</th>
                             <th>Danh mục sản phẩm</th>
@@ -59,6 +60,7 @@
                                 </td>
                                 <td><span class="text-ellipsis">{{ $pro->product_name }}</span></td>
                                 <td><span class="text-ellipsis">{{ $pro->product_quantity }}</span></td>
+                                <td><span class="text-ellipsis">{{ $pro->product_slug }}</span></td>
 
                                 <td><span class="text-ellipsis">{{ $pro->product_price }}</span></td>
                                 <td>

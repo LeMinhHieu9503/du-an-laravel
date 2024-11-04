@@ -50,6 +50,11 @@
                                     class="form-control" id="exampleInputEmail1" placeholder="Điền số lượng">
                             </div>
 
+                            <div class="form-group">
+                                    <label for="exampleInputEmail1">Slug</label>
+                                    <input type="text" name="product_slug" class="form-control " id="convert_slug" placeholder="Tên danh mục">
+                                </div>
+
                             <!-- Nhập Giá sản phẩm -->
                             <div class="form-group">
                                 <label for="ProductPrice">Giá sản phẩm</label>

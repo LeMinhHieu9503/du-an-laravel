@@ -43,7 +43,8 @@
                                 </label>
                             </th>
                             <th>Tên danh mục</th>
-                            <th>Mô tả</th>
+                            <th>Thuộc danh mục</th>
+                            <th>Slug</th>
                             <th>Hiển thị</th>
                             <th style="width:30px;"></th>
                         </tr>
@@ -54,7 +55,8 @@
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $cate_pro->category_name }}</span></td>
-                                <td><span class="text-ellipsis">{{ $cate_pro->category_desc }}</span></td>
+                                <td><span class="text-ellipsis">{{ $cate_pro->category_name }}</span></td>
+                                <td><span class="text-ellipsis">{{ $cate_pro->slug_category_product }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
                                         <?php

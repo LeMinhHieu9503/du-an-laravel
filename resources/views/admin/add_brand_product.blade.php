@@ -22,9 +22,13 @@
 
                             <!-- Nhập tên thương hiệu -->
                             <div class="form-group">
-                                <label for="BrandProductName">Tên thương hiệu</label>
-                                <input type="text" name="brand_product_name" class="form-control"
-                                    id="BrandProductName" placeholder="Tên thương hiệu" required>
+                                <label for="exampleInputEmail1">Tên thương hiệu</label>
+                                <input type="text" name="brand_product_name" class="form-control" onkeyup="ChangeToSlug();" id="slug" placeholder="Tên danh mục">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Slug</label>
+                                <input type="text" name="brand_slug" class="form-control" id="convert_slug" placeholder="Slug">
                             </div>
 
                             <!-- Mô tả thương hiệu -->
