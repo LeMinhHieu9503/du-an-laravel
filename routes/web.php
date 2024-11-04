@@ -178,4 +178,7 @@ Route::get('/delete-order/{order_code}', [OrderController::class, 'order_code'])
 
 //Authentication Roles - Admin
 Route::get('/register-auth', [AuthController::class, 'register_auth']);
+Route::get('/login-auth', [AuthController::class, 'login_auth']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout-auth', [AuthController::class, 'logout_auth']);

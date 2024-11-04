@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     use HasFactory;
     public $timestamps = false; //set time to false
@@ -22,4 +22,8 @@ class Admin extends Model
  	public function roles(){
  		return $this->belongsToMany('App\Models\Roles');
  	}
+
+    public function getAuthPassword(){
+        return $this->admin_password;
+    }
 }
