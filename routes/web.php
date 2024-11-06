@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BrandProduct;
+use App\Http\Controllers\CategoryPost;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
@@ -85,7 +86,8 @@ Route::post('/tim-kiem', [HomeController::class, 'search']);
 Route::get('/send-mail', [HomeController::class, 'sendMail']);
 
 
-
+//Post-Category
+Route::get('/danh-muc-bai-viet/{cate_post_id}', [CategoryPost::class, 'danh_muc_bai_viet']);
 
 
 
@@ -203,6 +205,12 @@ Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']]
     Route::get('/delete-user-roles/{admin_id}', [UserController::class, 'delete_user_roles']);
     Route::post('/store-users', [UserController::class, 'store_users']);
     Route::post('/assign-roles', [UserController::class, 'assign_roles']);
+
+
+    //Category-Post
+    Route::get('/add-category-post', [CategoryPost::class, 'add_category_post']);
+    Route::get('/all-category-post', [CategoryPost::class, 'all_category_post']);
+    Route::post('/save-category-post', [CategoryPost::class, 'save_category_post']);
 
 });
 // Không để middleware vì có thể chuyển sang user

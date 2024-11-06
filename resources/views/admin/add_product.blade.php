@@ -24,7 +24,7 @@
                             <!-- Nhập tên sản phẩm -->
                             <div class="form-group">
                                 <label for="ProductName">Tên sản phẩm</label>
-                                <input type="text" name="product_name" class="form-control" id="ProductName"
+                                <input type="text" name="product_name" class="form-control" id="slug" placeholder="Tên danh mục" onkeyup="ChangeToSlug();"
                                     placeholder="Tên sản phẩm" required>
                             </div>
 

@@ -3,7 +3,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Liệt kê danh mục sản phẩm
+                Liệt kê danh mục bài viết
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
@@ -42,44 +42,35 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th>Tên danh mục</th>
+                            <th>Tên danh mục bài viết</th>
                             <th>Slug</th>
+                            <th>Mô tả</th>
                             <th>Hiển thị</th>
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($all_category_product as $key => $cate_pro)
+                        @foreach ($category_post as $key => $cate_post)
                             <tr>
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
-                                <td><span class="text-ellipsis">{{ $cate_pro->category_name }}</span></td>
-                                <td><span class="text-ellipsis">{{ $cate_pro->slug_category_product }}</span></td>
+                                <td><span class="text-ellipsis">{{ $cate_post->cate_post_name }}</span></td>
+                                <td><span class="text-ellipsis">{{ $cate_post->cate_post_slug }}</span></td>
+
+                                <td><span class="text-ellipsis">{{ $cate_post->cate_post_desc }}</span></td>
+                                @if ($cate_post->cate_post_status == 0)
+                                    Hiển thị
+                                @else
+                                    Ẩn
+                                @endif
+
                                 <td>
-                                    <span class="text-ellipsis">
-                                        <?php
-                                            if($cate_pro->category_status ==1){
-                                        ?>
-                                        <a href="{{ URL::to('/unactive-category-product/' . $cate_pro->category_id) }}">
-                                            <span style="color:red;font-size:30px" class="fa fa-thumbs-down"></span>
-                                        </a>
-                                        <?php
-                                        }else{
-                                        ?>
-                                        <a href="{{ URL::to('/active-category-product/' . $cate_pro->category_id) }}">
-                                            <span style="color:green;font-size:30px" class="fa fa-thumbs-up"></span>
-                                        </a>
-                                        <?php
-                                        }
-                                        ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ URL::to('/edit-category-product/' . $cate_pro->category_id) }}"
+                                    <a href="{{ URL::to('/edit-category-post/' . $cate_post->cate_post_id) }}"
                                         class="active styling-edit" ui-toggle-class="">
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
-                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')" href="{{ URL::to('/delete-category-product/' . $cate_pro->category_id) }}"
+                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')"
+                                        href="{{ URL::to('/delete-category-post/' . $cate_post->cate_post_id) }}"
                                         class="active styling-delete" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>

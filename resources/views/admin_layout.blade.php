@@ -10,6 +10,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <!-- //bootstrap-css -->
     <!-- Custom CSS -->
     <link href="{{ asset('backend/css/style.css') }}" rel='stylesheet' type='text/css' />
@@ -111,6 +113,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <ul class="sub">
                                 <li><a href="{{ URL::to('/add-brand-product') }}">Thêm thương hiệu sản phẩm</a></li>
                                 <li><a href="{{ URL::to('all-brand-product') }}">Liệt kê thương hiệu sản phẩm</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Bài viết</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/add-category-post') }}">Thêm danh mục bài viết</a></li>
+                                <li><a href="{{ URL::to('all-category-post') }}">Liệt kê danh mục bài viết</a></li>
                             </ul>
                         </li>
 

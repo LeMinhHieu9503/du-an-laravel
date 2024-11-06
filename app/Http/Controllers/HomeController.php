@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\SendMail;
+use App\Models\CatePost;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,8 @@ class HomeController extends Controller
     {
         //slider
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        // Post-category
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
 
         
         $url_canonical = $request->url();
@@ -62,7 +65,8 @@ class HomeController extends Controller
             ->with('brand', $brand_product)
             ->with('all_product', $all_product)
             ->with('url_canonical', $url_canonical)
-            ->with('slider',$slider);
+            ->with('slider',$slider)
+            ->with('category_post',$category_post);
 
         // return view('pages.home')->with(compact('cate_product','brand_product','all_product')); //Cách 2
     }

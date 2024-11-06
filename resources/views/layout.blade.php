@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+     
     <title>Home | E-Shopper</title>
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -15,6 +16,7 @@
     <link href="{{ asset('frontend/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/sweetalert.css') }}" rel="stylesheet">
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -164,13 +166,16 @@
                                 <li><a href="{{ URL::to('/trang-chu') }}" class="active">Trang chủ</a></li>
                                 <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
+                                        @foreach ($category as $key =>$danhmuc)
+                                            <li><a href="{{URL::to('/danh-muc-san-pham/'.$danhmuc->category_id)}}">{{$danhmuc->category_name}}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="#">Tin tức<i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown"><a href="#">Bài viết<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-                                        <li><a href="blog-single.html">Blog Single</a></li>
+                                        @foreach ($category_post as $key =>$danhmucbaiviet)
+                                        <li><a href="{{URL::to('/danh-muc-bai-viet/'.$danhmucbaiviet->cate_post_id)}}">{{$danhmucbaiviet->cate_post_name}}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li><a href="404.html">Giỏ hàng</a></li>
@@ -216,8 +221,8 @@
 
                                     <div class="col-sm-12">
                                         <img alt="{{ $slide->slider_desc }}"
-                                            src="{{ asset('uploads/slider/' . $slide->slider_image) }}"
-                                            height="100%" width="100%" class="img img-responsive img-slider">
+                                            src="{{ asset('uploads/slider/' . $slide->slider_image) }}" height="100%"
+                                            width="100%" class="img img-responsive img-slider">
 
                                     </div>
                                 </div>
@@ -246,34 +251,13 @@
                     <div class="left-sidebar">
                         <h2>Danh mục sản phẩm</h2>
                         <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-
                             @foreach ($category as $key => $cate)
                                 <div class="panel panel-default">
-
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            {{-- <a data-toggle="collapse" data-parent="#accordian" href="{{ URL::to('/danh-muc-san-pham/' . $cate->category_id) }}">
-                                                {{ $cate->category_name }}
-                                            </a> --}}
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#{{$cate->category_id}}">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                {{ $cate->category_name }}
-                                            </a>
+                                        <h4 class="panel-title"><a
+                                                href="{{ URL::to('/danh-muc-san-pham/' . $cate->category_id) }}">{{ $cate->category_name }}</a>
                                         </h4>
                                     </div>
-
-                                    <div id="{{$cate->category_id}}" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Nike </a></li>
-                                                <li><a href="#">Under Armour </a></li>
-                                                <li><a href="#">Adidas </a></li>
-                                                <li><a href="#">Puma</a></li>
-                                                <li><a href="#">ASICS </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
                                 </div>
                             @endforeach
                         </div><!--/category-products-->
@@ -586,8 +570,7 @@
                 var _token = $('input[name="_token"]').val();
                 //Kiểm tra số lượng user đặt với số lượng hàng trong kho có
                 if (parseInt(cart_product_qty) > parseInt(cart_product_quantity)) {
-                    alert('Kho không đủ số lượng bạn mong muốn, mong bạn đặt ít hơn ' +
-                        cart_product_quantity);
+                    alert('Kho không đủ số lượng bạn mong muốn, mong bạn đặt ít hơn ' + cart_product_quantity);
                 } else {
                     $.ajax({
                         url: '{{ url('/add-cart-ajax') }}',
