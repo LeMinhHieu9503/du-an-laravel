@@ -58,11 +58,15 @@
                                 <td><span class="text-ellipsis">{{ $cate_post->cate_post_slug }}</span></td>
 
                                 <td><span class="text-ellipsis">{{ $cate_post->cate_post_desc }}</span></td>
-                                @if ($cate_post->cate_post_status == 0)
-                                    Hiển thị
-                                @else
-                                    Ẩn
-                                @endif
+                                <td>
+                                    <span class="text-ellipsis">
+                                        @if ($cate_post->cate_post_status == 0)
+                                            Hiển thị
+                                        @else
+                                            Ẩn
+                                        @endif
+                                    </span>
+                                </td>
 
                                 <td>
                                     <a href="{{ URL::to('/edit-category-post/' . $cate_post->cate_post_id) }}"
@@ -75,6 +79,7 @@
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>

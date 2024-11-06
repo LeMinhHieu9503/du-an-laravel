@@ -210,7 +210,10 @@ Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']]
     //Category-Post
     Route::get('/add-category-post', [CategoryPost::class, 'add_category_post']);
     Route::get('/all-category-post', [CategoryPost::class, 'all_category_post']);
+    Route::get('/delete-category-post/{cate_id}', [CategoryPost::class, 'delete_category_post']);
+    Route::get('/edit-category-post/{category_post_id}', [CategoryPost::class, 'edit_category_post']);
     Route::post('/save-category-post', [CategoryPost::class, 'save_category_post']);
+    Route::post('/update-category-post/{cate_id}', [CategoryPost::class, 'update_category_post']);
 
 });
 // Không để middleware vì có thể chuyển sang user

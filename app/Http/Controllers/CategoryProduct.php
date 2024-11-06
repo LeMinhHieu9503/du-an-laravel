@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\CatePost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
@@ -129,7 +131,7 @@ class CategoryProduct extends Controller
     //HOME
     public function show_category_home(Request $request, $category_id)
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '0')->take(4)->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -142,23 +144,26 @@ class CategoryProduct extends Controller
             ->join('tbl_category_product', 'tbl_product.category_id', '=', 'tbl_category_product.category_id')
             ->where('tbl_product.category_id', $category_id)
             ->get();
-
+        $category= Category::all();
+        $category_post = CatePost::all();
         $category_name = DB::table('tbl_category_product')
-            ->where('tbl_category_product.category_id',$category_id)
+            ->where('tbl_category_product.category_id', $category_id)
             ->limit(1)
             ->get();
-            foreach($cate_product as $key => $val){
-                //seo 
-                $url_canonical = $request->url();
-                //--seo
-                }
+        foreach ($cate_product as $key => $val) {
+            //seo 
+            $url_canonical = $request->url();
+            //--seo
+        }
 
         return view('pages.category.show_category')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('category_by_id', $category_by_id)
-            ->with('category_name',$category_name)
-            ->with('url_canonical',$url_canonical)
-            ->with('slider',$slider);
+            ->with('category_name', $category_name)
+            ->with('url_canonical', $url_canonical)
+            ->with('slider', $slider)
+            ->with('category_post', $category_post)
+            ->with('category', $category);
     }
 }

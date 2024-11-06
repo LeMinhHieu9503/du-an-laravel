@@ -60,48 +60,60 @@ class CategoryPost extends Controller
         // Điều hướng đến trang danh sách danh mục sản phẩm
         return redirect()->back();
     }
-    // public function edit_category_product($category_product_id)
-    // {
-    //     $this->AuthLogin();
+    public function edit_category_post($category_post_id)
+    {
+        $this->AuthLogin();
 
-    //     $edit_category_product = DB::table('tbl_category_product')
-    //         ->where('category_id', $category_product_id)
-    //         ->get();
-    //     $manager_category_product = view('admin.edit_category_product')
-    //         ->with('edit_category_product', $edit_category_product);
-    //     return view('admin_layout')->with('admin.edit_category_product', $manager_category_product);
-    // }
+        $category_post = CatePost::find($category_post_id);
 
-    // public function update_category_product(Request $request, $category_product_id)
-    // {
-    //     $this->AuthLogin();
+        return view('admin.category_post.edit_category_post')->with(compact('category_post'));
 
-    //     $data = array();
-    //     $data['category_name'] = $request->category_product_name;
-    //     $data['slug_category_product'] = $request->slug_category_product;
-    //     $data['category_desc'] = $request->category_product_desc;
+    }
 
-    //     DB::table('tbl_category_product')
-    //         ->where('category_id', $category_product_id)
-    //         ->update($data);
-    //     Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
-    //     return Redirect::to('all-category-product');
-    // }
+    public function update_category_post(Request $request, $cate_id)
+{
+    $this->AuthLogin();
 
-    // public function delete_category_product($category_product_id)
-    // {
-    //     $this->AuthLogin();
+    // Tìm bản ghi cần cập nhật theo ID
+    $category_post = CatePost::find($cate_id);
+    
+    // Kiểm tra nếu bản ghi tồn tại
+    if ($category_post) {
+        // Lấy tất cả dữ liệu từ request
+        $data = $request->all();
 
-    //     DB::table('tbl_category_product')
-    //         ->where('category_id', $category_product_id)
-    //         ->delete();
-    //     Session::put('message', 'Xóa danh mục sản phẩm thành công');
-    //     return Redirect::to('all-category-product');
-    // }
+        // Cập nhật các trường thông tin từ request
+        $category_post->cate_post_name = $data['cate_post_name'];
+        $category_post->cate_post_slug = $data['cate_post_slug'];
+        $category_post->cate_post_desc = $data['cate_post_desc'];
+        $category_post->cate_post_status = $data['cate_post_status'];
+
+        // Lưu thay đổi vào CSDL
+        $category_post->save();
+
+        Session::put('message', 'Cập nhật danh mục bài viết thành công');
+    } else {
+        Session::put('message', 'Danh mục bài viết không tồn tại');
+    }
+    
+    return Redirect::to('all-category-post');
+}
+
+
+    public function delete_category_post($cate_id)
+    {
+        $this->AuthLogin();
+        $category_post = CatePost::find($cate_id);
+
+        $category_post->delete();
+        
+        Session::put('message', 'Xóa danh mục bài viết thành công');
+        return Redirect::to('all-category-post');
+    }
 
 
     public function danh_muc_bai_viet($cate_post_id){
-        
+
     }
 
 }
