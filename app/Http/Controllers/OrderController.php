@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatePost;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,11 +26,12 @@ session_start();
 
 class OrderController extends Controller
 {
-    public function AuthLogin(){
+    public function AuthLogin()
+    {
         $admin_id = Auth::id();
-        if($admin_id){
+        if ($admin_id) {
             return Redirect::to('dashboard');
-        }else{
+        } else {
             return Redirect::to('admin')->send();
         }
     }
@@ -37,6 +39,8 @@ class OrderController extends Controller
     {
         $order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();
         $order = Order::where('order_code', $order_code)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
 
         foreach ($order as $key => $ord) {
             $customer_id = $ord->customer_id;
@@ -60,7 +64,7 @@ class OrderController extends Controller
             $coupon_condition  = 2;
             $coupon_number = 0;
         }
-        return view('admin.view_order')->with(compact('order_details', 'customer', 'shipping', 'order_details', 'coupon_condition', 'coupon_number', 'order', 'order_status'));
+        return view('admin.view_order')->with(compact('order_details', 'customer', 'shipping', 'order_details', 'coupon_condition', 'coupon_number', 'order', 'order_status', 'category_post'));
     }
     public function manage_order()
     {
@@ -71,48 +75,48 @@ class OrderController extends Controller
 
     // --------------------------------------------------------------
     // Update hàng tồn kho
-    
+
     public function update_order_qty(Request $request)
-{
-    // Lấy tất cả dữ liệu từ request
-    $data = $request->all();
+    {
+        // Lấy tất cả dữ liệu từ request
+        $data = $request->all();
 
-    // Cập nhật trạng thái đơn hàng
-    $order = Order::find($data['order_id']);
-    $order->order_status = $data['order_status'];
-    $order->save();
+        // Cập nhật trạng thái đơn hàng
+        $order = Order::find($data['order_id']);
+        $order->order_status = $data['order_status'];
+        $order->save();
 
-    // Duyệt qua từng sản phẩm trong đơn hàng
-    foreach ($data['order_product_id'] as $key => $product_id) {
-        // Tìm sản phẩm theo ID
-        $product = Product::find($product_id);
-        $product_quantity = $product->product_quantity;
-        $product_sold = $product->product_sold;
+        // Duyệt qua từng sản phẩm trong đơn hàng
+        foreach ($data['order_product_id'] as $key => $product_id) {
+            // Tìm sản phẩm theo ID
+            $product = Product::find($product_id);
+            $product_quantity = $product->product_quantity;
+            $product_sold = $product->product_sold;
 
-        foreach ($data['quantity'] as $key2 => $qty) {
-            // Kiểm tra nếu ID sản phẩm khớp với số lượng
-            if ($key == $key2) {
-                if ($order->order_status == 2) {
-                    // Tính số lượng còn lại và cập nhật nếu đơn hàng là "Đã xử lý"
-                    $pro_remin = $product_quantity - $qty;
-                    $product->product_quantity = $pro_remin;
+            foreach ($data['quantity'] as $key2 => $qty) {
+                // Kiểm tra nếu ID sản phẩm khớp với số lượng
+                if ($key == $key2) {
+                    if ($order->order_status == 2) {
+                        // Tính số lượng còn lại và cập nhật nếu đơn hàng là "Đã xử lý"
+                        $pro_remin = $product_quantity - $qty;
+                        $product->product_quantity = $pro_remin;
 
-                    // Cập nhật số lượng đã bán
-                    $product->product_sold = $product_sold + $qty;
-                    $product->save();
-                } elseif ($order->order_status != 2 && $order->order_status != 3) {
-                    // Khôi phục số lượng nếu đơn hàng không ở trạng thái "Đã xử lý" hoặc "Đã huỷ"
-                    $pro_remin = $product_quantity + $qty;
-                    $product->product_quantity = $pro_remin;
+                        // Cập nhật số lượng đã bán
+                        $product->product_sold = $product_sold + $qty;
+                        $product->save();
+                    } elseif ($order->order_status != 2 && $order->order_status != 3) {
+                        // Khôi phục số lượng nếu đơn hàng không ở trạng thái "Đã xử lý" hoặc "Đã huỷ"
+                        $pro_remin = $product_quantity + $qty;
+                        $product->product_quantity = $pro_remin;
 
-                    // Giảm số lượng đã bán
-                    $product->product_sold = $product_sold - $qty;
-                    $product->save();
+                        // Giảm số lượng đã bán
+                        $product->product_sold = $product_sold - $qty;
+                        $product->save();
+                    }
                 }
             }
         }
     }
-}
 
     // Update số lượng đặt hàng admin
     public function update_qty(Request $request)
@@ -124,11 +128,11 @@ class OrderController extends Controller
     }
 
     // Xóa đơn hàng
-    public function order_code(Request $request ,$order_code){
-		$order = Order::where('order_code',$order_code)->first();
-		$order->delete();
-		 Session::put('message','Xóa đơn hàng thành công');
+    public function order_code(Request $request, $order_code)
+    {
+        $order = Order::where('order_code', $order_code)->first();
+        $order->delete();
+        Session::put('message', 'Xóa đơn hàng thành công');
         return redirect()->back();
-
-	}
+    }
 }

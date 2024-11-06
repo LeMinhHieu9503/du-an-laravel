@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
 use App\Models\Brand;
+use App\Models\CatePost;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -151,6 +152,7 @@ class BrandProduct extends Controller
     public function show_brand_home(Request $request, $brand_id)
     {
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -174,6 +176,7 @@ class BrandProduct extends Controller
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('brand_by_id', $brand_by_id)
+            ->with('category_post',$category_post)
             ->with('brand_name', $brand_name)
             ->with('slider',$slider);
     }

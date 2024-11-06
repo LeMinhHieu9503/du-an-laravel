@@ -3,7 +3,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Liệt kê sản phẩm
+                Liệt kê bài viết
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
@@ -42,62 +42,49 @@
                                     <input type="checkbox"><i></i>
                                 </label>
                             </th>
-                            <th>Tên sản phẩm</th>
-                            <th>Số lượng</th>
+                            <th>Tên bài viết</th>
                             <th>Slug</th>
-                            <th>Giá sản phẩm</th>
-                            <th>Hình sản phẩm</th>
-                            <th>Danh mục sản phẩm</th>
-                            <th>Thương hiệu sản phẩm</th>
+                            <th>Hình bài viết</th>
+                            <th>Mô tả ngắn bài viết</th>
+                            <th>Danh mục bài viết</th>
                             <th>Hiển thị</th>
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($all_product as $key => $pro)
+                        @foreach ($all_post as $key => $post)
                             <tr>
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
-                                <td><span class="text-ellipsis">{{ $pro->product_name }}</span></td>
-                                <td><span class="text-ellipsis">{{ $pro->product_quantity }}</span></td>
-                                <td><span class="text-ellipsis">{{ $pro->product_slug }}</span></td>
-
-                                <td><span class="text-ellipsis">{{ $pro->product_price }}</span></td>
+                                <td><span class="text-ellipsis">{{ $post->post_title }}</span></td>
+                                <td><span class="text-ellipsis">{{ $post->post_slug }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
-                                        <img src="uploads/product/{{ $pro->product_image }}" height="100" width="100"
+                                        <img src="{{asset('uploads/post/'.$post->post_image )}}" height="100" width="100"
                                             alt="">
                                     </span>
                                 </td>
-                                <td><span class="text-ellipsis">{{ $pro->z }}</span></td>
-                                <td><span class="text-ellipsis">{{ $pro->brand_name }}</span></td>
+
+                                <td><span class="text-ellipsis">{{ $post->post_desc }}</span></td>
+
+                                <td><span class="text-ellipsis">{{ $post->cate_post_id }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
-                                        <?php
-                                            if($pro->product_status ==1){
-                                        ?>
-                                        <a href="{{ URL::to('/unactive-product/' . $pro->product_id) }}">
-                                            <span style="color:red;font-size:30px" class="fa fa-thumbs-down"></span>
-                                        </a>
-                                        <?php
-                                        }else{
-                                        ?>
-                                        <a href="{{ URL::to('/active-product/' . $pro->product_id) }}">
-                                            <span style="color:green;font-size:30px" class="fa fa-thumbs-up"></span>
-                                        </a>
-                                        <?php
-                                        }
-                                        ?>
+                                        @if ($post->post_status == 0)
+                                            Hiển thị
+                                        @else
+                                            Ẩn
+                                        @endif
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="{{ URL::to('/edit-product/' . $pro->product_id) }}" class="active styling-edit"
+                                    <a href="{{ URL::to('/edit-post/' . $post->post_id) }}" class="active styling-edit"
                                         ui-toggle-class="">
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
                                     <a onclick="return confirm('Bro chắc chắn xóa chứ?')"
-                                        href="{{ URL::to('/delete-product/' . $pro->product_id) }}"
-                                        class="active styling-delete" ui-toggle-class="">
+                                        href="{{ URL::to('/delete-post/' . $post->post_id) }}" class="active styling-delete"
+                                        ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>
                                 </td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatePost;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -195,6 +196,7 @@ class ProductController extends Controller
     public function details_product(Request $request, $product_id)
     {
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+    $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -224,6 +226,7 @@ class ProductController extends Controller
             ->with('brand', $brand_product)
             ->with('product_details', $details_product)
             ->with('relate', $related_product)
+            ->with('category_post', $category_post)
             ->with('slider',$slider);
     }
 }

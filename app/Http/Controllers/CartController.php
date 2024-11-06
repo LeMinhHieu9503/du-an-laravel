@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatePost;
 use App\Models\Coupon;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -116,6 +117,8 @@ class CartController extends Controller
     public function gio_hang(Request $request)
     {
         $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '0')->take(4)->get();
+    $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+        
 
         $url_canonical = $request->url();
 
@@ -130,6 +133,7 @@ class CartController extends Controller
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('url_canonical', $url_canonical)
+            ->with('category_post', $category_post)
             ->with('slider', $slider);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatePost;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,7 @@ class CheckoutController extends Controller
     public function login_checkout()
     {
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -46,6 +48,7 @@ class CheckoutController extends Controller
         return view('pages.checkout.login_checkout')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
+            ->with('category_post',$category_post)
             ->with('slider',$slider);
     }
 
@@ -67,6 +70,7 @@ class CheckoutController extends Controller
     public function checkout()
     {
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -81,6 +85,7 @@ class CheckoutController extends Controller
         return view('pages.checkout.show_checkout')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
+            ->with('category_post',$category_post)
             ->with('city', $city)
             ->with('slider',$slider);
     }

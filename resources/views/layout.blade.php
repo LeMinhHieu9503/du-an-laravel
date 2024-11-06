@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-     
+
     <title>Home | E-Shopper</title>
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -166,15 +166,19 @@
                                 <li><a href="{{ URL::to('/trang-chu') }}" class="active">Trang chủ</a></li>
                                 <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        @foreach ($category as $key =>$danhmuc)
-                                            <li><a href="{{URL::to('/danh-muc-san-pham/'.$danhmuc->category_id)}}">{{$danhmuc->category_name}}</a></li>
+                                        @foreach ($category as $key => $danhmuc)
+                                            <li><a
+                                                    href="{{ URL::to('/danh-muc-san-pham/' . $danhmuc->category_id) }}">{{ $danhmuc->category_name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="#">Bài viết<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        @foreach ($category_post as $key =>$danhmucbaiviet)
-                                        <li><a href="{{URL::to('/danh-muc-bai-viet/'.$danhmucbaiviet->cate_post_id)}}">{{$danhmucbaiviet->cate_post_name}}</a></li>
+                                        @foreach ($category_post as $key => $danhmucbaiviet)
+                                            <li><a
+                                                    href="{{ URL::to('/danh-muc-bai-viet/' . $danhmucbaiviet->cate_post_id) }}">{{ $danhmucbaiviet->cate_post_name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </li>
@@ -221,8 +225,8 @@
 
                                     <div class="col-sm-12">
                                         <img alt="{{ $slide->slider_desc }}"
-                                            src="{{ asset('uploads/slider/' . $slide->slider_image) }}" height="100%"
-                                            width="100%" class="img img-responsive img-slider">
+                                            src="{{ asset('uploads/slider/' . $slide->slider_image) }}"
+                                            height="100%" width="100%" class="img img-responsive img-slider">
 
                                     </div>
                                 </div>
@@ -570,7 +574,8 @@
                 var _token = $('input[name="_token"]').val();
                 //Kiểm tra số lượng user đặt với số lượng hàng trong kho có
                 if (parseInt(cart_product_qty) > parseInt(cart_product_quantity)) {
-                    alert('Kho không đủ số lượng bạn mong muốn, mong bạn đặt ít hơn ' + cart_product_quantity);
+                    alert('Kho không đủ số lượng bạn mong muốn, mong bạn đặt ít hơn ' +
+                        cart_product_quantity);
                 } else {
                     $.ajax({
                         url: '{{ url('/add-cart-ajax') }}',

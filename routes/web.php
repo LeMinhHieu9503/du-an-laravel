@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
@@ -87,7 +88,11 @@ Route::get('/send-mail', [HomeController::class, 'sendMail']);
 
 
 //Post-Category
-Route::get('/danh-muc-bai-viet/{cate_post_id}', [CategoryPost::class, 'danh_muc_bai_viet']);
+Route::get('/danh-muc-bai-viet/{post_slug}', [PostController::class, 'danh_muc_bai_viet']);
+
+// Bài viết
+// Route::get('/danh-muc-bai-viet/{cate_post_id}', [CategoryPost::class, 'danh_muc_bai_viet']);
+
 
 
 
@@ -113,7 +118,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 
 //Phân quyền chỉ có Admin or Author mới quản lí các chức năng
-Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
+// Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
 
     //Category-Product
     Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product']);
@@ -198,6 +203,9 @@ Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']]
     // Route::post('/login', [AuthController::class, 'login']);
     // Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 
+    //Phân quyền chỉ có Admin or Author mới quản lí các chức năng
+
+    Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
     //User
 
     Route::get('/add-users', [UserController::class, 'add_users']);
@@ -206,6 +214,7 @@ Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']]
     Route::post('/store-users', [UserController::class, 'store_users']);
     Route::post('/assign-roles', [UserController::class, 'assign_roles']);
 
+});
 
     //Category-Post
     Route::get('/add-category-post', [CategoryPost::class, 'add_category_post']);
@@ -215,7 +224,14 @@ Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']]
     Route::post('/save-category-post', [CategoryPost::class, 'save_category_post']);
     Route::post('/update-category-post/{cate_id}', [CategoryPost::class, 'update_category_post']);
 
-});
+    // Post
+    Route::get('/add-post', [PostController::class, 'add_post']);
+    Route::get('/all-post', [PostController::class, 'all_post']);
+    Route::post('/save-post', [PostController::class, 'save_post']);
+    Route::get('/delete-post/{post_id}', [PostController::class, 'delete_post']);
+
+
+// });
 // Không để middleware vì có thể chuyển sang user
 Route::get('/impersonate/{admin_id}', [UserController::class, 'impersonate']);
 Route::get('/impersonate-destroy', [UserController::class, 'impersonate_destroy']);

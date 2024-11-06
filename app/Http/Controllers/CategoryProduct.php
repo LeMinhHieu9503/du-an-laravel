@@ -132,6 +132,8 @@ class CategoryProduct extends Controller
     public function show_category_home(Request $request, $category_id)
     {
         $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '0')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -144,8 +146,10 @@ class CategoryProduct extends Controller
             ->join('tbl_category_product', 'tbl_product.category_id', '=', 'tbl_category_product.category_id')
             ->where('tbl_product.category_id', $category_id)
             ->get();
-        $category= Category::all();
+        // // 
+        $category = Category::all();
         $category_post = CatePost::all();
+        // 
         $category_name = DB::table('tbl_category_product')
             ->where('tbl_category_product.category_id', $category_id)
             ->limit(1)
@@ -163,7 +167,9 @@ class CategoryProduct extends Controller
             ->with('category_name', $category_name)
             ->with('url_canonical', $url_canonical)
             ->with('slider', $slider)
+            // 
             ->with('category_post', $category_post)
             ->with('category', $category);
+        // 
     }
 }
