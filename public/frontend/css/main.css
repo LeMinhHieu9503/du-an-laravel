@@ -2696,3 +2696,41 @@ h2.title {
 }
 
 
+.product-item {
+  display: flex;
+  align-items: flex-start; /* Căn chữ ở đầu phần thông tin */
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+.product-image {
+  width: 300px; /* Chiều rộng ảnh */
+  height: 300px; /* Chiều cao ảnh */
+  object-fit: cover;
+  margin-right: 100px; /* Khoảng cách giữa ảnh và phần thông tin */
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Đặt các phần tử trong product-info ở phía trên cùng */
+}
+
+.product-info p {
+  font-size: 18px;
+  color: #333;
+  margin: 0 0 10px 0; /* Khoảng cách dưới chữ */
+}
+
+.add-to-cart {
+  font-size: 14px;
+  color: #fff;
+  background-color: #5cb85c; /* Màu nền của nút */
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+

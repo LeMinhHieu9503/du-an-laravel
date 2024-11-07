@@ -195,7 +195,7 @@ class ProductController extends Controller
     //HOME
     public function details_product(Request $request, $product_id)
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','0')->take(4)->get();
+        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
     $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')

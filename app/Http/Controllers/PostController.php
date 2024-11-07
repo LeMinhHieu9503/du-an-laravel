@@ -77,43 +77,40 @@ class PostController extends Controller
         Session::put('message', 'Thêm bài viết thành công');
         return redirect()->back();
     }
-    // public function edit_category_post($category_post_id)
-    // {
-    //     $this->AuthLogin();
+    public function editPost($post_id)
+    {
+        $edit_post = DB::table('tbl_posts')->where('post_id', $post_id)->get();
+        $cate_post = DB::table('tbl_category_post')->get(); // Lấy danh mục bài viết cho dropdown
 
-    //     $category_post = CatePost::find($category_post_id);
+        return view('admin.post.edit_post')->with('edit_post', $edit_post)->with('cate_post', $cate_post);
+    }
 
-    //     return view('admin.category_post.edit_category_post')->with(compact('category_post'));
-    // }
+    // Cập nhật bài viết
+    public function updatePost(Request $request, $post_id)
+    {
+        $data = array();
+        $data['post_title'] = $request->post_title;
+        $data['post_slug'] = $request->post_slug;
+        $data['post_desc'] = $request->post_desc;
+        $data['post_meta_desc'] = $request->post_meta_desc;
+        $data['post_content'] = $request->post_content;
+        $data['cate_post_id'] = $request->cate_post_id;
+        $data['post_status'] = $request->post_status;
 
-    // public function update_category_post(Request $request, $cate_id)
-    // {
-    //     $this->AuthLogin();
+        // Kiểm tra nếu có upload hình ảnh mới
+        if ($request->hasFile('post_image')) {
+            $image = $request->file('post_image');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move('uploads/post', $image_name);
+            $data['post_image'] = $image_name;
+        }
 
-    //     // Tìm bản ghi cần cập nhật theo ID
-    //     $category_post = CatePost::find($cate_id);
+        // Cập nhật bài viết vào cơ sở dữ liệu
+        DB::table('tbl_posts')->where('post_id', $post_id)->update($data);
 
-    //     // Kiểm tra nếu bản ghi tồn tại
-    //     if ($category_post) {
-    //         // Lấy tất cả dữ liệu từ request
-    //         $data = $request->all();
-
-    //         // Cập nhật các trường thông tin từ request
-    //         $category_post->cate_post_name = $data['cate_post_name'];
-    //         $category_post->cate_post_slug = $data['cate_post_slug'];
-    //         $category_post->cate_post_desc = $data['cate_post_desc'];
-    //         $category_post->cate_post_status = $data['cate_post_status'];
-
-    //         // Lưu thay đổi vào CSDL
-    //         $category_post->save();
-
-    //         Session::put('message', 'Cập nhật danh mục bài viết thành công');
-    //     } else {
-    //         Session::put('message', 'Danh mục bài viết không tồn tại');
-    //     }
-
-    //     return Redirect::to('all-category-post');
-    // }
+        Session::put('message', 'Cập nhật bài viết thành công');
+        return Redirect::to('all-post');
+    }
 
 
     public function delete_post($post_id)
@@ -132,39 +129,33 @@ class PostController extends Controller
         return redirect()->back();
     }
 
-    public function danh_muc_bai_viet(Request $request, $post_slug)
-{
-    $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
-    $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+    public function danh_muc_bai_viet(Request $request, $post_id)
+    {
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
-    $cate_product = DB::table('tbl_category_product')
-        ->where('category_status', '0')
-        ->orderBy('category_id', 'desc')->get();
-    $brand_product = DB::table('tbl_brand')
-        ->where('brand_status', '0')
-        ->orderBy('brand_id', 'desc')->get();
+        $cate_product = DB::table('tbl_category_product')
+            ->where('category_status', '0')
+            ->orderBy('category_id', 'desc')->get();
+        $brand_product = DB::table('tbl_brand')
+            ->where('brand_status', '0')
+            ->orderBy('brand_id', 'desc')->get();
 
-    $catepost = CatePost::where('cate_post_slug', $post_slug)->take(1)->get();
+        // Tìm danh mục bài viết bằng post_id
+        $catepost = CatePost::where('cate_post_id', $post_id)->first();
 
-    // Lấy ID danh mục từ $catepost
-    $cate_id = null;
-    foreach ($catepost as $key => $cate) {
-        $cate_id = $cate->cate_post_id;
+        // Kiểm tra nếu tìm thấy $catepost
+        if ($catepost) {
+            $post = Post::with('cate_post')->where('post_status', 1)->where('cate_post_id', $catepost->cate_post_id)->get();
+        } else {
+            $post = collect(); // Trả về tập hợp rỗng nếu không tìm thấy $catepost
+        }
+
+        return view('pages.baiviet.danhmucbaiviet')
+            ->with('category', $cate_product)
+            ->with('brand', $brand_product)
+            ->with('slider', $slider)
+            ->with('post', $post)
+            ->with('category_post', $category_post);
     }
-
-    // Kiểm tra nếu $cate_id không null trước khi tiếp tục
-    if ($cate_id !== null) {
-        $post = Post::with('cate_post')->where('post_status', 0)->where('cate_post_id', $cate_id)->get();
-    } else {
-        $post = collect(); // Trả về một tập hợp rỗng nếu không tìm thấy $cate_id
-    }
-
-    return view('pages.baiviet.danhmucbaiviet')
-        ->with('category', $cate_product)
-        ->with('brand', $brand_product)
-        ->with('slider', $slider)
-        ->with('post', $post)
-        ->with('category_post', $category_post);
-}
-
 }

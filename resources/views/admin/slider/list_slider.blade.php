@@ -65,13 +65,13 @@
                                             if($slide->slider_status ==1){
                                         ?>
                                         <a href="{{ URL::to('/unactive-slide/' . $slide->slider_id) }}">
-                                            <span style="color:red;font-size:30px" class="fa fa-thumbs-down"></span>
+                                            <span style="color:green;font-size:30px" class="fa fa-thumbs-up"></span>
                                         </a>
                                         <?php
                                         }else{
                                         ?>
                                         <a href="{{ URL::to('/active-slide/' . $slide->slider_id) }}">
-                                            <span style="color:green;font-size:30px" class="fa fa-thumbs-up"></span>
+                                            <span style="color:red;font-size:30px" class="fa fa-thumbs-down"></span>
                                         </a>
                                         <?php
                                         }

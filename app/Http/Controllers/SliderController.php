@@ -71,7 +71,7 @@ class SliderController extends Controller
 
         DB::table('tbl_slider')->where('slider_id', $slider_id)
             ->update(['slider_status' => 0]);
-        Session::put('message', 'Kích hoạt slider thành công');
+        Session::put('message', 'Không kích hoạt slider thành công');
         return Redirect::to('manage-slider');
     }
 
@@ -81,7 +81,7 @@ class SliderController extends Controller
 
         DB::table('tbl_slider')->where('slider_id', $slider_id)
             ->update(['slider_status' => 1]);
-        Session::put('message', 'Không kích hoạt slider thành công');
+        Session::put('message', 'Kích hoạt slider thành công');
         return Redirect::to('manage-slider');
     }
 

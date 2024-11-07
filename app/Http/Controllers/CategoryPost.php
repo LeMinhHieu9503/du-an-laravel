@@ -112,8 +112,5 @@ class CategoryPost extends Controller
     }
 
 
-    public function danh_muc_bai_viet($cate_post_id){
-
-    }
 
 }

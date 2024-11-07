@@ -131,7 +131,7 @@ class CategoryProduct extends Controller
     //HOME
     public function show_category_home(Request $request, $category_id)
     {
-        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '0')->take(4)->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
 

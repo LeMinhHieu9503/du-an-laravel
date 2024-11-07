@@ -17,77 +17,70 @@
                     <div class="position-center">
                         <!-- Form bắt đầu -->
                         <form role="form" method="POST" action="{{ URL::to('/save-post') }}" enctype="multipart/form-data">
-                            <!-- Thêm token bảo mật nếu bạn dùng Laravel -->
                             {{ csrf_field() }}
 
-                            <!-- Nhập tên thương hiệu -->
+                            <!-- Nhập tên bài viết -->
                             <div class="form-group">
-                              <label for="exampleInputEmail1">Tên bài viết</label>
-                              <input type="text" name="post_title" class="form-control" onkeyup="ChangeToSlug();"
-                                  id="slug" placeholder="Tên danh mục" >
-                          </div>
+                                <label for="post_title">Tên bài viết</label>
+                                <input type="text" name="post_title" class="form-control" onkeyup="ChangeToSlug();"
+                                       id="slug" placeholder="Tên bài viết" required>
+                            </div>
 
-                          <div class="form-group">
-                              <label for="exampleInputEmail1">Post-Slug</label>
-                              <input type="text" name="post_slug" class="form-control" id="convert_slug"
-                                  placeholder="Slug">
-                          </div>
+                            <!-- Nhập slug bài viết -->
+                            <div class="form-group">
+                                <label for="post_slug">Post-Slug</label>
+                                <input type="text" name="post_slug" class="form-control" id="convert_slug"
+                                       placeholder="Slug" required>
+                            </div>
 
-                          <!-- Mô tả thương hiệu -->
-                          <div class="form-group">
-                              <label for="BrandProductDesc">Tóm tắt bài viết</label>
-                              <textarea name="post_content" class="form-control" id="BrandProductDesc" cols="30" placeholder="Mô tả thương hiệu"
-                                  rows="10" ></textarea>
-                          </div>
+                            <!-- Tóm tắt bài viết -->
+                            <div class="form-group">
+                                <label for="post_content">Tóm tắt bài viết</label>
+                                <textarea name="post_content" class="form-control" id="post_content" cols="30" placeholder="Tóm tắt bài viết"
+                                          rows="5" required></textarea>
+                            </div>
 
-                          <!-- Mô tả thương hiệu -->
-                          <div class="form-group">
-                              <label for="BrandProductDesc">Mô tả bài viết</label>
-                              <textarea name="post_desc" class="form-control" id="BrandProductDesc" cols="30" placeholder="Mô tả thương hiệu"
-                                  rows="10" ></textarea>
-                          </div>
+                            <!-- Mô tả bài viết -->
+                            <div class="form-group">
+                                <label for="post_desc">Mô tả bài viết</label>
+                                <textarea name="post_desc" class="form-control" id="post_desc" cols="30" placeholder="Mô tả bài viết"
+                                          rows="5" required></textarea>
+                            </div>
 
-                          <!-- Mô tả thương hiệu -->
-                          <div class="form-group">
-                              <label for="BrandProductDesc">Nội dung bài viết</label>
-                              <textarea name="post_meta_desc" class="form-control" id="BrandProductDesc" cols="30"
-                                  placeholder="Mô tả thương hiệu" rows="10" ></textarea>
-                          </div>
+                            <!-- Nội dung bài viết -->
+                            <div class="form-group">
+                                <label for="post_meta_desc">Nội dung bài viết</label>
+                                <textarea name="post_meta_desc" class="form-control" id="post_meta_desc" cols="30" placeholder="Nội dung bài viết"
+                                          rows="5" required></textarea>
+                            </div>
 
-                          <!-- Mô tả thương hiệu -->
-                          <div class="form-group">
-                            <label for="BrandProductDesc">Từ khóa bài viết</label>
-                            <textarea name="post_meta_keywords" class="form-control" id="BrandProductDesc" cols="30"
-                                placeholder="Mô tả thương hiệu" rows="10" ></textarea>
-                        </div>
+                            <!-- Hình ảnh bài viết -->
+                            <div class="form-group">
+                                <label for="ProductImage">Hình ảnh bài viết</label>
+                                <input type="file" name="post_image" class="form-control" id="ProductImage" required>
+                            </div>
 
-                          <!-- Hình ảnh sản phẩm -->
-                          <div class="form-group">
-                              <label for="ProductImage">Hình ảnh sản phẩm</label>
-                              <input type="file" name="post_image" class="form-control" id="ProductImgae" >
-                          </div>
-                          <!-- Hiển thị danh mục bài viết-->
-                          <div class="form-group">
-                              <label for="BrandProductDisplay">Hiển thị</label>
-                              <select name="cate_post_id" class="form-control input-sm m-bot15"
-                                  id="BrandProductDisplay">
-                                  @foreach ($cate_post as $key => $cate)
-                                      <option value="{{ $cate->cate_post_id }}">{{ $cate->cate_post_name }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
+                            <!-- Chọn danh mục bài viết -->
+                            <div class="form-group">
+                                <label for="cate_post_id">Danh mục bài viết</label>
+                                <select name="cate_post_id" class="form-control input-sm m-bot15" id="cate_post_id" required>
+                                    @foreach ($cate_post as $cate)
+                                        <option value="{{ $cate->cate_post_id }}">{{ $cate->cate_post_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                          <!-- Hiển thị -->
-                          <div class="form-group">
-                              <label for="BrandProductDisplay">Hiển thị</label>
-                              <select name="post_status" class="form-control input-sm m-bot15"
-                                  id="BrandProductDisplay">
-                                  <option value="1">Ẩn</option>
-                                  <option value="0">Hiển thị</option>
-                              </select>
-                          </div>
-                          <!-- Nút Thêm -->
-                          <button type="submit" name="add_post" class="btn btn-info">Thêm bài viết</button>
+                            <!-- Hiển thị bài viết -->
+                            <div class="form-group">
+                                <label for="post_status">Hiển thị</label>
+                                <select name="post_status" class="form-control input-sm m-bot15" id="post_status" required>
+                                    <option value="1">Ẩn</option>
+                                    <option value="0">Hiển thị</option>
+                                </select>
+                            </div>
+
+                            <!-- Nút Thêm bài viết -->
+                            <button type="submit" name="add_post" class="btn btn-info">Thêm bài viết</button>
                         </form>
                         <!-- Form kết thúc -->
                     </div>

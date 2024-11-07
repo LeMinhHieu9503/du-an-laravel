@@ -474,6 +474,23 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     {{-- Sweet Alert --}}
     <script src="{{ asset('frontend/js/sweetalert.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.dropdown > a').click(function(e) {
+                e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+                // Kiểm tra nếu menu con đã hiện, thì ẩn nó đi; nếu đang ẩn, thì hiện lên
+                $(this).next('.sub-menu').stop(true, true).slideToggle(300);
+            });
+
+            // Đóng menu khi click bên ngoài
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.dropdown').length) {
+                    $('.sub-menu').slideUp(300);
+                }
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function() {
