@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryPost;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
@@ -93,8 +94,10 @@ Route::get('/edit-post/{post_id}', [PostController::class, 'editPost']);
 Route::get('/bai-viet/{post_id}', [PostController::class, 'bai_viet']);
 Route::post('/update-post/{post_id}', [PostController::class, 'updatePost']);
 
-// Bài viết
-// Route::get('/danh-muc-bai-viet/{cate_post_id}', [CategoryPost::class, 'danh_muc_bai_viet']);
+//Gallery
+Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery']);
+Route::post('/select-gallery', [GalleryController::class, 'select_gallery']);
+
 
 
 

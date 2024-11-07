@@ -133,8 +133,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Bài viết</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ URL::to('/add-post') }}">Thêm  bài viết</a></li>
-                                <li><a href="{{ URL::to('all-post') }}">Liệt kê  bài viết</a></li>
+                                <li><a href="{{ URL::to('/add-post') }}">Thêm bài viết</a></li>
+                                <li><a href="{{ URL::to('all-post') }}">Liệt kê bài viết</a></li>
                             </ul>
                         </li>
 
@@ -248,6 +248,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
     <script src="{{ asset('backend/js/jquery.form-validator.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            load_gallery();
+
+            function load_gallery() {
+                var pro_id = $('.pro_id').val();
+                var _token = $('input[name="_token"]').val();
+
+                // alert(pro_id);
+                $.ajax({
+                    url: "{{ url('/select-gallery') }}",
+                    method: "POST",
+                    data: {
+                        _token: _token,
+                        pro_id: pro_id
+                    },
+                    success: function(data) {
+                        $('#gallery_load').html(data);
+                    }
+                });
+            }
+        });
+    </script>
     <script type="text/javascript">
         function ChangeToSlug() {
             var slug;
