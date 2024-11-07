@@ -90,7 +90,9 @@ Route::get('/send-mail', [HomeController::class, 'sendMail']);
 //Post-Category
 Route::get('/danh-muc-bai-viet/{post_id}', [PostController::class, 'danh_muc_bai_viet']);
 Route::get('/edit-post/{post_id}', [PostController::class, 'editPost']);
+Route::get('/bai-viet/{post_id}', [PostController::class, 'bai_viet']);
 Route::post('/update-post/{post_id}', [PostController::class, 'updatePost']);
+
 // Bài viết
 // Route::get('/danh-muc-bai-viet/{cate_post_id}', [CategoryPost::class, 'danh_muc_bai_viet']);
 

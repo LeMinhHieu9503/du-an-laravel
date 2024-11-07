@@ -158,4 +158,32 @@ class PostController extends Controller
             ->with('post', $post)
             ->with('category_post', $category_post);
     }
+
+    public function bai_viet(Request $request, $post_id)
+    {
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
+        $cate_product = DB::table('tbl_category_product')
+            ->where('category_status', '0')
+            ->orderBy('category_id', 'desc')->get();
+        $brand_product = DB::table('tbl_brand')
+            ->where('brand_status', '0')
+            ->orderBy('brand_id', 'desc')->get();
+
+        // Tìm danh mục bài viết bằng post_id
+        $post = Post::with('cate_post')->where('post_status', 1)->where('post_id', $post_id)->take(1)->get();
+
+        foreach ($post as $key => $p) {
+            $cate_id = $p->cate_post_id;
+        }
+
+        return view('pages.baiviet.baiviet')
+            ->with('category', $cate_product)
+            ->with('brand', $brand_product)
+            ->with('slider', $slider)
+            ->with('post', $post)
+            ->with('category_post', $category_post);
+    }
+
 }

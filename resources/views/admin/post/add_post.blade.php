@@ -36,21 +36,21 @@
                             <!-- Tóm tắt bài viết -->
                             <div class="form-group">
                                 <label for="post_content">Tóm tắt bài viết</label>
-                                <textarea name="post_content" class="form-control" id="post_content" cols="30" placeholder="Tóm tắt bài viết"
+                                <textarea name="post_content" class="form-control" cols="30" placeholder="Tóm tắt bài viết"
                                           rows="5" required></textarea>
                             </div>
 
                             <!-- Mô tả bài viết -->
                             <div class="form-group">
                                 <label for="post_desc">Mô tả bài viết</label>
-                                <textarea name="post_desc" class="form-control" id="post_desc" cols="30" placeholder="Mô tả bài viết"
+                                <textarea name="post_desc" class="form-control" id="ckeditor1" cols="30" placeholder="Mô tả bài viết"
                                           rows="5" required></textarea>
                             </div>
 
                             <!-- Nội dung bài viết -->
                             <div class="form-group">
                                 <label for="post_meta_desc">Nội dung bài viết</label>
-                                <textarea name="post_meta_desc" class="form-control" id="post_meta_desc" cols="30" placeholder="Nội dung bài viết"
+                                <textarea name="post_meta_desc" class="form-control" id="ckeditor3" cols="30" placeholder="Nội dung bài viết"
                                           rows="5" required></textarea>
                             </div>
 

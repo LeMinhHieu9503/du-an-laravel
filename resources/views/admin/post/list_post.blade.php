@@ -57,7 +57,7 @@
                                 <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $post->post_title }}</span></td>
-                                <td><span class="text-ellipsis">{{ $post->post_slug }}</span></td>
+                                <td ><span class="text-ellipsis">{{ $post->post_slug }}</span></td>
                                 <td>
                                     <span class="text-ellipsis">
                                         <img src="{{asset('uploads/post/'.$post->post_image )}}" height="100" width="100"
@@ -65,7 +65,7 @@
                                     </span>
                                 </td>
 
-                                <td><span class="text-ellipsis">{{ $post->post_desc }}</span></td>
+                                <td ><span class="text-ellipsis">{{ $post->post_desc }}</span></td>
 
                                 <td><span class="text-ellipsis">{{ $post->cate_post_id }}</span></td>
                                 <td>

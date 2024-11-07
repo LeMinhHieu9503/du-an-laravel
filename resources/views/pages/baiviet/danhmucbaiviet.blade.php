@@ -6,18 +6,12 @@
             @foreach ($post as $key => $p)
                 <div class="single-products">
                     <div class="product-item">
-                        <a href="{{ URL::to('/bai-viet/' . $p->post_id) }}">
-                            <img src="{{ URL::to('uploads/post/' . $p->post_image) }}" alt="Ảnh bài viết"
-                                class="product-image" />
-                        </a>
+                        <img src="{{ URL::to('uploads/post/' . $p->post_image) }}" alt="Ảnh bài viết" class="product-image" />
                         <div class="product-info">
-                            <a href="{{ URL::to('/bai-viet/' . $p->post_id) }}">
-                                <h4>{{ $p->post_title }}</h4>
-                                <p>{{ $p->post_desc }}</p>
-                            </a>
-                            {{-- <a href="" class="btn btn-warning btn-sm">Xem bài viết</a> --}}
+                            <h4 style="text-align: left">{{ $p->post_title }}</h4>
+                            <p style="text-align: left" >{{ $p->post_desc }}</p>
                         </div>
-                        <a href="" class="btn btn-warning btn-sm">Xem bài viết</a>
+                        <a href="{{url('bai-viet/'.$p->post_id)}}" class="btn btn-warning btn-sm">Xem bài viết</a>
                     </div>
                 </div>
             @endforeach

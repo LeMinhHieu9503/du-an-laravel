@@ -40,19 +40,19 @@
                                 <!-- Tóm tắt bài viết -->
                                 <div class="form-group">
                                     <label for="post_desc">Tóm tắt bài viết</label>
-                                    <textarea name="post_desc" class="form-control" id="post_desc" cols="30" rows="5" required>{{ $edit_value->post_desc }}</textarea>
+                                    <textarea name="post_desc" class="form-control" cols="30" rows="5" required>{{ $edit_value->post_desc }}</textarea>
                                 </div>
 
                                 <!-- Nội dung bài viết -->
                                 <div class="form-group">
                                     <label for="post_content">Mô tả bài viết</label>
-                                    <textarea name="post_content" class="form-control" id="post_content" cols="30" rows="10" required>{{ $edit_value->post_content }}</textarea>
+                                    <textarea name="post_content" class="form-control" id="ckeditor1"  cols="30" rows="10" required>{{ $edit_value->post_content }}</textarea>
                                 </div>
 
                                 <!-- Nội dung bài viết -->
                                 <div class="form-group">
                                   <label for="post_content">Nội dung bài viết</label>
-                                  <textarea name="post_meta_desc" class="form-control" id="post_content" cols="30" rows="10" required>{{ $edit_value->post_meta_desc }}</textarea>
+                                  <textarea name="post_meta_desc" class="form-control" id="ckeditor"  cols="30" rows="10" required>{{ $edit_value->post_meta_desc }}</textarea>
                               </div>
 
                                 <!-- Hình ảnh bài viết -->

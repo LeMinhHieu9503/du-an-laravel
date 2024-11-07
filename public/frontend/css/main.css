@@ -2732,5 +2732,62 @@ h2.title {
   padding: 8px 12px;
   cursor: pointer;
 }
+.features_items {
+  margin-top: 30px;
+}
+
+.product-image-wrapper {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.single-products {
+  padding: 20px;
+  background-color: white;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-item {
+  text-align: center;
+}
+
+.product-item h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product-item p.post-desc {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.product-item .post-image img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.product-item .post-content {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.product-item .post-meta p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.product-item .post-meta strong {
+  font-weight: bold;
+}
 
 

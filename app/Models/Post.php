@@ -22,8 +22,10 @@ class Post extends Model
         'post_meta_desc',
         'post_slug'
     ];
-    public function cate_post() {
+    public function cate_post()
+    {
         return $this->belongsTo(CatePost::class, 'cate_post_id');
     }
+
     
 }
