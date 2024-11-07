@@ -15,6 +15,9 @@
     <link href="{{ asset('frontend/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/lightgallery.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/lightslider.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/prettify.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/sweetalert.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -474,6 +477,27 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     {{-- Sweet Alert --}}
     <script src="{{ asset('frontend/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/lightgallery-all.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
+    <script src="{{ asset('frontend/js/prettify.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#imageGallery').lightSlider({
+                gallery: true,
+                item: 1,
+                loop: true,
+                thumbItem: 3,
+                slideMargin: 0,
+                enableDrag: false,
+                currentPagerPosition: 'left',
+                onSliderLoad: function(el) {
+                    el.lightGallery({
+                        selector: '#imageGallery .lslide'
+                    });
+                }
+            });
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.dropdown > a').click(function(e) {
