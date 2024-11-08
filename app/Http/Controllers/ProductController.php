@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatePost;
+use App\Models\Gallery;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+
 
 session_start();
 class ProductController extends Controller
@@ -68,40 +72,44 @@ class ProductController extends Controller
         $data['product_status'] = $request->product_status;
         $data['product_sold'] = 0;
 
+        // Paths for file uploads
+        $path_gallery = 'uploads/gallery/';
+        $path = 'uploads/product/';
+
+        // Get the product image from the form
         $get_image = $request->file('product_image');
+
         if ($get_image) {
+            // Generate a unique name for the uploaded image
             $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            // Đặt tên mới cho ảnh
-            $new_image = $get_name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+            $name_image = pathinfo($get_name_image, PATHINFO_FILENAME);
+            $new_image = $name_image . '_' . Str::random(5) . '.' . $get_image->getClientOriginalExtension();
 
-            // Di chuyển ảnh vào thư mục uploads/product
-            $get_image->move('uploads/product', $new_image);
+            // Move the image to the product folder
+            $get_image->move(public_path($path), $new_image);
 
-            // Lưu tên ảnh vào mảng $data
+            // Copy the image to the gallery folder
+            File::copy(public_path($path . $new_image), public_path($path_gallery . $new_image));
+
+            // Store the image name in the data array
             $data['product_image'] = $new_image;
-
-            // Thêm sản phẩm vào bảng 'tbl_product'
-            DB::table('tbl_product')->insert($data);
-
-            // Lưu thông báo vào session
-            Session::put('message', 'Thêm sản phẩm thành công');
-
-            // Điều hướng về trang thêm sản phẩm
-            return redirect::to('add-product');
         }
 
-        // Nếu không có hình ảnh
-        $data['product_image'] = '';
+        // Insert the product data into the database and get the product ID
+        $pro_id = DB::table('tbl_product')->insertGetId($data);
 
-        // Thêm dữ liệu vào bảng 'tbl_product'
-        DB::table('tbl_product')->insert($data);
+        // Save the gallery image associated with the product
+        $gallery = new Gallery();
+        $gallery->gallery_image = $new_image;
+        $gallery->gallery_name = $new_image;
+        $gallery->product_id = $pro_id;
+        $gallery->save();
 
-        // Lưu thông báo thành công vào session
+        // Set a success message in the session
         Session::put('message', 'Thêm sản phẩm thành công');
 
-        // Điều hướng đến trang danh sách sản phẩm
-        return redirect::to('all-product');
+        // Redirect to the product add page
+        return redirect()->back();
     }
 
     public function unactive_product($product_id)
@@ -195,8 +203,9 @@ class ProductController extends Controller
     //HOME
     public function details_product(Request $request, $product_id)
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
-    $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
@@ -209,11 +218,13 @@ class ProductController extends Controller
             ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id')
             ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id')
             ->where('tbl_product.product_id', $product_id)->get();
-
+        // $category_id = null;
         foreach ($details_product as $key => $value) {
             $category_id = $value->category_id;
+            $product_id = $value->product_id;
         }
-
+        //gallery
+        $gallery = Gallery::where('product_id', $product_id)->get();
         $related_product = DB::table('tbl_product')
             ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id')
             ->join('tbl_brand', 'tbl_brand.brand_id', '=', 'tbl_product.brand_id')
@@ -227,6 +238,7 @@ class ProductController extends Controller
             ->with('product_details', $details_product)
             ->with('relate', $related_product)
             ->with('category_post', $category_post)
-            ->with('slider',$slider);
+            ->with('gallery', $gallery)
+            ->with('slider', $slider);
     }
 }

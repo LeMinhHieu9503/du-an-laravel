@@ -5,7 +5,7 @@
             <style type="text/css">
                 .lSSlideOuter .lSPager.lSGallery img{
                     display: block;
-                    height: s;
+                    height: 150px;
                     max-width: 100%;
                 }
                 li.active{
@@ -15,23 +15,11 @@
             </style>
             <div class="col-sm-5">
                 <ul id="imageGallery">
-                    <li data-thumb="{{asset('frontend/images/1.jpg')}}" data-src="{{asset('frontend/images/1.jpg')}}">
-                        <img width="100%"  src="{{asset('frontend/images/1.jpg')}}" />
+                    @foreach($gallery as $key => $gal)
+                    <li data-thumb="{{asset('uploads/gallery/'.$gal->gallery_image)}}" data-src="{{asset('uploads/gallery/'.$gal->gallery_image)}}">
+                        <img width="100%"  src="{{asset('uploads/gallery/'.$gal->gallery_image)}}" />
                     </li>
-                    <li data-thumb="{{asset('frontend/images/404.png')}}" data-src="{{asset('frontend/images/404.png')}}">
-                        <img width="100%" src="{{asset('frontend/images/404.png')}}" />
-                    </li>
-                    <li data-thumb="{{asset('frontend/images/blog-one.jpg')}}" data-src="{{asset('frontend/images/blog-one.jpg')}}">
-                        <img width="100%" src="{{asset('frontend/images/blog-one.jpg')}}" />
-                    </li>
-                    <li data-thumb="{{asset('frontend/images/blog-three.jpg')}}" data-src="{{asset('frontend/images/blog-three.jpg')}}">
-                        <img width="100%" src="{{asset('frontend/images/blog-three.jpg')}}" />
-                    </li>
-                    <li data-thumb="{{asset('frontend/images/blog-two.jpg')}}" data-src="{{asset('frontend/images/blog-two.jpg')}}">
-                        <img width="100%" src="{{asset('frontend/images/blog-two.jpg')}}" />
-                    </li>
-                    
-           
+                    @endforeach
                 </ul>
 
             </div>

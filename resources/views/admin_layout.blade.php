@@ -10,6 +10,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- //bootstrap-css -->
@@ -273,21 +274,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             $('#file').change(function() {
                 var error = '';
                 var files = $('#file')[0].files;
+
+                // Check for file count
                 if (files.length > 5) {
                     error += '<p>Bạn chọn tối đa chỉ 5 ảnh</p>';
-                } else if (files.length == '') {
+                } else if (files.length === 0) {
                     error += '<p>Bạn không được bỏ trống ảnh</p>';
-                } else if (files.size > 2000000) {
-                    error += '<p>File ảnh không được lớn hơn 2MB</p>';
-                }
-                if (error == '') {
-
                 } else {
-                    $('#file').val('');
-                    $('#error_gallery').html('<span class="text-danger">' + error + '</span>');
-                    return false;
+                    // Check each file size
+                    for (var i = 0; i < files.length; i++) {
+                        if (files[i].size > 200000000) { // 2MB in bytes
+                            error += '<p>File ảnh không được lớn hơn 2MB</p>';
+                            break;
+                        }
+                    }
+                }
+
+                if (error === '') {
+                    $('#error_gallery').html(''); // Clear error if no issues
+                } else {
+                    $('#file').val(''); // Clear the file input
+                    $('#error_gallery').html('<span class="text-danger">' + error +
+                    '</span>'); // Display error
                 }
             });
+
             $(document).on('blur', '.edit_gal_name', function() {
                 // alert('Ahiahiahifh')
                 var gal_id = $(this).data('gal_id');
@@ -309,8 +320,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         // $('#gallery_load').html(data);
                         load_gallery();
                         $('#error_gallery').html(
-                            '<span class="text-danger">Cập nhật tên hình ảnh thành cống</span>'
-                            );
+                            '<span class="text-danger">Cập nhật tên hình ảnh thành công</span>'
+                        );
                     }
                 });
             });
@@ -335,11 +346,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             // $('#gallery_load').html(data);
                             load_gallery();
                             $('#error_gallery').html(
-                                '<span class="text-danger">Xóa hình ảnh thành cống</span>');
+                                '<span class="text-danger">Xóa hình ảnh thành công</span>');
                         }
                     });
                 }
             });
+
+
+            $(document).on('change', '.file_image', function() {
+                var gal_id = $(this).data('gal_id');
+                var image = document.getElementById('file-' + gal_id).files[0];
+
+                var form_data = new FormData();
+                form_data.append("file", document.getElementById('file-' + gal_id).files[0]);
+                form_data.append("gal_id", gal_id);
+
+                $.ajax({
+                    url: "{{ url('/update-gallery') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        load_gallery();
+                        $('#error_gallery').html(
+                            '<span class="text-success">Cập nhật hình ảnh thành công</span>'
+                        );
+                    },
+                    error: function() {
+                        $('#error_gallery').html(
+                            '<span class="text-danger">Có lỗi xảy ra, vui lòng thử lại.</span>'
+                        );
+                    }
+                });
+            });
+
         });
     </script>
     <script type="text/javascript">
