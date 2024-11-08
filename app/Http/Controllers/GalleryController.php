@@ -37,6 +37,8 @@ class GalleryController extends Controller
         $gallery = Gallery::where('product_id', $product_id)->get();
         $gallery_count = $gallery->count();
         $output = '
+        <form>
+                ' . csrf_field() . '
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -54,11 +56,12 @@ class GalleryController extends Controller
             foreach ($gallery as $key => $gal) {
                 $i++;
                 $output .= '
+            
                 <tr>
                     <td>' . $i . '</td>
-                    <td>' . $gal->gallery_name . '</td>
+                    <td contenteditable class="edit_gal_name" data-gal_id="' . $gal->gallery_id . '">' . $gal->gallery_name . '</td>
                     <td><img src = "' . url('uploads/gallery/' . $gal->gallery_image) . '" class="img-thumbnail" width="120px" height="120px"></td>
-                    <td><button dât-gal_id="' . $gal->gallery_id . '" class="btn btn-xs btn-danger delete-gallery"></button></td>
+                    <td><button type="button" data-gal_id="' . $gal->gallery_id . '" class="btn btn-xs btn-danger delete-gallery">Xóa</button></td>
                     
                 </tr>
             ';
@@ -68,10 +71,58 @@ class GalleryController extends Controller
             <tr>
                 <td colspan="4">Sản phẩm này chưa có thư viện ảnh</td>
             </tr>
-            </table>
         ';
         }
+        $output .= '
+            </tbody>
+            </table>
+            </form>
+        ';
 
         echo $output;
+    }
+
+    public function insert_gallery(Request $request, $pro_id)
+    {
+        $request->validate([
+            'file' => 'required|array',
+            'file.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $get_image = $request->file('file');
+        if ($get_image) {
+            foreach ($get_image as $image) {
+                $get_name_image = $image->getClientOriginalName();
+                $name_image = current(explode('.', $get_name_image));
+                $new_image = $get_name_image . rand(0, 99) . '.' . $image->getClientOriginalExtension();
+
+                $image->move('uploads/gallery', $new_image);
+                $gallery = new Gallery();
+                $gallery->gallery_name = $new_image;
+                $gallery->gallery_image = $new_image;
+                $gallery->product_id = $pro_id;
+                $gallery->save();
+            }
+        }
+        Session::put('message', 'Thêm thư viện ảnh thành công');
+        return redirect()->back();
+    }
+
+    public function update_gallery_name(Request $request)
+    {
+        $gal_id = $request->gal_id;
+        $gal_text = $request->gal_text;
+        $gallery = Gallery::find($gal_id);
+        $gallery->gallery_name = $gal_text;
+        $gallery->save();
+    }
+
+    public function delete_gallery(Request $request)
+    {
+        $gal_id = $request->gal_id;
+        $gallery = Gallery::find($gal_id);
+        unlink('uploads/gallery/'.$gallery->gallery_image);
+        $gallery->delete();
+
     }
 }

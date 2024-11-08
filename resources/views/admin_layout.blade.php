@@ -269,6 +269,77 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     }
                 });
             }
+
+            $('#file').change(function() {
+                var error = '';
+                var files = $('#file')[0].files;
+                if (files.length > 5) {
+                    error += '<p>Bạn chọn tối đa chỉ 5 ảnh</p>';
+                } else if (files.length == '') {
+                    error += '<p>Bạn không được bỏ trống ảnh</p>';
+                } else if (files.size > 2000000) {
+                    error += '<p>File ảnh không được lớn hơn 2MB</p>';
+                }
+                if (error == '') {
+
+                } else {
+                    $('#file').val('');
+                    $('#error_gallery').html('<span class="text-danger">' + error + '</span>');
+                    return false;
+                }
+            });
+            $(document).on('blur', '.edit_gal_name', function() {
+                // alert('Ahiahiahifh')
+                var gal_id = $(this).data('gal_id');
+                var gal_text = $(this).text();
+                var _token = $('input[name="_token"]').val();
+
+                // alert(gal_id);
+                // alert(gal_text);
+                $.ajax({
+                    url: "{{ url('/update-gallery-name') }}",
+                    method: "POST",
+                    data: {
+                        gal_id: gal_id,
+                        gal_text: gal_text,
+                        _token: _token
+
+                    },
+                    success: function(data) {
+                        // $('#gallery_load').html(data);
+                        load_gallery();
+                        $('#error_gallery').html(
+                            '<span class="text-danger">Cập nhật tên hình ảnh thành cống</span>'
+                            );
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete-gallery', function() {
+                // alert('Ahiahiahifh')
+                var gal_id = $(this).data('gal_id');
+                var _token = $('input[name="_token"]').val();
+
+                // alert(gal_id);
+                // alert(gal_text);
+                if (confirm('Bạn muốn xóa hình ảnh này không?')) {
+                    $.ajax({
+                        url: "{{ url('/delete-gallery') }}",
+                        method: "POST",
+                        data: {
+                            gal_id: gal_id,
+                            _token: _token
+
+                        },
+                        success: function(data) {
+                            // $('#gallery_load').html(data);
+                            load_gallery();
+                            $('#error_gallery').html(
+                                '<span class="text-danger">Xóa hình ảnh thành cống</span>');
+                        }
+                    });
+                }
+            });
         });
     </script>
     <script type="text/javascript">
