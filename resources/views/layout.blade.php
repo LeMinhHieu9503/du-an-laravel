@@ -229,7 +229,7 @@
                                     <div class="col-sm-12">
                                         <img alt="{{ $slide->slider_desc }}"
                                             src="{{ asset('uploads/slider/' . $slide->slider_image) }}"
-                                            height="100%" width="100%" class="img img-responsive img-slider">
+                                            height="300px" width="100%" class="img img-responsive img-slider">
 
                                     </div>
                                 </div>

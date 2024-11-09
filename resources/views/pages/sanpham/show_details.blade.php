@@ -5,7 +5,7 @@
             <style type="text/css">
                 .lSSlideOuter .lSPager.lSGallery img{
                     display: block;
-                    height: 150px;
+                    height: 100px;
                     max-width: 100%;
                 }
                 li.active{
@@ -17,7 +17,7 @@
                 <ul id="imageGallery">
                     @foreach($gallery as $key => $gal)
                     <li data-thumb="{{asset('uploads/gallery/'.$gal->gallery_image)}}" data-src="{{asset('uploads/gallery/'.$gal->gallery_image)}}">
-                        <img width="100%"  src="{{asset('uploads/gallery/'.$gal->gallery_image)}}" />
+                        <img width="100%"  src="{{asset('uploads/gallery/'.$gal->gallery_image)}}" height="450px" />
                     </li>
                     @endforeach
                 </ul>
@@ -83,11 +83,11 @@
             <div class="tab-content">
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="details">
-                        <p style="font-size: 20px">{{ $value->product_desc }}</p>
+                        <p style="font-size: 20px">{!! $value->product_desc !!}</p>
                     </div>
 
                     <div class="tab-pane fade" id="companyprofile">
-                        <p style="font-size: 20px">{{ $value->product_content }}</p>
+                        <p style="font-size: 20px">{!! $value->product_content !!}</p>
                     </div>
                 </div>
 

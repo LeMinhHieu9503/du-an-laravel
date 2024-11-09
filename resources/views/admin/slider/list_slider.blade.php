@@ -56,7 +56,7 @@
                                 </td>
                                 <td><span class="text-ellipsis">{{ $slide->slider_name }}</span></td>
                                 <td><span class="text-ellipsis">
-                                    <img src="uploads/slider/{{ $slide->slider_image }}"  alt="">    
+                                    <img src="uploads/slider/{{ $slide->slider_image }}" width="300px" alt="">    
                                 </span></td>
                                 <td><span class="text-ellipsis">{{ $slide->slider_desc }}</span></td>
                                 <td>
