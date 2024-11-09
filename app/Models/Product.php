@@ -23,4 +23,9 @@ class Product extends Model
         'product_image',
         'product_status'
     ];
+
+    public function comment()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

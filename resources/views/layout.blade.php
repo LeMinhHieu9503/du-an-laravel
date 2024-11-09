@@ -644,9 +644,11 @@
                         comment_content: comment_content
                     },
                     success: function(data) {
-                        load_comment(); // Cập nhật lại danh sách bình luận
                         $('#notify_comment').html(
-                            '<p class="text text-success">Thêm bình luận thành công!</p>');
+                            '<span class="text text-success">Thêm bình luận thành công,bình luận đang chờ duyệt!</span>');
+                        load_comment(); // Cập nhật lại danh sách bình luận
+
+                        $('#notify_comment').fadeOut(20000);
                         // Xóa nội dung đã nhập
                         $('.comment_name').val('');
                         $('.comment_content').val('');

@@ -15,6 +15,12 @@ class Comment extends Model
         'comment_name',
         'comment_content',
         'comment_date',
-        'comment_product_id'
+        'comment_status',
+        'comment_product_id',
+        'comment_parent_comment'
     ];
+
+    public function product(){
+        return $this->belongsTo('App\Models\Product','comment_product_id');
+    }
 }

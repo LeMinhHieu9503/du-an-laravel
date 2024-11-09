@@ -245,6 +245,32 @@ class ProductController extends Controller
 
 
     // Comment
+    public function list_comment()
+    {
+        $comment = Comment::with('product')->orderBy('comment_status', 'DESC')->get();
+        return view('admin.comment.list_comment')->with(compact('comment'));
+    }
+
+    public function allow_comment(Request $request)
+    {
+        $data = $request->all();
+        $comment = Comment::find($data['comment_id']);
+        $comment->comment_status = $data['comment_status'];
+        $comment->save();
+    }
+
+    public function reply_comment(Request $request){
+        $data = $request->all();
+        $comment = new Comment();
+        $comment->comment_content = $data['comment'];
+        $comment->comment_product_id = $data['comment_product_id'];
+        $comment->comment_name = 'Admin';
+        $comment->comment_parent_comment = $data['comment_id'];
+        $comment->comment_status = 0;
+        $comment->comment_date = now();
+
+        $comment->save();
+    }
     public function send_comment(Request $request)
     {
         // Kiểm tra nếu các trường bắt buộc bị trống
@@ -252,22 +278,28 @@ class ProductController extends Controller
             return response()->json(['error' => 'Tên và nội dung bình luận không được để trống!'], 400);
         }
 
+        // Nếu không truyền comment_status, mặc định là 0
+        $comment_status = $request->has('comment_status') ? $request->comment_status : 1;
+
         // Thêm bình luận vào database
         Comment::create([
             'comment_name' => $request->comment_name,
             'comment_content' => $request->comment_content,
-            'comment_date' => now(),  // Thời gian hiện tại
-            'comment_product_id' => $request->product_id
+            'comment_date' => now(),
+            'comment_product_id' => $request->product_id,
+            'comment_status' => $comment_status
         ]);
 
         // Trả lại phản hồi thành công
-        return response()->json(['success' => 'Bình luận đã được thêm thành công']);
+        return response()->json(['success' => 'Bình luận đã được thêm thành công và đang đợi xét duyệt.']);
     }
+
+
 
     public function load_comment(Request $request)
     {
         $product_id = $request->product_id;
-        $comment = Comment::where('comment_product_id', $product_id)->get();
+        $comment = Comment::where('comment_product_id', $product_id)->where('comment_status', 0)->get();
         $output = '';
 
         foreach ($comment as $comm) {

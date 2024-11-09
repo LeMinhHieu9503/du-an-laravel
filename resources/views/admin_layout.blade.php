@@ -192,6 +192,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li><a href="{{ URL::to('add-slider') }}">Thêm slider</a></li>
                             </ul>
                         </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Comment</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/comment') }}">Liệt kê comment</a></li>
+                            </ul>
+                        </li>
                         @impersonate
                             <li>
                                 <span>
@@ -250,6 +260,74 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     <script src="{{ asset('backend/js/jquery.form-validator.min.js') }}"></script>
     <script type="text/javascript">
+        $('.comment_duyet_btn').click(function() {
+            var comment_status = $(this).data('comment_status');
+            var comment_id = $(this).data('comment_id');
+            var comment_product_id = $(this).attr('id');
+
+            var alertMessage = (comment_status == 0) ?
+                'Thay đổi thành duyệt thành công' :
+                'Thay đổi thành bỏ duyệt thành công';
+
+            $.ajax({
+                url: "{{ url('/allow-comment') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    comment_status: comment_status,
+                    comment_id: comment_id,
+                    comment_product_id: comment_product_id
+                },
+                success: function(data) {
+                    location.reload();
+                    $('#notify_comment').html('<span class="text text-success">' + alertMessage +
+                        '</span>');
+                    setTimeout(function() {
+                        $('#notify_comment').html(''); 
+                    }, 50000);
+                }
+            });
+
+        });
+
+        $('.btn-reply-comment').click(function() {
+            var comment_id = $(this).data('comment_id');
+
+            var comment = $('.reply_comment_'+comment_id).val();
+            var comment_product_id = $(this).data('product_id');
+
+            var alert = 'Trả lời thành công';
+            // alert(comment);
+            // alert(comment_id);
+            // alert(comment_product_id);
+
+
+            $.ajax({
+                url: "{{ url('/reply-comment') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    comment: comment,
+                    comment_id: comment_id,
+                    comment_product_id: comment_product_id
+                },
+                success: function(data) {
+                    // location.reload();
+                    $('#notify_comment').html('<span class="text text-success">' + alert +
+                        '</span>');
+                    $('.reply_comment_'+comment_id).val('');
+                }
+            });
+
+        });
+
+       
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
             load_gallery();
 
@@ -295,7 +373,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 } else {
                     $('#file').val(''); // Clear the file input
                     $('#error_gallery').html('<span class="text-danger">' + error +
-                    '</span>'); // Display error
+                        '</span>'); // Display error
                 }
             });
 
