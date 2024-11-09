@@ -600,7 +600,68 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            load_comment();
 
+            function load_comment() {
+                var product_id = $('.comment_product_id').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ url('/load-comment') }}",
+                    method: "POST",
+                    data: {
+                        product_id: product_id,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#comment_show').html(data);
+                    }
+                });
+            }
+
+            $('.send-comment').click(function() {
+                var product_id = $('.comment_product_id').val();
+                var comment_name = $('.comment_name').val();
+                var _token = $('input[name="_token"]').val();
+                var comment_content = $('.comment_content').val();
+
+                // Kiểm tra nếu các trường không trống
+                if (comment_name === "" || comment_content === "") {
+                    $('#notify_comment').html(
+                        '<p class="text text-danger">Tên và nội dung bình luận không được để trống!</p>'
+                        );
+                    return; // Dừng lại không gửi yêu cầu AJAX
+                }
+
+                $.ajax({
+                    url: "{{ url('/send-comment') }}",
+                    method: "POST",
+                    data: {
+                        product_id: product_id,
+                        _token: _token,
+                        comment_name: comment_name,
+                        comment_content: comment_content
+                    },
+                    success: function(data) {
+                        load_comment(); // Cập nhật lại danh sách bình luận
+                        $('#notify_comment').html(
+                            '<p class="text text-success">Thêm bình luận thành công!</p>');
+                        // Xóa nội dung đã nhập
+                        $('.comment_name').val('');
+                        $('.comment_content').val('');
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                        $('#notify_comment').html(
+                            '<p class="text text-danger">Có lỗi xảy ra, vui lòng thử lại!</p>'
+                            );
+                    }
+                });
+            });
+
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -651,6 +712,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.choose').on('change', function() {

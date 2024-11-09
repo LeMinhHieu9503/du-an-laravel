@@ -3,22 +3,24 @@
     @foreach ($product_details as $key => $value)
         <div class="product-details"><!--product-details-->
             <style type="text/css">
-                .lSSlideOuter .lSPager.lSGallery img{
+                .lSSlideOuter .lSPager.lSGallery img {
                     display: block;
                     height: 100px;
                     max-width: 100%;
                 }
-                li.active{
+
+                li.active {
                     border: 2px solid;
                     color: orange;
                 }
             </style>
             <div class="col-sm-5">
                 <ul id="imageGallery">
-                    @foreach($gallery as $key => $gal)
-                    <li data-thumb="{{asset('uploads/gallery/'.$gal->gallery_image)}}" data-src="{{asset('uploads/gallery/'.$gal->gallery_image)}}">
-                        <img width="100%"  src="{{asset('uploads/gallery/'.$gal->gallery_image)}}" height="450px" />
-                    </li>
+                    @foreach ($gallery as $key => $gal)
+                        <li data-thumb="{{ asset('uploads/gallery/' . $gal->gallery_image) }}"
+                            data-src="{{ asset('uploads/gallery/' . $gal->gallery_image) }}">
+                            <img width="100%" src="{{ asset('uploads/gallery/' . $gal->gallery_image) }}" height="450px" />
+                        </li>
                     @endforeach
                 </ul>
 
@@ -75,9 +77,9 @@
         <div class="category-tab shop-details-tab"><!--category-tab-->
             <div class="col-sm-12">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#details" data-toggle="tab">Mô tả sản phẩm</a></li>
+                    <li><a href="#details" data-toggle="tab">Mô tả sản phẩm</a></li>
                     <li><a href="#companyprofile" data-toggle="tab">Chi tiết sản phẩm</a></li>
-                    <li><a href="#reviews" data-toggle="tab">Đánh giá (5)</a></li>
+                    <li class="active"><a href="#reviews" data-toggle="tab">Đánh giá (5)</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -92,31 +94,45 @@
                 </div>
 
 
-                <div class="tab-pane fade " id="reviews">
+                <div class="tab-pane fade active in" id="reviews">
                     <div class="col-sm-12">
                         <ul>
-                            <li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
+                            <li><a href=""><i class="fa fa-user"></i>Admin</a></li>
                             <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-                            <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
+                            <li><a href=""><i class="fa fa-calendar-o"></i>09.11.2024</a></li>
                         </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore
-                            et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut
-                            aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur.</p>
-                        <p><b>Write Your Review</b></p>
+                        <style type="text/css">
+                            .style_comment {
+                                border: 1px solid #ddd;
+                                border-radius: 10px;
+                                background: rgb(191, 188, 188);
+                            }
+                        </style>
+                        <form action="" >
+                            @csrf
+                            <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{ $value->product_id }}">
+                            <div id="comment_show"></div> <!-- Ajax sẽ cập nhật phần này -->
+                            
+                            <p></p>
+                        </form>
+                        
 
-                        <form action="#">
+                        <p><b>Viết đánh giá của bạn</b></p>
+                        <style>
+                            
+                        </style>
+                        <form action="#" class="form" method="POST">
+                            @csrf
                             <span>
-                                <input type="text" placeholder="Your Name" />
-                                <input type="email" placeholder="Email Address" />
+                                <input class="comment_name" type="text" name="comment_name" placeholder="Tên bình luận" />
                             </span>
-                            <textarea name=""></textarea>
-                            <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                            <button type="button" class="btn btn-default pull-right">
-                                Submit
+                            <textarea class="comment_content" name="comment_content" placeholder="Nội dung bình luận:"></textarea>
+                            <b>Đánh giá sao: </b> <img src="{{asset('frontend/images/product-details/rating.png')}}" alt="" />
+                            <button type="button" class="btn btn-default pull-right send-comment">
+                                Gửi bình luận
                             </button>
+                            <div id="comment_show"></div> <!-- Ajax sẽ cập nhật phần này -->
+
                         </form>
                     </div>
                 </div>

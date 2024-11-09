@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatePost;
+use App\Models\Comment;
 use App\Models\Gallery;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -240,5 +241,49 @@ class ProductController extends Controller
             ->with('category_post', $category_post)
             ->with('gallery', $gallery)
             ->with('slider', $slider);
+    }
+
+
+    // Comment
+    public function send_comment(Request $request)
+    {
+        // Kiểm tra nếu các trường bắt buộc bị trống
+        if (empty($request->comment_name) || empty($request->comment_content)) {
+            return response()->json(['error' => 'Tên và nội dung bình luận không được để trống!'], 400);
+        }
+
+        // Thêm bình luận vào database
+        Comment::create([
+            'comment_name' => $request->comment_name,
+            'comment_content' => $request->comment_content,
+            'comment_date' => now(),  // Thời gian hiện tại
+            'comment_product_id' => $request->product_id
+        ]);
+
+        // Trả lại phản hồi thành công
+        return response()->json(['success' => 'Bình luận đã được thêm thành công']);
+    }
+
+    public function load_comment(Request $request)
+    {
+        $product_id = $request->product_id;
+        $comment = Comment::where('comment_product_id', $product_id)->get();
+        $output = '';
+
+        foreach ($comment as $comm) {
+            $output .= '
+        <div class="row style_comment">
+            <div class="col-md-2">
+                <img src="' . asset('/uploads/avatar-batman.jpg') . '" width="100%" class="img img-responsive img-thumbnail" alt="">
+            </div>
+            <div class="col-md-10">
+                <p style="color: green">' . htmlspecialchars($comm->comment_name) . '</p>
+                <p style="color: black">' . htmlspecialchars($comm->comment_date) . '</p>
+                <p>' . htmlspecialchars($comm->comment_content) . '</p>
+            </div>
+        </div>
+        <br>';
+        }
+        echo $output;
     }
 }

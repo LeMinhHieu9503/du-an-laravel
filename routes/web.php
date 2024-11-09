@@ -103,6 +103,9 @@ Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery']);
 Route::post('/update-gallery', [GalleryController::class, 'update_gallery']);
 
 
+//Comment
+Route::post('/send-comment', [ProductController::class, 'send_comment']);
+Route::post('/load-comment', [ProductController::class, 'load_comment']);
 
 
 
@@ -130,92 +133,92 @@ Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 //Phân quyền chỉ có Admin or Author mới quản lí các chức năng
 // Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
 
-    //Category-Product
-    Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product']);
-    Route::get('/all-category-product', [CategoryProduct::class, 'all_category_product']);
+//Category-Product
+Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product']);
+Route::get('/all-category-product', [CategoryProduct::class, 'all_category_product']);
 
-    Route::post('/save-category-product', [CategoryProduct::class, 'save_category_product']);
-    Route::get('/edit-category-product/{category_product_id}', [CategoryProduct::class, 'edit_category_product']);
-    Route::post('/update-category-product/{category_product_id}', [CategoryProduct::class, 'update_category_product']);
+Route::post('/save-category-product', [CategoryProduct::class, 'save_category_product']);
+Route::get('/edit-category-product/{category_product_id}', [CategoryProduct::class, 'edit_category_product']);
+Route::post('/update-category-product/{category_product_id}', [CategoryProduct::class, 'update_category_product']);
 
-    Route::get('/delete-category-product/{category_product_id}', [CategoryProduct::class, 'delete_category_product']);
+Route::get('/delete-category-product/{category_product_id}', [CategoryProduct::class, 'delete_category_product']);
 
-    Route::get('/unactive-category-product/{category_product_id}', [CategoryProduct::class, 'unactive_category_product']);
-    Route::get('/active-category-product/{category_product_id}', [CategoryProduct::class, 'active_category_product']);
+Route::get('/unactive-category-product/{category_product_id}', [CategoryProduct::class, 'unactive_category_product']);
+Route::get('/active-category-product/{category_product_id}', [CategoryProduct::class, 'active_category_product']);
 
-    //Brand
-    Route::get('/add-brand-product', [BrandProduct::class, 'add_brand_product']);
-    Route::get('/all-brand-product', [BrandProduct::class, 'all_brand_product']);
+//Brand
+Route::get('/add-brand-product', [BrandProduct::class, 'add_brand_product']);
+Route::get('/all-brand-product', [BrandProduct::class, 'all_brand_product']);
 
-    Route::post('/save-brand-product', [BrandProduct::class, 'save_brand_product']);
-    Route::get('/edit-brand-product/{brand_product_id}', [BrandProduct::class, 'edit_brand_product']);
-    Route::post('/update-brand-product/{brand_product_id}', [BrandProduct::class, 'update_brand_product']);
+Route::post('/save-brand-product', [BrandProduct::class, 'save_brand_product']);
+Route::get('/edit-brand-product/{brand_product_id}', [BrandProduct::class, 'edit_brand_product']);
+Route::post('/update-brand-product/{brand_product_id}', [BrandProduct::class, 'update_brand_product']);
 
-    Route::get('/delete-brand-product/{brand_product_id}', [BrandProduct::class, 'delete_brand_product']);
+Route::get('/delete-brand-product/{brand_product_id}', [BrandProduct::class, 'delete_brand_product']);
 
-    Route::get('/unactive-brand-product/{brand_product_id}', [BrandProduct::class, 'unactive_brand_product']);
-    Route::get('/active-brand-product/{brand_product_id}', [BrandProduct::class, 'active_brand_product']);
+Route::get('/unactive-brand-product/{brand_product_id}', [BrandProduct::class, 'unactive_brand_product']);
+Route::get('/active-brand-product/{brand_product_id}', [BrandProduct::class, 'active_brand_product']);
 
-    //Product
-    Route::get('/add-product', [ProductController::class, 'add_product']);
-    Route::get('/all-product', [ProductController::class, 'all_product']);
+//Product
+Route::get('/add-product', [ProductController::class, 'add_product']);
+Route::get('/all-product', [ProductController::class, 'all_product']);
 
-    Route::post('/save-product', [ProductController::class, 'save_product']);
-    Route::get('/edit-product/{product_id}', [ProductController::class, 'edit_product']);
-    Route::post('/update-product/{product_id}', [ProductController::class, 'update_product']);
+Route::post('/save-product', [ProductController::class, 'save_product']);
+Route::get('/edit-product/{product_id}', [ProductController::class, 'edit_product']);
+Route::post('/update-product/{product_id}', [ProductController::class, 'update_product']);
 
-    Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_product']);
+Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_product']);
 
-    Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product']);
-    Route::get('/active-product/{product_id}', [ProductController::class, 'active_product']);
+Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product']);
+Route::get('/active-product/{product_id}', [ProductController::class, 'active_product']);
 
 
-    //MANAGE-ORDER
-    Route::get('/manage-order', [OrderController::class, 'manage_order']);
-    Route::get('/view-order/{order_code}', [OrderController::class, 'view_order']);
+//MANAGE-ORDER
+Route::get('/manage-order', [OrderController::class, 'manage_order']);
+Route::get('/view-order/{order_code}', [OrderController::class, 'view_order']);
 
-    //COUPON
-    Route::get('/insert-coupon', [CouponController::class, 'insert_coupon']);
-    Route::get('/list-coupon', [CouponController::class, 'list_coupon']);
-    Route::get('/delete-coupon/{coupon_id}', [CouponController::class, 'delete_coupon']);
-    Route::get('/unset-coupon', [CouponController::class, 'unset_coupon']);
-    Route::post('/insert-coupon-code', [CouponController::class, 'insert_coupon_code']);
+//COUPON
+Route::get('/insert-coupon', [CouponController::class, 'insert_coupon']);
+Route::get('/list-coupon', [CouponController::class, 'list_coupon']);
+Route::get('/delete-coupon/{coupon_id}', [CouponController::class, 'delete_coupon']);
+Route::get('/unset-coupon', [CouponController::class, 'unset_coupon']);
+Route::post('/insert-coupon-code', [CouponController::class, 'insert_coupon_code']);
 
-    //Delivery
-    Route::get('/delivery', [DeliveryController::class, 'delivery']);
-    Route::post('/select-delivery', [DeliveryController::class, 'select_delivery']);
-    Route::post('/insert-delivery', [DeliveryController::class, 'insert_delivery']);
-    Route::post('/select-feeship', [DeliveryController::class, 'select_feeship']);
-    Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
+//Delivery
+Route::get('/delivery', [DeliveryController::class, 'delivery']);
+Route::post('/select-delivery', [DeliveryController::class, 'select_delivery']);
+Route::post('/insert-delivery', [DeliveryController::class, 'insert_delivery']);
+Route::post('/select-feeship', [DeliveryController::class, 'select_feeship']);
+Route::post('/update-delivery', [DeliveryController::class, 'update_delivery']);
 
-    //Checkout
-    Route::post('/confirm_order', [CheckoutController::class, 'confirm_order']);
+//Checkout
+Route::post('/confirm_order', [CheckoutController::class, 'confirm_order']);
 
-    //Slider 
-    Route::get('/manage-slider', [SliderController::class, 'manage_slider']);
-    Route::get('/add-slider', [SliderController::class, 'add_slider']);
-    Route::post('/insert-slider', [SliderController::class, 'insert_slider']);
+//Slider 
+Route::get('/manage-slider', [SliderController::class, 'manage_slider']);
+Route::get('/add-slider', [SliderController::class, 'add_slider']);
+Route::post('/insert-slider', [SliderController::class, 'insert_slider']);
 
-    Route::get('/unactive-slide/{slider_id}', [SliderController::class, 'unactive_slide']);
-    Route::get('/active-slide/{slider_id}', [SliderController::class, 'active_slide']);
+Route::get('/unactive-slide/{slider_id}', [SliderController::class, 'unactive_slide']);
+Route::get('/active-slide/{slider_id}', [SliderController::class, 'active_slide']);
 
-    Route::get('/delete-slide/{slider_id}', [SliderController::class, 'delete_slide']);
+Route::get('/delete-slide/{slider_id}', [SliderController::class, 'delete_slide']);
 
-    //ORDER-Hàng tồn
-    Route::post('/update-order-qty', [OrderController::class, 'update_order_qty']);
-    Route::post('/update-qty', [OrderController::class, 'update_qty']);
-    Route::get('/delete-order/{order_code}', [OrderController::class, 'order_code']);
+//ORDER-Hàng tồn
+Route::post('/update-order-qty', [OrderController::class, 'update_order_qty']);
+Route::post('/update-qty', [OrderController::class, 'update_qty']);
+Route::get('/delete-order/{order_code}', [OrderController::class, 'order_code']);
 
-    // //Authentication Roles - Admin
-    // Route::get('/register-auth', [AuthController::class, 'register_auth']);
-    // Route::get('/login-auth', [AuthController::class, 'login_auth']);
-    // Route::post('/register', [AuthController::class, 'register']);
-    // Route::post('/login', [AuthController::class, 'login']);
-    // Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
+// //Authentication Roles - Admin
+// Route::get('/register-auth', [AuthController::class, 'register_auth']);
+// Route::get('/login-auth', [AuthController::class, 'login_auth']);
+// Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 
-    //Phân quyền chỉ có Admin or Author mới quản lí các chức năng
+//Phân quyền chỉ có Admin or Author mới quản lí các chức năng
 
-    Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
+Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
     //User
 
     Route::get('/add-users', [UserController::class, 'add_users']);
@@ -223,22 +226,21 @@ Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
     Route::get('/delete-user-roles/{admin_id}', [UserController::class, 'delete_user_roles']);
     Route::post('/store-users', [UserController::class, 'store_users']);
     Route::post('/assign-roles', [UserController::class, 'assign_roles']);
-
 });
 
-    //Category-Post
-    Route::get('/add-category-post', [CategoryPost::class, 'add_category_post']);
-    Route::get('/all-category-post', [CategoryPost::class, 'all_category_post']);
-    Route::get('/delete-category-post/{cate_id}', [CategoryPost::class, 'delete_category_post']);
-    Route::get('/edit-category-post/{category_post_id}', [CategoryPost::class, 'edit_category_post']);
-    Route::post('/save-category-post', [CategoryPost::class, 'save_category_post']);
-    Route::post('/update-category-post/{cate_id}', [CategoryPost::class, 'update_category_post']);
+//Category-Post
+Route::get('/add-category-post', [CategoryPost::class, 'add_category_post']);
+Route::get('/all-category-post', [CategoryPost::class, 'all_category_post']);
+Route::get('/delete-category-post/{cate_id}', [CategoryPost::class, 'delete_category_post']);
+Route::get('/edit-category-post/{category_post_id}', [CategoryPost::class, 'edit_category_post']);
+Route::post('/save-category-post', [CategoryPost::class, 'save_category_post']);
+Route::post('/update-category-post/{cate_id}', [CategoryPost::class, 'update_category_post']);
 
-    // Post
-    Route::get('/add-post', [PostController::class, 'add_post']);
-    Route::get('/all-post', [PostController::class, 'all_post']);
-    Route::post('/save-post', [PostController::class, 'save_post']);
-    Route::get('/delete-post/{post_id}', [PostController::class, 'delete_post']);
+// Post
+Route::get('/add-post', [PostController::class, 'add_post']);
+Route::get('/all-post', [PostController::class, 'all_post']);
+Route::post('/save-post', [PostController::class, 'save_post']);
+Route::get('/delete-post/{post_id}', [PostController::class, 'delete_post']);
 
 
 // });
