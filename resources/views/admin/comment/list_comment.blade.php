@@ -68,12 +68,30 @@
                                 <td><span class="text-ellipsis">{{ $comm->comment_name }}</span></td>
                                 {{-- Reply --}}
                                 <td><span class="text-ellipsis">{{ $comm->comment_content }}
+                                  <style type="text/css">
+                                    ul.list_rep li{
+                                      list-style-type: decimal;
+                                      color: blue;
+                                      margin: 5px 40px;
+                                    }
+                                  </style>
+                                        <ul class="list_rep">
+                                          Trả lời: 
+                                            @foreach ($comment_rep as $key => $comm_reply)
+                                                @if ($comm_reply->comment_parent_comment == $comm->comment_id)
+                                                    <li>{{$comm_reply->comment_content}}</li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
                                         @if ($comm->comment_status == 0)
                                             <br>
-                                            <textarea name="comment_content" id="" class="form-control reply_comment_{{$comm->comment_id}}" rows="5"></textarea>
+                                            <textarea name="comment_content" id="" class="form-control reply_comment_{{ $comm->comment_id }}"
+                                                rows="5"></textarea>
                                             <br>
-                                            <button class="btn btn-info btn-reply-comment" data-comment_id="{{ $comm->comment_id }}" data-product_id="{{ $comm->comment_product_id }}">Trả lời bình luận</button>
-                                            @endif
+                                            <button class="btn btn-info btn-reply-comment"
+                                                data-comment_id="{{ $comm->comment_id }}"
+                                                data-product_id="{{ $comm->comment_product_id }}">Trả lời bình luận</button>
+                                        @endif
                                     </span></td>
 
                                 <td><span class="text-ellipsis">{{ $comm->comment_date }}</span></td>

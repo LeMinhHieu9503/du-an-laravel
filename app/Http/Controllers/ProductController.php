@@ -248,7 +248,8 @@ class ProductController extends Controller
     public function list_comment()
     {
         $comment = Comment::with('product')->orderBy('comment_status', 'DESC')->get();
-        return view('admin.comment.list_comment')->with(compact('comment'));
+        $comment_rep = Comment::with('product')->where('comment_parent_comment','>',0)->orderBy('comment_id', 'DESC')->get();
+        return view('admin.comment.list_comment')->with(compact('comment','comment_rep'));
     }
 
     public function allow_comment(Request $request)
@@ -259,7 +260,8 @@ class ProductController extends Controller
         $comment->save();
     }
 
-    public function reply_comment(Request $request){
+    public function reply_comment(Request $request)
+    {
         $data = $request->all();
         $comment = new Comment();
         $comment->comment_content = $data['comment'];
@@ -278,8 +280,9 @@ class ProductController extends Controller
             return response()->json(['error' => 'Tên và nội dung bình luận không được để trống!'], 400);
         }
 
-        // Nếu không truyền comment_status, mặc định là 0
+        // Nếu không truyền comment_status, mặc định là 1
         $comment_status = $request->has('comment_status') ? $request->comment_status : 1;
+        $comment_parent_comment = $request->has('comment_parent_comment') ? $request->comment_parent_comment : 0;
 
         // Thêm bình luận vào database
         Comment::create([
@@ -300,10 +303,12 @@ class ProductController extends Controller
     {
         $product_id = $request->product_id;
         $comment = Comment::where('comment_product_id', $product_id)->where('comment_status', 0)->get();
+        $comment_rep = Comment::with('product')->where('comment_parent_comment','>', 0)->get();
         $output = '';
 
-        foreach ($comment as $comm) {
+        foreach ($comment as $key => $comm) {
             $output .= '
+            
         <div class="row style_comment">
             <div class="col-md-2">
                 <img src="' . asset('/uploads/avatar-batman.jpg') . '" width="100%" class="img img-responsive img-thumbnail" alt="">
@@ -314,7 +319,26 @@ class ProductController extends Controller
                 <p>' . htmlspecialchars($comm->comment_content) . '</p>
             </div>
         </div>
+        <br>
+        ';
+
+            foreach ($comment_rep as $key => $rep_comment) {
+                if ($rep_comment->comment_parent_comment == $comm->comment_id) {
+                    $output .= '
+
+        <div class="row style_comment" style="margin:5px 40px;background-color:rgb(154 208 186)">
+            <div class="col-md-2">
+                <img src="' . asset('/uploads/avatar-admin.jpg') . '" width="75%" class="img img-responsive img-thumbnail" alt="">
+            </div>
+            <div class="col-md-10">
+                <p style="color: green">@Store</p>
+                <p style="color: black">' . $rep_comment->comment_content . '</p>
+                <p></p>
+            </div>
+        </div>
         <br>';
+                }
+            }
         }
         echo $output;
     }
