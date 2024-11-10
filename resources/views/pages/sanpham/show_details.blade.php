@@ -108,26 +108,29 @@
                                 background: rgb(191, 188, 188);
                             }
                         </style>
-                        <form action="" >
+                        <form action="">
                             @csrf
-                            <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{ $value->product_id }}">
+                            <input type="hidden" name="comment_product_id" class="comment_product_id"
+                                value="{{ $value->product_id }}">
                             <div id="comment_show"></div> <!-- Ajax sẽ cập nhật phần này -->
-                            
+
                             <p></p>
                         </form>
-                        
+
 
                         <p><b>Viết đánh giá của bạn</b></p>
                         <style>
-                            
+
                         </style>
                         <form action="#" class="form" method="POST">
                             @csrf
                             <span>
-                                <input class="comment_name" type="text" name="comment_name" placeholder="Tên bình luận" />
+                                <input class="comment_name" type="text" name="comment_name"
+                                    placeholder="Tên bình luận" />
                             </span>
                             <textarea class="comment_content" name="comment_content" placeholder="Nội dung bình luận:"></textarea>
-                            <b>Đánh giá sao: </b> <img src="{{asset('frontend/images/product-details/rating.png')}}" alt="" />
+                            <b>Đánh giá sao: </b> <img src="{{ asset('frontend/images/product-details/rating.png') }}"
+                                alt="" />
                             <button type="button" class="btn btn-default pull-right send-comment">
                                 Gửi bình luận
                             </button>
@@ -157,9 +160,8 @@
                                             height="100%" width="100px" alt="" />
                                         <h2>{{ number_format($lienquan->product_price) . '  ' . 'VNĐ' }}</h2>
                                         <p>{{ $lienquan->product_name }}</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Thêm
-                                            giỏ hàng</a>
+                                        <a href="" class="btn btn-default add-to-cart"><i
+                                                class="fa fa-shopping-cart"></i>Xem chi tiết</a>
                                     </div>
                                 </div>
                             </div>

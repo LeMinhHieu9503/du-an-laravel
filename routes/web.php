@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\CategoryPost;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\GalleryController;
@@ -107,6 +108,8 @@ Route::post('/update-gallery', [GalleryController::class, 'update_gallery']);
 Route::post('/send-comment', [ProductController::class, 'send_comment']);
 Route::post('/load-comment', [ProductController::class, 'load_comment']);
 
+// Contact
+Route::get('/lienhe',[ContactController::class,'lien_he']);
 
 
 
@@ -143,6 +146,16 @@ Route::get('/delete-comment/{comment_id}', [ProductController::class, 'delete_co
 Route::post('/update-comment/{comment_id}', [ProductController::class, 'update_comment']);
 Route::post('/reply-comment', [ProductController::class, 'reply_comment']);
 
+// Contact
+
+Route::get('/information',[ContactController::class,'information']);
+Route::get('/list-information', [ContactController::class, 'list_info'])->name('list-information');
+Route::post('/save-info',[ContactController::class,'save_info']);
+Route::get('/edit-info/{info_id}', [ContactController::class,'edit_info']); 
+Route::put('/update-info/{info_id}', [ContactController::class,'update_info']); 
+Route::get('/delete-info/{info_id}', [ContactController::class,'delete_info']); 
+
+// Product
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product']);
 Route::get('/all-category-product', [CategoryProduct::class, 'all_category_product']);
 

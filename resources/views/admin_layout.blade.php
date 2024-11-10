@@ -201,6 +201,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <ul class="sub">
                                 <li><a href="{{ URL::to('/comment') }}">Liệt kê comment</a></li>
                             </ul>
+
+                        </li><li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Thông tin website</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/information') }}">Thêm thông tin</a></li>
+                                <li><a href="{{ URL::to('/list-information') }}">Liệt kê thông tin</a></li>
+                            </ul>
                         </li>
                         @impersonate
                             <li>
