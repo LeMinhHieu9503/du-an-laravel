@@ -138,6 +138,9 @@ Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 // Comment
 Route::get('/comment', [ProductController::class, 'list_comment']);
 Route::post('/allow-comment', [ProductController::class, 'allow_comment']);
+Route::get('/edit-comment/{comment_id}', [ProductController::class, 'edit_comment']);
+Route::get('/delete-comment/{comment_id}', [ProductController::class, 'delete_comment']);
+Route::post('/update-comment/{comment_id}', [ProductController::class, 'update_comment']);
 Route::post('/reply-comment', [ProductController::class, 'reply_comment']);
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product']);

@@ -83,7 +83,7 @@
                                                 @endif
                                             @endforeach
                                         </ul>
-                                        @if ($comm->comment_status == 0)
+                                        @if ($comm->comment_status == 0 )
                                             <br>
                                             <textarea name="comment_content" id="" class="form-control reply_comment_{{ $comm->comment_id }}"
                                                 rows="5"></textarea>
@@ -102,10 +102,10 @@
                                     </span></td>
 
                                 <td>
-                                    <a href="" class="active styling-edit" ui-toggle-class="">
+                                    <a href="{{ URL::to('/edit-comment/' . $comm->comment_id) }}" class="active styling-edit" ui-toggle-class="">
                                         <i class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
-                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')" href=""
+                                    <a onclick="return confirm('Bro chắc chắn xóa chứ?')" href="{{ URL::to('/delete-comment/' . $comm->comment_id) }}"
                                         class="active styling-delete" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>

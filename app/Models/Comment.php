@@ -23,9 +23,5 @@ class Comment extends Model
     public function product(){
         return $this->belongsTo('App\Models\Product','comment_product_id');
     }
-    public function replies()
-{
-    return $this->hasMany(Comment::class, 'comment_parent_comment');
-}
-
+    
 }

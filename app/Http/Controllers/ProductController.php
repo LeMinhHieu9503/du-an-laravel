@@ -248,8 +248,8 @@ class ProductController extends Controller
     public function list_comment()
     {
         $comment = Comment::with('product')->orderBy('comment_status', 'DESC')->get();
-        $comment_rep = Comment::with('product')->where('comment_parent_comment','>',0)->orderBy('comment_id', 'DESC')->get();
-        return view('admin.comment.list_comment')->with(compact('comment','comment_rep'));
+        $comment_rep = Comment::with('product')->where('comment_parent_comment', '>', 0)->orderBy('comment_id', 'DESC')->get();
+        return view('admin.comment.list_comment')->with(compact('comment', 'comment_rep'));
     }
 
     public function allow_comment(Request $request)
@@ -268,7 +268,7 @@ class ProductController extends Controller
         $comment->comment_product_id = $data['comment_product_id'];
         $comment->comment_name = 'Admin';
         $comment->comment_parent_comment = $data['comment_id'];
-        $comment->comment_status = 0;
+        $comment->comment_status = 1;
         $comment->comment_date = now();
 
         $comment->save();
@@ -281,7 +281,7 @@ class ProductController extends Controller
         }
 
         // Nếu không truyền comment_status, mặc định là 1
-        $comment_status = $request->has('comment_status') ? $request->comment_status : 1;
+        $comment_status = $request->has('comment_status') ? $request->comment_status : 0;
         $comment_parent_comment = $request->has('comment_parent_comment') ? $request->comment_parent_comment : 0;
 
         // Thêm bình luận vào database
@@ -303,7 +303,7 @@ class ProductController extends Controller
     {
         $product_id = $request->product_id;
         $comment = Comment::where('comment_product_id', $product_id)->where('comment_status', 0)->get();
-        $comment_rep = Comment::with('product')->where('comment_parent_comment','>', 0)->get();
+        $comment_rep = Comment::with('product')->where('comment_parent_comment', '>', 0)->get();
         $output = '';
 
         foreach ($comment as $key => $comm) {
@@ -341,5 +341,50 @@ class ProductController extends Controller
             }
         }
         echo $output;
+    }
+
+    public function delete_comment($comment_id)
+    {
+        $comment = Comment::find($comment_id);
+        if ($comment) {
+            $comment->delete();
+            return redirect()->back()->with('message', 'Xóa bình luận thành công!');
+        } else {
+            return redirect()->back()->with('error', 'Không tìm thấy bình luận!');
+        }
+    }
+
+    public function edit_comment($comment_id)
+    {
+        $comment = Comment::find($comment_id);
+        if ($comment) {
+            return view('admin.comment.edit_comment')->with('comment', $comment);
+        } else {
+            return redirect()->back()->with('error', 'Không tìm thấy bình luận!');
+        }
+    }
+
+    public function update_comment(Request $request, $comment_id)
+    {
+        // Tìm bình luận theo ID
+        $comment = Comment::find($comment_id);
+
+        // Kiểm tra nếu tìm thấy bình luận
+        if ($comment) {
+            // Cập nhật nội dung bình luận từ form
+            $comment->comment_content = $request->comment_content;
+
+            // Lưu lại thay đổi
+            $comment->save();
+
+            // Thêm thông báo vào session
+            Session::put('message', 'Cập nhật bình luận thành công!');
+        } else {
+            // Nếu không tìm thấy bình luận, hiển thị thông báo lỗi
+            Session::put('message', 'Không tìm thấy bình luận!');
+        }
+
+        // Quay lại trang danh sách bình luận
+        return redirect()->back();
     }
 }
