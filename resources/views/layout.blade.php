@@ -186,7 +186,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="404.html">Giỏ hàng</a></li>
-                                <li><a href="{{url('/lienhe')}}">Liên hệ</a></li>
+                                <li><a href="{{ url('/lienhe') }}">Liên hệ</a></li>
                             </ul>
                         </div>
                     </div>
@@ -292,9 +292,16 @@
                             </div>
                         </div><!--/price-range-->
 
-                        <div class="shipping text-center"><!--shipping-->
-                            <img src="{{ URL::to('frontend/images/shipping.jpg') }}" alt="" />
-                        </div><!--/shipping-->
+                        <div class="brands_products">
+                            <h2>Sản phẩm yêu thích</h2>
+                            <div class="brands-name">
+
+                                <div id="row_wishlist" class="row">
+
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -481,6 +488,69 @@
     <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
     <script src="{{ asset('frontend/js/prettify.js') }}"></script>
     <script type="text/javascript">
+        function view() {
+            if (localStorage.getItem('data') != null) {
+                var data = JSON.parse(localStorage.getItem('data'));
+                data.reverse();
+                document.getElementById('row_wishlist').style.overflow = 'scroll';
+                document.getElementById('row_wishlist').style.height = '600px';
+
+                for (i = 0; i < data.length; i++) {
+                    var name = data[i].name;
+                    var price = data[i].price;
+                    var image = data[i].image;
+                    var url = data[i].url;
+
+                    $("#row_wishlist").append('<div class="row" style="margin:10px 0"><div class="col-md-4"><img src="' +
+                        image + '" width="100%"></div><div class="col-md-8 info_wishlist"><p>' + name +
+                        '</p><p style="color:#FE980F">' + price + '</p> <a href="' + url +
+                        '">Đặt hàng</a> </div></div>');
+                }
+            }
+        }
+        view();
+
+        function add_wistlist(clicked_id) {
+            var id = clicked_id;
+
+            var name = document.getElementById('wishlist_productname' + id).value;
+            var price = document.getElementById('wishlist_productprice' + id).value;
+            var image = document.getElementById('wishlist_productimage' + id).src;
+            var url = document.getElementById('wishlist_producturl' + id).href;
+
+            var newItem = {
+                'url': url,
+                'id': id,
+                'name': name,
+                'price': price,
+                'image': image
+            };
+
+            if (localStorage.getItem('data') == null) {
+                localStorage.setItem('data', '[]');
+            }
+
+            var old_data = JSON.parse(localStorage.getItem('data'));
+
+            var matches = $.grep(old_data, function(obj) {
+                return obj.id == id;
+            });
+
+            if (matches.length) {
+                alert('Sản phẩm bạn đã yêu thích, nên không thể thêm');
+            } else {
+                old_data.push(newItem);
+
+                $("#row_wishlist").append('<div class="row" style="margin:10px 0"><div class="col-md-4"><img src="' +
+                    newItem.image + '" width="100%"></div><div class="col-md-8 info_wishlist"><p>' + newItem.name +
+                    '</p> <p style="color:#FE980F">' + newItem.price + '</p> <a href="' + newItem.url +
+                    '">Đặt hàng</a></div></div>');
+            }
+
+            localStorage.setItem('data', JSON.stringify(old_data));
+        }
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#imageGallery').lightSlider({
                 gallery: true,
@@ -600,6 +670,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             load_comment();
@@ -630,7 +701,7 @@
                 if (comment_name === "" || comment_content === "") {
                     $('#notify_comment').html(
                         '<p class="text text-danger">Tên và nội dung bình luận không được để trống!</p>'
-                        );
+                    );
                     return; // Dừng lại không gửi yêu cầu AJAX
                 }
 
@@ -645,7 +716,8 @@
                     },
                     success: function(data) {
                         $('#notify_comment').html(
-                            '<span class="text text-success">Thêm bình luận thành công,bình luận đang chờ duyệt!</span>');
+                            '<span class="text text-success">Thêm bình luận thành công,bình luận đang chờ duyệt!</span>'
+                        );
                         load_comment(); // Cập nhật lại danh sách bình luận
 
                         $('#notify_comment').fadeOut(20000);
@@ -657,7 +729,7 @@
                         console.log(xhr.responseText);
                         $('#notify_comment').html(
                             '<p class="text text-danger">Có lỗi xảy ra, vui lòng thử lại!</p>'
-                            );
+                        );
                     }
                 });
             });
