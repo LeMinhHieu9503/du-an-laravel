@@ -5,7 +5,7 @@
         @foreach ($all_product as $key => $product)
       
         
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">

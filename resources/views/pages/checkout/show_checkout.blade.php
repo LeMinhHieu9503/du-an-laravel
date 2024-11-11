@@ -28,7 +28,7 @@
 								<form method="POST" >
 									@csrf
 									<input type="text" name="shipping_email" class="shipping_email" placeholder="Điền email">
-									<input type="text" name="shipping_name" class="shipping_name" placeholder="Họ và tên người gửi">
+									<input type="text" name="shipping_name" class="shipping_name" placeholder="Họ và tên ">
 									<input type="text" name="shipping_address" class="shipping_address" placeholder="Địa chỉ gửi hàng">
 									<input type="text" name="shipping_phone" class="shipping_phone" placeholder="Số điện thoại">
 									<textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>
