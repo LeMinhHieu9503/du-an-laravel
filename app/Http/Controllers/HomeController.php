@@ -96,6 +96,8 @@ class HomeController extends Controller
         // Lấy sản phẩm đã lọc
         $all_product = $products->get();
 
+
+        
         return view('pages.home')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)

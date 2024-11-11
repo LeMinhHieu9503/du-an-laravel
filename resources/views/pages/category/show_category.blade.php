@@ -25,7 +25,17 @@
                                     <button type="submit" class="btn btn-primary">Áp dụng</button>
                                 </form>
                             </div>
+
+                            <div class="col-md-4">
+                                <label for="amount">Lọc theo giá</label>
+
+                                <form action="">
+                                    <div id="slider-range"></div>
+                                    
+                                </form>
+                            </div>
                         </div>
+                        
                         
                         
 

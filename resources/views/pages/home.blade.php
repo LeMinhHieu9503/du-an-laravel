@@ -105,6 +105,8 @@
                     <button type="submit">Lọc</button>
                 </form>
             </div>
+
+
         </div>
         @foreach ($all_product as $key => $product)
             <div class="col-sm-6">

@@ -286,15 +286,13 @@
                         <div class="brands_products">
                             <h2>Sản phẩm yêu thích</h2>
                             <div class="brands-name">
-
                                 <div id="row_wishlist" class="row">
-
                                 </div>
-
                             </div>
                         </div>
 
                     </div>
+
                 </div>
 
                 <div class="col-sm-9 padding-right">
@@ -478,7 +476,34 @@
     <script src="{{ asset('frontend/js/lightgallery-all.min.js') }}"></script>
     <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
     <script src="{{ asset('frontend/js/prettify.js') }}"></script>
+<style>
+    #row_wishlist {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các phần tử bọc vào khi không đủ chỗ */
+    gap: 20px; /* Khoảng cách giữa các phần tử */
+    overflow: hidden; /* Ngừng cuộn ngang */
+}
 
+.product-item {
+    display: flex;
+    flex-direction: column; /* Hiển thị theo chiều dọc */
+    justify-content: center;
+    align-items: center;
+    width: calc(33% - 20px); /* Để các phần tử chiếm 1/3 chiều rộng, bạn có thể điều chỉnh giá trị này */
+    box-sizing: border-box; /* Đảm bảo tính toán đúng kích thước */
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto; /* Giữ tỷ lệ ảnh đúng */
+}
+
+.product-info {
+    padding-top: 10px;
+    text-align: center;
+}
+
+</style>
     <script type="text/javascript">
         function view() {
             if (localStorage.getItem('data') != null) {
@@ -493,10 +518,19 @@
                     var image = data[i].image;
                     var url = data[i].url;
 
-                    $("#row_wishlist").append('<div class="row" style="margin:10px 0"><div class="col-md-4"><img src="' +
-                        image + '" width="100%"></div><div class="col-md-8 info_wishlist"><p>' + name +
-                        '</p><p style="color:#FE980F">' + price + '</p> <a href="' + url +
-                        '">Đặt hàng</a> </div></div>');
+                    $("#row_wishlist").append(`
+    <div class="row" style="margin:10px 0; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 10px; width: 100%; text-align: center;">
+            <img src="${image}" width="100%" />
+        </div>
+        <div class="info_wishlist" style="text-align: center;">
+            <p>${name}</p>
+            <p style="color:#FE980F">${price}</p>
+            <a href="${url}">Đặt hàng</a>
+        </div>
+    </div>
+`);
+
                 }
             }
         }
