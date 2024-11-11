@@ -159,6 +159,38 @@ class CategoryProduct extends Controller
             $url_canonical = $request->url();
             //--seo
         }
+        $products = DB::table('tbl_product')
+        ->join('tbl_category_product', 'tbl_product.category_id', '=', 'tbl_category_product.category_id')
+        ->where('tbl_product.category_id', $category_id);
+
+    // Kiểm tra xem có tham số sort trong URL không
+    if ($request->has('sort')) {
+        $sort_by = $request->get('sort');
+        
+        // Áp dụng sắp xếp theo các tiêu chí
+        switch ($sort_by) {
+            case 'giam_dan':
+                $products = $products->orderBy('product_price', 'DESC');
+                break;
+            case 'tang_dan':
+                $products = $products->orderBy('product_price', 'ASC');
+                break;
+            case 'kytu_az':
+                $products = $products->orderBy('product_name', 'ASC');
+                break;
+            case 'kytu_za':
+                $products = $products->orderBy('product_name', 'DESC');
+                break;
+            default:
+                $products = $products->orderBy('product_id', 'DESC');
+        }
+    } else {
+        // Nếu không có tham số sort, mặc định sắp xếp theo product_id giảm dần
+        $products = $products->orderBy('product_id', 'DESC');
+    }
+
+    // Lấy sản phẩm đã lọc
+    $category_by_id = $products->get();
 
         return view('pages.category.show_category')
             ->with('category', $cate_product)

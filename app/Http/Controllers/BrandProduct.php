@@ -40,7 +40,7 @@ class BrandProduct extends Controller
         $this->AuthLogin();
 
         // $all_brand_product = DB::table('tbl_brand')->get(); //Static hướng đối tượng
-        $all_brand_product = Brand::orderBy('brand_id','DESC')->get();
+        $all_brand_product = Brand::orderBy('brand_id', 'DESC')->get();
 
         $manager_brand_product = view('admin.all_brand_product')
             ->with('all_brand_product', $all_brand_product);
@@ -130,7 +130,7 @@ class BrandProduct extends Controller
         // $data['brand_slug'] = $request->brand_slug;
         // $data['brand_desc'] = $request->brand_product_desc;
         // DB::table('tbl_brand')->where('brand_id',$brand_product_id)->update($data);
-        Session::put('message','Cập nhật thương hiệu sản phẩm thành công');
+        Session::put('message', 'Cập nhật thương hiệu sản phẩm thành công');
         return Redirect::to('all-brand-product');
     }
 
@@ -151,7 +151,7 @@ class BrandProduct extends Controller
     //HOME
     public function show_brand_home(Request $request, $brand_id)
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
@@ -170,14 +170,45 @@ class BrandProduct extends Controller
             ->where('tbl_brand.brand_id', $brand_id)
             ->limit(1)
             ->get();
+        $products = DB::table('tbl_product')
+        ->join('tbl_brand', 'tbl_product.brand_id', '=', 'tbl_brand.brand_id')
+        ->where('tbl_product.brand_id', $brand_id);
 
+        // Kiểm tra xem có tham số sort trong URL không
+        if ($request->has('sort')) {
+            $sort_by = $request->get('sort');
+
+            // Áp dụng sắp xếp theo các tiêu chí
+            switch ($sort_by) {
+                case 'giam_dan':
+                    $products = $products->orderBy('product_price', 'DESC');
+                    break;
+                case 'tang_dan':
+                    $products = $products->orderBy('product_price', 'ASC');
+                    break;
+                case 'kytu_az':
+                    $products = $products->orderBy('product_name', 'ASC');
+                    break;
+                case 'kytu_za':
+                    $products = $products->orderBy('product_name', 'DESC');
+                    break;
+                default:
+                    $products = $products->orderBy('product_id', 'DESC');
+            }
+        } else {
+            // Nếu không có tham số sort, mặc định sắp xếp theo product_id giảm dần
+            $products = $products->orderBy('product_id', 'DESC');
+        }
+
+        // Lấy sản phẩm đã lọc
+        $brand_by_id = $products->get();
 
         return view('pages.brand.show_brand')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
             ->with('brand_by_id', $brand_by_id)
-            ->with('category_post',$category_post)
+            ->with('category_post', $category_post)
             ->with('brand_name', $brand_name)
-            ->with('slider',$slider);
+            ->with('slider', $slider);
     }
 }

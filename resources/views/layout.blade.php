@@ -282,15 +282,6 @@
                             </div>
                         </div><!--/brands_products-->
 
-                        <div class="price-range"><!--price-range-->
-                            <h2>Price Range</h2>
-                            <div class="well text-center">
-                                <input type="text" class="span2" value="" data-slider-min="0"
-                                    data-slider-max="10000" data-slider-step="5" data-slider-value="[0,10000]"
-                                    id="sl2"><br />
-                                <b class="pull-left">$ 0</b> <b class="pull-right">$ 10000</b>
-                            </div>
-                        </div><!--/price-range-->
 
                         <div class="brands_products">
                             <h2>Sản phẩm yêu thích</h2>
@@ -487,6 +478,7 @@
     <script src="{{ asset('frontend/js/lightgallery-all.min.js') }}"></script>
     <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
     <script src="{{ asset('frontend/js/prettify.js') }}"></script>
+
     <script type="text/javascript">
         function view() {
             if (localStorage.getItem('data') != null) {
@@ -670,7 +662,19 @@
             });
         });
     </script>
+    {{-- <script type="text/javascript">
+        $(document).ready(function() {
 
+            $('#sort').on('change', function() {
+                var url = $(this).val();
+                if (url) {
+                    window.location = url;
+                }
+                return false;
+            });
+
+        });
+    </script> --}}
     <script type="text/javascript">
         $(document).ready(function() {
             load_comment();

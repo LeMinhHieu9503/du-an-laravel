@@ -7,6 +7,28 @@
                         <h2 class="title text-center">{{$name->category_name}}</h2>
 
                         @endforeach
+
+                        {{-- Sắp xếp  --}}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="sort">Sắp xếp theo</label>
+                                <form action="" method="GET">
+                                    @csrf
+                                    <div class="form-group">
+                                        <select name="sort" id="sort" class="form-control">
+                                            <option value="tang_dan">Giá tăng dần</option>
+                                            <option value="giam_dan">Giá giảm dần</option>
+                                            <option value="kytu_az">A đến Z</option>
+                                            <option value="kytu_za">Z đến A</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Áp dụng</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        
+
                         @foreach($category_by_id as $key => $product)
                         <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}">
                         <div class="col-sm-6">
