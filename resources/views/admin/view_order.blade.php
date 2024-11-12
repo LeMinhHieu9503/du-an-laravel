@@ -131,10 +131,12 @@
                         @foreach ($order_details as $key => $details)
                             @php
                                 $i++;
-                                $subtotal = $details->product_price * $details->product_sales_quantity;
+                                $product_price = (float) $details->product_price; // Ép kiểu về float
+                                $product_quantity = (int) $details->product_sales_quantity; // Ép kiểu về int
+                                $subtotal = ($product_price*1000) * $product_quantity;
                                 $total += $subtotal;
                             @endphp
-                            <tr class="color_qty_{{$details->product_id}}">
+                            <tr class="color_qty_{{ $details->product_id }}">
                                 <td><label><i>{{ $i }}</i></label>
                                 </td>
                                 <td><span class="text-ellipsis">{{ $details->product_name }}</span></td>
@@ -148,27 +150,29 @@
                                     </span></td>
                                 <td>{{ number_format($details->product_feeship, 0, ',', '.') }}đ</td>
                                 <td>
-                                        <input type="number" min="1" {{$order_status == 2 ? 'disabled' : ''}} value="{{ $details->product_sales_quantity }}"
-                                            name="product_sales_quantity" class="order_qty_{{ $details->product_id }}">
+                                    <input type="number" min="1" {{ $order_status == 2 ? 'disabled' : '' }}
+                                        value="{{ $details->product_sales_quantity }}" name="product_sales_quantity"
+                                        class="order_qty_{{ $details->product_id }}">
 
-                                        <input type="hidden" name="order_qty_storage"
-                                            value="{{ $details->product->product_quantity }}"
-                                            class="order_qty_storage_{{ $details->product_id }}">
+                                    <input type="hidden" name="order_qty_storage"
+                                        value="{{ $details->product->product_quantity }}"
+                                        class="order_qty_storage_{{ $details->product_id }}">
 
-                                        <input type="hidden" name="order_code" value="{{ $details->order_code }}"
-                                            class="order_code">
+                                    <input type="hidden" name="order_code" value="{{ $details->order_code }}"
+                                        class="order_code">
 
-                                        <input type="hidden" name="order_product_id" value="{{ $details->product_id }}"
-                                            class="order_product_id">
-                                @if($order_status != 2)
+                                    <input type="hidden" name="order_product_id" value="{{ $details->product_id }}"
+                                        class="order_product_id">
+                                    @if ($order_status != 2)
                                         <button class="btn btn-default update_quantity_order"
                                             data-product_id="{{ $details->product_id }}" name="update_quantity_order">Cập
                                             nhật</button>
-                                @endif
+                                    @endif
                                 </td>
                                 <td><span
-                                        class="text-ellipsis">{{ number_format($details->product_price, 0, ',', '.') }}đ</span>
+                                        class="text-ellipsis">{{ $details->product_price }}đ</span>
                                 </td>
+
                                 <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}đ</span>
                                 </td>
 

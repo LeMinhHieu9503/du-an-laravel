@@ -132,10 +132,13 @@
 											$total = 0;
 									@endphp
 									@foreach(Session::get('cart') as $key => $cart)
-										@php
-											$subtotal = $cart['product_price']*$cart['product_qty'];
-											$total+=$subtotal;
-										@endphp
+									@php
+									$product_price = (float) $cart['product_price']; // Ép kiểu về float
+									$product_qty = (int) $cart['product_qty']; // Ép kiểu về int
+									$subtotal = ($product_price*1000) * $product_qty;
+									$total += $subtotal;
+							@endphp
+							
 
 									<tr>
 										<td class="cart_product">
@@ -146,7 +149,7 @@
 											<p>{{$cart['product_name']}}</p>
 										</td>
 										<td class="cart_price">
-											<p>{{number_format($cart['product_price'],0,',','.')}}đ</p>
+											<p>{{$cart['product_price']}}đ</p>
 										</td>
 										<td class="cart_quantity">
 											<div class="cart_quantity_button">

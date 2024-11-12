@@ -188,10 +188,10 @@ class CategoryProduct extends Controller
             // Nếu không có tham số sort, mặc định sắp xếp theo product_id giảm dần
             $products = $products->orderBy('product_id', 'DESC');
         }
-        
+
         // Lấy sản phẩm đã lọc
         $category_by_id = $products->get();
-
+        
         return view('pages.category.show_category')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)

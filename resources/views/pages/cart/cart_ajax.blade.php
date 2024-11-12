@@ -39,10 +39,13 @@
                                 @endphp
 
                                 @foreach (Session::get('cart') as $key => $cart)
-                                    @php
-                                        $subtotal = $cart['product_qty'] * $cart['product_price'];
-                                        $total += $subtotal;
-                                    @endphp
+                                @php
+                                $product_qty = floatval($cart['product_qty']);  // Ép kiểu về float
+                                $product_price = floatval($cart['product_price']); // Ép kiểu về float
+                            
+                                $subtotal = $product_qty * ($product_price*1000);
+                                $total += $subtotal;
+                            @endphp
                                     <tr>
                                         <td class="cart_product">
                                             <img src="{{ asset('uploads/product/' . $cart['product_image']) }}"
@@ -58,7 +61,7 @@
                                         </td>
                                         
                                         <td class="cart_price">
-                                            <p>{{ number_format($cart['product_price'], 0, ',', '.') }}đ</p>
+                                            <p>{{$cart['product_price']}}đ</p>
 
                                         </td>
                                         <td class="cart_quantity">

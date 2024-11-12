@@ -17,7 +17,8 @@ return new class extends Migration
             $table->integer('brand_id');
             $table->text('product_desc');
             $table->text('product_content');
-            $table->string('product_price');
+            // Chuyển thành decimal thay vì string
+            $table->float('product_price', 8, 2); // 8 số, 2 chữ số thập phân
             $table->string('product_image');
             $table->integer('product_status');
             $table->timestamps();
@@ -32,3 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('tbl_product');
     }
 };
+
