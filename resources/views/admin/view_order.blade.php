@@ -170,7 +170,7 @@
                                     @endif
                                 </td>
                                 <td><span
-                                        class="text-ellipsis">{{ number_format($details->product_price,0,',','.') }}đ</span>
+                                        class="text-ellipsis">{{ ($details->product_price) }}đ</span>
                                 </td>
 
                                 <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}đ</span>
@@ -194,8 +194,9 @@
                                         $total_coupon = $total - $coupon_number + $details->product_feeship;
                                     @endphp
                                 @endif
-
-                                Tiền coupon: {{ number_format($coupon_number ?? 0, 0, ',', '.') }}đ
+                                <br>
+                                
+                                Tiền coupon giảm: {{ number_format($total_after_coupon ?? 0, 0, ',', '.') }}đ
                                 <br>
                                 Phí ship: {{ number_format($details->product_feeship ?? 0, 0, ',', '.') }}đ
                                 <br>
