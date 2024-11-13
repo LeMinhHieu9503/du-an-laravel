@@ -77,6 +77,7 @@ class CartController extends Controller
     public function add_cart_ajax(Request $request)
     {
         $data = $request->all();
+        
         $session_id = substr(md5(microtime()), rand(0, 26), 5);
         $cart = Session::get('cart');
         if ($cart == true) {
@@ -111,7 +112,7 @@ class CartController extends Controller
         }
 
         Session::put('cart', $cart);
-        Session::save();
+        Session::save();    
     }
 
     public function gio_hang(Request $request)

@@ -39,13 +39,19 @@
                                 @endphp
 
                                 @foreach (Session::get('cart') as $key => $cart)
-                                @php
-                                $product_qty = floatval($cart['product_qty']);  // Ép kiểu về float
-                                $product_price = floatval($cart['product_price']); // Ép kiểu về float
-                            
-                                $subtotal = $product_qty * ($product_price);
-                                $total += $subtotal;
-                            @endphp
+                                    @php
+                                        $product_qty = (float) $cart['product_qty']; // Ép kiểu về float
+                                        $product_price = (float) $cart['product_price']; // Ép kiểu về float
+
+                                        var_dump('qty   ' . $product_qty . '<hr>');
+
+                                        var_dump('price   ' . $product_price . '<hr>');
+
+                                        var_dump('cart_price   ' . $cart['product_price']);
+
+                                        $subtotal = $product_qty * $product_price;
+                                        $total += $subtotal;
+                                    @endphp
                                     <tr>
                                         <td class="cart_product">
                                             <img src="{{ asset('uploads/product/' . $cart['product_image']) }}"
@@ -59,9 +65,11 @@
                                             <h4><a href=""></a></h4>
                                             <p>{{ $cart['product_quantity'] }}</p>
                                         </td>
-                                        
+
                                         <td class="cart_price">
+
                                             <p>{{ $cart['product_price'] }}đ</p>
+
 
                                         </td>
                                         <td class="cart_quantity">

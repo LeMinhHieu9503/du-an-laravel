@@ -15,8 +15,7 @@ class Order extends Model
         'customer_id',
         'shipping_id',
         'order_status',
-        'order_code',
-        'created_at'
+        'order_code'
     ];
 
     
