@@ -133,7 +133,7 @@
                                 $i++;
                                 $product_price = (float) $details->product_price; // Ép kiểu về float
                                 $product_quantity = (int) $details->product_sales_quantity; // Ép kiểu về int
-                                $subtotal = ($product_price*1000) * $product_quantity;
+                                $subtotal = ($product_price) * $product_quantity;
                                 $total += $subtotal;
                             @endphp
                             <tr class="color_qty_{{ $details->product_id }}">
@@ -170,7 +170,7 @@
                                     @endif
                                 </td>
                                 <td><span
-                                        class="text-ellipsis">{{ $details->product_price }}đ</span>
+                                        class="text-ellipsis">{{ number_format($details->product_price,0,',','.') }}đ</span>
                                 </td>
 
                                 <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}đ</span>

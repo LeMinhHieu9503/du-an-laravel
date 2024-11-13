@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('product_desc');
             $table->text('product_content');
             // Chuyển thành decimal thay vì string
-            $table->float('product_price', 8, 2); // 8 số, 2 chữ số thập phân
+            $table->decimal('product_price', 15, 2); // 8 số, 2 chữ số thập phân
             $table->string('product_image');
             $table->integer('product_status');
             $table->timestamps();

@@ -63,7 +63,7 @@
                             <!-- Chọn danh mục bài viết -->
                             <div class="form-group">
                                 <label for="cate_post_id">Danh mục bài viết</label>
-                                <select name="cate_post_id" class="form-control input-sm m-bot15" id="cate_post_id" required>
+                                <select name="cate_post_id" class="form-control input-sm m-bot15" id="cate_post_id" >
                                     @foreach ($cate_post as $cate)
                                         <option value="{{ $cate->cate_post_id }}">{{ $cate->cate_post_name }}</option>
                                     @endforeach
@@ -82,6 +82,7 @@
                             <!-- Nút Thêm bài viết -->
                             <button type="submit" name="add_post" class="btn btn-info">Thêm bài viết</button>
                         </form>
+                        
                         <!-- Form kết thúc -->
                     </div>
                 </div>

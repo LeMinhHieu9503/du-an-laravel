@@ -133,11 +133,15 @@
 									@endphp
 									@foreach(Session::get('cart') as $key => $cart)
 									@php
-									$product_price = (float) $cart['product_price']; // Ép kiểu về float
-									$product_qty = (int) $cart['product_qty']; // Ép kiểu về int
-									$subtotal = ($product_price*1000) * $product_qty;
-									$total += $subtotal;
-							@endphp
+    // Loại bỏ dấu phẩy, dấu chấm và các ký tự không phải số trong giá trị giá và số lượng
+    $product_price = (float) preg_replace('/[^\d.]/', '', $cart['product_price']);
+    $product_qty = (int) preg_replace('/[^\d]/', '', $cart['product_qty']);
+    
+    // Tính toán subtotal và tổng
+    $subtotal = $product_price * $product_qty;
+    $total += $subtotal;
+@endphp
+
 							
 
 									<tr>
@@ -149,7 +153,7 @@
 											<p>{{$cart['product_name']}}</p>
 										</td>
 										<td class="cart_price">
-											<p>{{$cart['product_price']}}đ</p>
+											<p>{{ number_format($cart['product_price'], 0, ',', '.') }}đ</p>
 										</td>
 										<td class="cart_quantity">
 											<div class="cart_quantity_button">

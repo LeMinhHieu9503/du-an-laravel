@@ -4,8 +4,8 @@
         <div class="product-image-wrapper">
             @foreach ($post as $key => $p)
                 <div class="single-products">
-                    <h2 class="title text-center">{{ $p->post_title }}</h2>
-                    <p class="post-desc text-center" style="text-align: left" >{{$p->post_desc }}</p>
+                    <h2 class="title text-center">{!! $p->post_title !!}</h2>
+                    <p class="post-desc text-center" style="text-align: left" >{!!$p->post_desc !!}</p>
 
                         <!-- Hình ảnh bài viết -->
                         <div class="post-image">

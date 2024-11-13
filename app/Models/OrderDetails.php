@@ -18,7 +18,8 @@ class OrderDetails extends Model
         'product_price',
         'product_sales_quantity',
         'product_coupon',
-        'product_feeship'
+        'product_feeship',
+        'order_id'
     ];
 
     public function product(){

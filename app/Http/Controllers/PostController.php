@@ -30,6 +30,7 @@ class PostController extends Controller
         $cate_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         return view('admin.post.add_post')->with(compact('cate_post'));
+        
     }
 
     // Hiển thị danh sách tất cả danh mục sản phẩm
