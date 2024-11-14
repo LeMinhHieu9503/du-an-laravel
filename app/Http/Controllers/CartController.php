@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CatePost;
 use App\Models\Coupon;
 use App\Models\Slider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Để sử dụng Hash
@@ -17,11 +18,12 @@ session_start();
 
 class CartController extends Controller
 {
-    public function AuthLogin(){
+    public function AuthLogin()
+    {
         $admin_id = Auth::id();
-        if($admin_id){
+        if ($admin_id) {
             return Redirect::to('dashboard');
-        }else{
+        } else {
             return Redirect::to('admin')->send();
         }
     }
@@ -77,7 +79,7 @@ class CartController extends Controller
     public function add_cart_ajax(Request $request)
     {
         $data = $request->all();
-        
+
         $session_id = substr(md5(microtime()), rand(0, 26), 5);
         $cart = Session::get('cart');
         if ($cart == true) {
@@ -112,17 +114,17 @@ class CartController extends Controller
         }
 
         Session::put('cart', $cart);
-        Session::save();    
+        Session::save();
     }
 
     public function gio_hang(Request $request)
     {
         $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
-    $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
         
-
         $url_canonical = $request->url();
-
+        $coupons = Coupon::all(); 
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -135,6 +137,7 @@ class CartController extends Controller
             ->with('brand', $brand_product)
             ->with('url_canonical', $url_canonical)
             ->with('category_post', $category_post)
+            ->with('coupons', $coupons)
             ->with('slider', $slider);
     }
 
@@ -200,8 +203,10 @@ class CartController extends Controller
 
     public function check_coupon(Request $request)
     {
+
+        $today = Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y');
         $data = $request->all();
-        $coupon = Coupon::where('coupon_code', $data['coupon'])->first();
+        $coupon = Coupon::where('coupon_code', $data['coupon'])->where('coupon_status', 1)->where('coupon_date_end','>=',$today)->first();
         if ($coupon) {
             $count_coupon = $coupon->count();
             if ($count_coupon > 0) {
@@ -230,7 +235,7 @@ class CartController extends Controller
                 return redirect()->back()->with('message', 'Thêm mã giảm giá thành công');
             }
         } else {
-            return redirect()->back()->with('error', 'Mã giảm giá không đúng');
+            return redirect()->back()->with('error', 'Mã giảm giá không đúng hoặc đã hết hạn');
         }
     }
 }

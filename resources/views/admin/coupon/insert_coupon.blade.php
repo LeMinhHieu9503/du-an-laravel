@@ -24,7 +24,19 @@
                             <div class="form-group">
                                 <label for="categoryProductName">Tên mã giảm giá</label>
                                 <input type="text" name="coupon_name" class="form-control"
-                                    id="categoryProductName" placeholder="Tên mã giảm giá" required>
+                                    id="" placeholder="Tên mã giảm giá" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="categoryProductName">Ngày bắt đầu</label>
+                                <input type="text" name="coupon_date_start" class="form-control"
+                                    id="start_coupon" placeholder="Tên mã giảm giá" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="categoryProductName">Ngày kết thúc</label>
+                                <input type="text" name="coupon_date_end" class="form-control"
+                                    id="end_coupon" placeholder="Tên mã giảm giá" required>
                             </div>
 
                             <!-- Nhập mã giảm giá -->

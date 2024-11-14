@@ -198,7 +198,8 @@
 
 
                                                 <td colspan="2">
-                                                    <li>Tổng tiền :<span>{{ number_format($total, 0, ',', '.') }}$</span></li>
+                                                    <li>Tổng tiền :<span>{{ number_format($total, 0, ',', '.') }}$</span>
+                                                    </li>
                                                     @if (Session::get('coupon'))
                                                         <li>
 
@@ -209,7 +210,6 @@
                                                                         @php
                                                                             $total_coupon =
                                                                                 ($total * $cou['coupon_number']) / 100;
-
                                                                         @endphp
                                                                     </p>
                                                                     <p>
@@ -299,12 +299,15 @@
                                             <input type="submit" class="btn btn-default check_coupon"
                                                 name="check_coupon" value="Tính mã giảm giá">
 
+
                                         </form>
                                     </td>
                                 </tr>
                             @endif
 
                             </table>
+
+
 
                         </div>
                     </div>
@@ -316,6 +319,160 @@
 
 
         </div>
+        <!-- Nút hiển thị bảng mã giảm giá -->
+        <button onclick="showCouponTable()" id="show-coupons-btn">Xem toàn bộ mã giảm giá</button>
+
+        <!-- Nút ẩn bảng mã giảm giá (mặc định bị ẩn) -->
+        <button onclick="hideCouponTable()" id="hide-coupons-btn" style="display: none;">Ẩn bảng mã giảm giá</button>
+        <div id="coupon-warning" style="display: none; color: red; margin-top: 10px;">
+            <p>Chỉ được sử dụng một mã giảm giá cho mỗi đơn hàng!</p>
+            <p >Có thể đổi sang mã khác !</p>
+        </div>
+        <!-- Bảng mã giảm giá -->
+
+        <div id="coupon-table" class="coupon-table" style="display: none;">
+            <h3>Các mã giảm giá hiện có</h3>
+            <table>
+                <tr>
+                    <th>Tên Mã Giảm Giá</th>
+                    <th>Mã giảm giá</th>
+                    <th>Giảm</th>
+                    <th>Ngày hết hạn</th>
+                </tr>
+                @foreach ($coupons as $coupon)
+                    <tr>
+                        <td>{{ $coupon->coupon_name }}</td>
+                        <td>{{ $coupon->coupon_code }}</td>
+                        <td>
+                            @if ($coupon->coupon_condition == 1)
+                                {{ $coupon->coupon_number }} %
+                            @else
+                                {{ number_format($coupon->coupon_number, 0, ',', '.') }} VND
+                            @endif
+                        </td>
+                        <td>{{ $coupon->coupon_date_end }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+
+        <script>
+            // Hiển thị bảng mã giảm giá và thanh thông báo
+            function showCouponTable() {
+                document.getElementById("coupon-table").style.display = "block"; // Hiển thị bảng
+                document.getElementById("show-coupons-btn").style.display = "none"; // Ẩn nút "Xem toàn bộ mã giảm giá"
+                document.getElementById("hide-coupons-btn").style.display = "inline"; // Hiển thị nút "Ẩn bảng mã giảm giá"
+                document.getElementById("coupon-warning").style.display = "block"; // Hiển thị thanh thông báo
+            }
+
+            // Ẩn bảng mã giảm giá và thanh thông báo
+            function hideCouponTable() {
+                document.getElementById("coupon-table").style.display = "none"; // Ẩn bảng
+                document.getElementById("show-coupons-btn").style.display = "inline"; // Hiển thị nút "Xem toàn bộ mã giảm giá"
+                document.getElementById("hide-coupons-btn").style.display = "none"; // Ẩn nút "Ẩn bảng mã giảm giá"
+                document.getElementById("coupon-warning").style.display = "none"; // Ẩn thanh thông báo
+            }
+        </script>
+        <style>
+            /* Thông báo */
+            #coupon-warning {
+                background-color: #f8d7da;
+                /* Màu nền đỏ nhạt */
+                color: #721c24;
+                /* Màu chữ đỏ đậm */
+                border: 1px solid #f5c6cb;
+                /* Viền nhẹ màu đỏ nhạt */
+                padding: 15px;
+                border-radius: 5px;
+                /* Bo góc nhẹ */
+                font-size: 16px;
+                /* Cỡ chữ vừa */
+                margin-top: 20px;
+                /* Khoảng cách phía trên */
+                width: 100%;
+                /* Chiều rộng thanh thông báo */
+                box-sizing: border-box;
+                /* Đảm bảo padding không làm thay đổi kích thước */
+            }
+
+            #coupon-warning p {
+                margin: 0;
+                /* Loại bỏ margin mặc định của <p> */
+                font-weight: bold;
+                /* Chữ đậm */
+            }
+
+            #coupon-warning i {
+                margin-right: 10px;
+                /* Khoảng cách giữa biểu tượng và văn bản */
+            }
+
+            /* Nút hiển thị và ẩn bảng mã giảm giá */
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                color: #fff;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin-top: 10px;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            /* Bảng mã giảm giá */
+            .coupon-table {
+                margin-top: 20px;
+                text-align: center;
+                max-width: 600px;
+                margin: 0 auto;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                background-color: #fff;
+                overflow: hidden;
+            }
+
+            .coupon-table h3 {
+                padding: 15px;
+                background-color: #007bff;
+                color: #fff;
+                font-size: 20px;
+                margin: 0;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+            /* Bảng mã giảm giá - bảng dữ liệu */
+            .coupon-table table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .coupon-table th,
+            .coupon-table td {
+                padding: 12px 15px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .coupon-table th {
+                background-color: #f8f9fa;
+                color: #333;
+                font-weight: bold;
+            }
+
+            .coupon-table td {
+                color: #555;
+            }
+
+            .coupon-table tr:last-child td {
+                border-bottom: none;
+            }
+        </style>
     </section> <!--/#cart_items-->
 
 @endsection

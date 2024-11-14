@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\City;
+use App\Models\Coupon;
 use App\Models\Province;
 use App\Models\Wards;
 use App\Models\Feeship;
@@ -35,7 +36,7 @@ class CheckoutController extends Controller
     }
     public function login_checkout()
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
@@ -48,8 +49,8 @@ class CheckoutController extends Controller
         return view('pages.checkout.login_checkout')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('category_post',$category_post)
-            ->with('slider',$slider);
+            ->with('category_post', $category_post)
+            ->with('slider', $slider);
     }
 
     public function add_customer(Request $request)
@@ -69,7 +70,7 @@ class CheckoutController extends Controller
 
     public function checkout()
     {
-        $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
         $cate_product = DB::table('tbl_category_product')
@@ -80,14 +81,16 @@ class CheckoutController extends Controller
             ->orderBy('brand_id', 'desc')->get();
 
         $city = City::orderBy('matp', 'ASC')->get();
+        $coupons = Coupon::all();
 
 
         return view('pages.checkout.show_checkout')
             ->with('category', $cate_product)
             ->with('brand', $brand_product)
-            ->with('category_post',$category_post)
+            ->with('category_post', $category_post)
             ->with('city', $city)
-            ->with('slider',$slider);
+            ->with('coupons', $coupons)
+            ->with('slider', $slider);
     }
 
     public function save_checkout_customer(Request $request)
@@ -167,7 +170,7 @@ class CheckoutController extends Controller
                 ->with('brand', $brand_product);
         } else {
             // Thanh toán bằng thẻ ghi nợ
-            Cart::destroy();
+            // Cart::destroy();
 
             echo 'Thanh toán thẻ ghi nợ';
         }
@@ -285,6 +288,12 @@ class CheckoutController extends Controller
         $data = $request->all();
         $shipping = new Shipping();
 
+        //getcoupon
+        $coupon = Coupon::where('coupon_code', $data['order_coupon'])->first();
+        $coupon->coupon_time =  $coupon->coupon_time - 1;
+        $coupon->save();
+
+        // get van chuyen
         $shipping->shipping_name = $data['shipping_name'];
         $shipping->shipping_email = $data['shipping_email'];
         $shipping->shipping_phone = $data['shipping_phone'];

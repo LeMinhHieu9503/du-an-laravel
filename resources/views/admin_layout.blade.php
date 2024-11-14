@@ -177,7 +177,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Coupon</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ URL::to('/insert-coupon') }}">Quản lý mã giảm giá</a></li>
+                                <li><a href="{{ URL::to('/insert-coupon') }}">Thêm mã giảm giá</a></li>
                                 <li><a href="{{ URL::to('list-coupon') }}">Liệt kê mã giảm giá</a></li>
                             </ul>
                         </li>
@@ -272,6 +272,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </section>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 
     <script src="{{ asset('backend/js/bootstrap.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.dcjqaccordion.2.7.js') }}"></script>
@@ -282,6 +284,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
     <script src="{{ asset('backend/js/jquery.form-validator.min.js') }}"></script>
+
+    <script>
+        $(function() {
+            $("#start_coupon").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "dd/mm/yy",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"],
+                duration: "slow"
+            });
+            $("#end_coupon").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "dd/mm/yy",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"],
+                duration: "slow"
+            });
+        });
+    </script>
+
+    <script>
+        $(function() {
+            $("#datepicker").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "yy-mm-dd",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"],
+                duration: "slow"
+            });
+            $("#datepicker2").datepicker({
+                prevText: "Tháng trước",
+                nextText: "Tháng sau",
+                dateFormat: "yy-mm-dd",
+                dayNamesMin: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"],
+                duration: "slow"
+            });
+        });
+    </script>
+
     <script type="text/javascript">
         $('.comment_duyet_btn').click(function() {
             var comment_status = $(this).data('comment_status');
