@@ -148,7 +148,7 @@
                                             Không mã
                                         @endif
                                     </span></td>
-                                <td>{{ number_format($details->product_feeship, 0, ',', '.') }}đ</td>
+                                <td>{{ ($details->product_feeship) }}$</td>
                                 <td>
                                     <input type="number" min="1" {{ $order_status == 2 ? 'disabled' : '' }}
                                         value="{{ $details->product_sales_quantity }}" name="product_sales_quantity"
@@ -170,10 +170,10 @@
                                     @endif
                                 </td>
                                 <td><span
-                                        class="text-ellipsis">{{ ($details->product_price) }}đ</span>
+                                        class="text-ellipsis">{{ ($details->product_price) }}$</span>
                                 </td>
 
-                                <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}đ</span>
+                                <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}$</span>
                                 </td>
 
                             </tr>
@@ -182,27 +182,31 @@
                             <td colspan="2">
                                 @php
                                     $total_coupon = 0;
+                                    $total_after_coupon = 0;
                                 @endphp
-
+                        
                                 @if ($coupon_condition == 1)
                                     @php
+                                        // Giảm giá theo phần trăm
                                         $total_after_coupon = ($total * $coupon_number) / 100;
-                                        $total_coupon = $total - $total_after_coupon + $details->product_feeship;
+                                        $total_coupon = $total - $total_after_coupon + ($details->product_feeship ?? 0);
                                     @endphp
-                                @else
+                                    Tiền coupon giảm: {{ number_format($total_after_coupon, 0, ',', '.') }}$
+                                @elseif ($coupon_condition == 2)
                                     @php
-                                        $total_coupon = $total - $coupon_number + $details->product_feeship;
+                                        // Giảm giá số tiền cố định
+                                        $total_coupon = $total - $coupon_number + ($details->product_feeship ?? 0);
                                     @endphp
+                                    Tiền coupon giảm: {{ number_format($coupon_number, 0, ',', '.') }}$
                                 @endif
                                 <br>
-                                
-                                Tiền coupon giảm: {{ number_format($total_after_coupon ?? 0, 0, ',', '.') }}đ
+                        
+                                Phí ship: {{ number_format($details->product_feeship ?? 0, 0, ',', '.') }}$
                                 <br>
-                                Phí ship: {{ number_format($details->product_feeship ?? 0, 0, ',', '.') }}đ
-                                <br>
-                                Thanh toán: {{ number_format($total_coupon, 0, ',', '.') }}đ
+                                Thanh toán: {{ number_format($total_coupon, 0, ',', '.') }}$
                             </td>
                         </tr>
+                        
                         <tr>
                             <td colspan="6">
                                 @foreach ($order as $key => $or)
@@ -245,6 +249,7 @@
                                             </select>
                                         </form>
                                     @endif
+                                    
                                 @endforeach
                             </td>
                         </tr>

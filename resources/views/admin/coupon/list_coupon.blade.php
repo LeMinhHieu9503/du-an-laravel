@@ -76,7 +76,7 @@
                                         <?php
                                         }else{
                                         ?>
-                                        Giảm {{$cou->coupon_number}} k
+                                        Giảm {{$cou->coupon_number}} $
                                         <?php
                                         }
                                         ?>
