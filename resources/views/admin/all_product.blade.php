@@ -68,7 +68,7 @@
                                 <td><span class="text-ellipsis">{{ $pro->product_quantity }}</span></td>
                                 <td><span class="text-ellipsis">{{ $pro->product_slug }}</span></td>
 
-                                <td><span class="text-ellipsis">{{ $pro->product_price }}</span></td>
+                                <td><span class="text-ellipsis">{{ $pro->product_price }} $</span></td>
                                 <td>
                                     <span class="text-ellipsis">
                                         <img src="uploads/product/{{ $pro->product_image }}" height="100" width="100"

@@ -525,7 +525,7 @@
         </div>
         <div class="info_wishlist" style="text-align: center;">
             <p>${name}</p>
-            <p style="color:#FE980F">${price}</p>
+            <p style="color:#FE980F">${price}$</p>
             <a href="${url}">Đặt hàng</a>
         </div>
     </div>

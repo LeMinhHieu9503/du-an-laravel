@@ -18,5 +18,8 @@ class Order extends Model
         'order_code'
     ];
 
-    
+    public function shipping()
+    {
+        return $this->belongsTo(Shipping::class, 'shipping_id');
+    }
 }

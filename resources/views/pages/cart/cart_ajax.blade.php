@@ -68,7 +68,7 @@
 
                                         <td class="cart_price">
 
-                                            <p>{{ $cart['product_price'] }}đ</p>
+                                            <p>{{ $cart['product_price'] }}$</p>
 
 
                                         </td>
@@ -83,7 +83,7 @@
                                         </td>
                                         <td class="cart_total">
                                             <p class="cart_total_price">
-                                                {{ number_format($subtotal, 0, ',', '.') }}đ
+                                                {{ number_format($subtotal, 0, ',', '.') }}$
                                             </p>
                                         </td>
                                         <td class="cart_delete">
@@ -97,7 +97,7 @@
                                     <td>
                                         <div class="total_area " colspan="2">
                                             <ul class="total-list">
-                                                <li>Tổng tiền :<span>{{ number_format($total, 0, ',', '.') }}đ</span></li>
+                                                <li>Tổng tiền :<span>{{ number_format($total, 0, ',', '.') }}$</span></li>
                                                 @if (Session::get('coupon'))
                                                     <li>
 
@@ -110,16 +110,16 @@
                                                                             ($total * $cou['coupon_number']) / 100;
                                                                         echo '<p><li>Tổng giảm:' .
                                                                             number_format($total_coupon, 0, ',', '.') .
-                                                                            'đ</li></p>';
+                                                                            '$</li></p>';
                                                                     @endphp
                                                                 </p>
                                                                 <p>
                                                     <li>Tổng đã giảm
-                                                        :{{ number_format($total - $total_coupon, 0, ',', '.') }}đ
+                                                        :{{ number_format($total - $total_coupon, 0, ',', '.') }}$
                                                     </li>
                                                     </p>
                                                 @elseif($cou['coupon_condition'] == 2)
-                                                    Mã giảm : {{ number_format($cou['coupon_number'], 0, ',', '.') }} k
+                                                    Mã giảm : {{ number_format($cou['coupon_number'], 0, ',', '.') }} $
                                                     <p>
                                                         @php
                                                             $total_coupon = $total - $cou['coupon_number'];
@@ -127,7 +127,7 @@
                                                         @endphp
                                                     </p>
                                                     <p>
-                                                        <li>Tổng đã giảm :{{ number_format($total_coupon, 0, ',', '.') }}đ
+                                                        <li>Tổng đã giảm :{{ number_format($total_coupon, 0, ',', '.') }}$
                                                         </li>
                                                     </p>
                                                 @endif

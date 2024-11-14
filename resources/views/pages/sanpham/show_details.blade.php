@@ -50,7 +50,7 @@
                             class="cart_product_price_{{ $value->product_id }}">
 
                         <span>
-                            <span>{{ number_format($value->product_price, 0, ',', '.') . 'VNĐ' }}</span>
+                            <span>{{ number_format($value->product_price, 0, ',', '.') . '$' }}</span>
 
                             <label>Số lượng:</label>
                             <input name="qty" type="number" min="1"
@@ -158,7 +158,7 @@
                                     <div class="productinfo text-center">
                                         <img src="{{ URL::to('uploads/product/' . $lienquan->product_image) }}"
                                             height="100%" width="100px" alt="" />
-                                        <h2>{{ number_format($lienquan->product_price) . '  ' . 'VNĐ' }}</h2>
+                                        <h2>{{ number_format($lienquan->product_price) . '  ' . '$' }}</h2>
                                         <p>{{ $lienquan->product_name }}</p>
                                         <a href="" class="btn btn-default add-to-cart"><i
                                                 class="fa fa-shopping-cart"></i>Xem chi tiết</a>

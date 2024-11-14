@@ -268,7 +268,7 @@ class CheckoutController extends Controller
                         Session::save();
                     }
                 } else {
-                    Session::put('fee', 20000);
+                    Session::put('fee', 20);
                     Session::save();
                 }
             }

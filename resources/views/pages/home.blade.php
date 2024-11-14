@@ -141,7 +141,7 @@
                                     <img src="{{ URL::to('uploads/product/' . $product->product_image) }}"
                                         id="wishlist_productimage{{ $product->product_id }}" alt="" />
 
-                                    <h2>{{ number_format($product->product_price) . '  ' . 'VNĐ' }}</h2>
+                                    <h2>{{ number_format($product->product_price) . '  ' . '$' }}</h2>
 
                                     <p>{{ $product->product_name }}</p>
 

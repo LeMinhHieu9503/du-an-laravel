@@ -16,6 +16,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\StatiscalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -139,7 +140,9 @@ Route::get('/logout-auth', [AuthController::class, 'logout_auth']);
 //Phân quyền chỉ có Admin or Author mới quản lí các chức năng
 // Route::group(['middleware' => 'auth.roles', 'auth.roles' => ['admin', 'author']], function () {
 
-//Category-Product
+//Statiscal
+Route::get('/statiscal', [StatiscalController::class, 'index']);
+
 
 // Comment
 Route::get('/comment', [ProductController::class, 'list_comment']);

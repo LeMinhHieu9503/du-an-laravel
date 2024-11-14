@@ -202,7 +202,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li><a href="{{ URL::to('/comment') }}">Liệt kê comment</a></li>
                             </ul>
 
-                        </li><li class="sub-menu">
+                        </li>
+                        <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
                                 <span>Thông tin website</span>
@@ -233,7 +234,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </ul>
                             </li>
                         @endhasrole
-
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Thống kê</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/statiscal') }}">Thống kê</a></li>
+                            </ul>
+                        </li>
 
 
                     </ul>
@@ -260,6 +270,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </section>
         <!--main content end-->
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <script src="{{ asset('backend/js/bootstrap.js') }}"></script>
     <script src="{{ asset('backend/js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('backend/js/scripts.js') }}"></script>
@@ -295,7 +308,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     $('#notify_comment').html('<span class="text text-success">' + alertMessage +
                         '</span>');
                     setTimeout(function() {
-                        $('#notify_comment').html(''); 
+                        $('#notify_comment').html('');
                     }, 50000);
                 }
             });
@@ -305,7 +318,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         $('.btn-reply-comment').click(function() {
             var comment_id = $(this).data('comment_id');
 
-            var comment = $('.reply_comment_'+comment_id).val();
+            var comment = $('.reply_comment_' + comment_id).val();
             var comment_product_id = $(this).data('product_id');
 
             var alert = 'Trả lời thành công';
@@ -329,13 +342,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     // location.reload();
                     $('#notify_comment').html('<span class="text text-success">' + alert +
                         '</span>');
-                    $('.reply_comment_'+comment_id).val('');
+                    $('.reply_comment_' + comment_id).val('');
                 }
             });
 
         });
-
-       
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
