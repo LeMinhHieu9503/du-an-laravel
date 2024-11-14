@@ -43,11 +43,11 @@
                                         $product_qty = (float) $cart['product_qty']; // Ép kiểu về float
                                         $product_price = (float) $cart['product_price']; // Ép kiểu về float
 
-                                        var_dump('qty   ' . $product_qty . '<hr>');
+                                        // var_dump('qty   ' . $product_qty . '<hr>');
 
-                                        var_dump('price   ' . $product_price . '<hr>');
+                                        // var_dump('price   ' . $product_price . '<hr>');
 
-                                        var_dump('cart_price   ' . $cart['product_price']);
+                                        // var_dump('cart_price   ' . $cart['product_price']);
 
                                         $subtotal = $product_qty * $product_price;
                                         $total += $subtotal;
