@@ -128,6 +128,20 @@
                                 <li><a href="{{ URL::to('/gio-hang') }}"><i class="fa fa-shopping-cart"></i> Giỏ
                                         hàng</a></li>
                                 <?php
+                                        $customer_id = Session::get('customer_id');
+                                        if($customer_id!=NULL){ 
+                                      ?>
+                                <li><a href="{{ URL::to('/history') }}" target="_blank"><i class="fa fa-bell"></i> Lịch sử đơn
+                                        hàng</a></li>
+
+                                <?php
+                                 }
+                                      ?>
+
+
+
+
+                                <?php
                                    $customer_id = Session::get('customer_id');
                                    if($customer_id!=NULL){ 
                                  ?>
@@ -465,31 +479,37 @@
 
     <style>
         #row_wishlist {
-        display: flex;
-        flex-wrap: wrap; /* Cho phép các phần tử bọc vào khi không đủ chỗ */
-        gap: 20px; /* Khoảng cách giữa các phần tử */
-        overflow: hidden; /* Ngừng cuộn ngang */
-    }
-    
-    .product-item {
-        display: flex;
-        flex-direction: column; /* Hiển thị theo chiều dọc */
-        justify-content: center;
-        align-items: center;
-        width: calc(33% - 20px); /* Để các phần tử chiếm 1/3 chiều rộng, bạn có thể điều chỉnh giá trị này */
-        box-sizing: border-box; /* Đảm bảo tính toán đúng kích thước */
-    }
-    
-    .product-image img {
-        max-width: 100%;
-        height: auto; /* Giữ tỷ lệ ảnh đúng */
-    }
-    
-    .product-info {
-        padding-top: 10px;
-        text-align: center;
-    }
-    
+            display: flex;
+            flex-wrap: wrap;
+            /* Cho phép các phần tử bọc vào khi không đủ chỗ */
+            gap: 20px;
+            /* Khoảng cách giữa các phần tử */
+            overflow: hidden;
+            /* Ngừng cuộn ngang */
+        }
+
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            /* Hiển thị theo chiều dọc */
+            justify-content: center;
+            align-items: center;
+            width: calc(33% - 20px);
+            /* Để các phần tử chiếm 1/3 chiều rộng, bạn có thể điều chỉnh giá trị này */
+            box-sizing: border-box;
+            /* Đảm bảo tính toán đúng kích thước */
+        }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            /* Giữ tỷ lệ ảnh đúng */
+        }
+
+        .product-info {
+            padding-top: 10px;
+            text-align: center;
+        }
     </style>
 
     <script src="{{ asset('frontend/js/jquery.js') }}"></script>

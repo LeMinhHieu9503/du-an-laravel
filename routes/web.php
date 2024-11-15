@@ -126,7 +126,9 @@ Route::get('/change-pass', [ForgetPassController::class, 'showChangePasswordForm
 Route::post('/change-pass', [ForgetPassController::class, 'changePassword'])->name('changePassword');
 
 
-
+// oder-old
+Route::get('/history',[OrderController::class,'history']);
+Route::get('/view-hisstory-order/{order_code}',[OrderController::class,'view_history_order']);
 
 //                                       BACK-END
 

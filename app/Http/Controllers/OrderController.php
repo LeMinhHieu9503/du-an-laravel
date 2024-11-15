@@ -20,6 +20,7 @@ use App\Models\OrderDetails;
 use App\Models\Customer;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\Slider;
 use Illuminate\Support\Facades\Auth;
 
 session_start();
@@ -134,5 +135,103 @@ class OrderController extends Controller
         $order->delete();
         Session::put('message', 'Xóa đơn hàng thành công');
         return redirect()->back();
+    }
+
+    public function history(Request $request)
+    {
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
+
+        // Post-category
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
+        // URL Canonical
+        $url_canonical = $request->url();
+
+        // Lấy tất cả thể loại sản phẩm
+        $cate_product = DB::table('tbl_category_product')
+            ->where('category_status', '0')
+            ->orderBy('category_id', 'desc')->get();
+
+        // Lấy tất cả thương hiệu sản phẩm
+        $brand_product = DB::table('tbl_brand')
+            ->where('brand_status', '0')
+            ->orderBy('brand_id', 'desc')->get();
+
+        if (!Session::get('customer_id')) {
+            return redirect('/login-checkout')->with('error', 'Vui lòng đăng nhập để được xem lịch sử đơn hàng');
+        } else {
+            $order = Order::where('customer_id', Session::get('customer_id'))->orderBy('created_at', 'DESC')->paginate(5);
+            return view('pages.history.history')->with(compact('order'))
+                ->with('category', $cate_product)
+                ->with('brand', $brand_product)
+                ->with('url_canonical', $url_canonical)
+                ->with('slider', $slider)
+                ->with('category_post', $category_post);
+        }
+    }
+
+    public function view_history_order(Request $request, $order_code)
+    {
+        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
+
+        // Post-category
+        $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+
+        // URL Canonical
+        $url_canonical = $request->url();
+
+        // Lấy tất cả thể loại sản phẩm
+        $cate_product = DB::table('tbl_category_product')
+            ->where('category_status', '0')
+            ->orderBy('category_id', 'desc')->get();
+
+        // Lấy tất cả thương hiệu sản phẩm
+        $brand_product = DB::table('tbl_brand')
+            ->where('brand_status', '0')
+            ->orderBy('brand_id', 'desc')->get();
+
+        if (!Session::get('customer_id')) {
+            return redirect('/login-checkout')->with('error', 'Vui lòng đăng nhập để được xem lịch sử đơn hàng');
+        } else {
+            $order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();
+            $order = Order::where('order_code', $order_code)->get();
+
+            foreach ($order as $key => $ord) {
+                $customer_id = $ord->customer_id;
+                $shipping_id = $ord->shipping_id;
+                $order_status = $ord->order_status;
+            }
+            $customer = Customer::where('customer_id', $customer_id)->first();
+            $shipping = Shipping::where('shipping_id', $shipping_id)->first();
+
+            $order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();
+
+            foreach ($order_details as $key => $order_d) {
+                $product_coupon = $order_d->product_coupon;
+            }
+
+            if ($product_coupon != 'no') {
+                $coupon = Coupon::where('coupon_code', $product_coupon)->first();
+                $coupon_condition = $coupon->coupon_condition;
+                $coupon_number = $coupon->coupon_number;
+            } else {
+                $coupon_condition  = 2;
+                $coupon_number = 0;
+            }
+            // $order = Order::where('customer_id', Session::get('customer_id'))->orderBy('created_at', 'DESC')->paginate(5);
+            return view('pages.history.view_history_order')
+                ->with('category', $cate_product)
+                ->with('brand', $brand_product)
+                ->with('url_canonical', $url_canonical)
+                ->with('slider', $slider)
+                ->with('category_post', $category_post)
+                ->with('order_details', $order_details)
+                ->with('customer', $customer)
+                ->with('shipping', $shipping)
+                ->with('coupon_condition', $coupon_condition)
+                ->with('coupon_number', $coupon_number)
+                ->with('order', $order)
+                ->with('order_status', $order_status);
+        }
     }
 }

@@ -288,10 +288,18 @@ class CheckoutController extends Controller
         $data = $request->all();
         $shipping = new Shipping();
 
-        //getcoupon
-        $coupon = Coupon::where('coupon_code', $data['order_coupon'])->first();
-        $coupon->coupon_time =  $coupon->coupon_time - 1;
-        $coupon->save();
+        // Kiểm tra nếu có mã coupon
+        if (!empty($data['order_coupon'])) {
+            $coupon = Coupon::where('coupon_code', $data['order_coupon'])->first();
+
+            // Kiểm tra coupon có tồn tại và hợp lệ
+            if ($coupon) {
+                $coupon->coupon_time = $coupon->coupon_time - 1;
+                $coupon->save();
+            } else {
+                return redirect()->back()->with('error', 'Mã giảm giá không hợp lệ hoặc đã hết hạn.');
+            }
+        }
 
         // get van chuyen
         $shipping->shipping_name = $data['shipping_name'];

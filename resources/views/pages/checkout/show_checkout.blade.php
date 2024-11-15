@@ -18,6 +18,33 @@
             <div class="register-req">
                 <p>Làm ơn đăng ký hoặc đăng nhập để thanh toán giỏ hàng và xem lại lịch sử mua hàng</p>
             </div><!--/register-req-->
+            <style>
+                .btn-history {
+                    display: inline-block;
+                    background-color: orange;
+                    /* Nền sáng */
+                    color: black;
+                    font-size: 20px;
+                    padding: 10px 20px;
+                    /* Thêm padding giống như một nút */
+                    text-align: center;
+                    text-decoration: none;
+                    /* Bỏ gạch chân */
+                    border: 1px solid #ccc;
+                    /* Viền mờ */
+                    border-radius: 5px;
+                    /* Bo tròn viền */
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    /* Hiệu ứng khi hover */
+                }
+
+                .btn-history:hover {
+                    background-color: #e9ecef;
+                    /* Nền khi hover */
+                }
+            </style>
+            <a href="{{ url('history') }}" target="_blank" class="btn-history">Xem lại lịch sử đơn hàng</a>
 
             <div class="shopper-informations">
                 <div class="row">
@@ -25,94 +52,140 @@
                     <div class="col-sm-12 clearfix">
                         <div class="bill-to">
                             <p>Điền thông tin gửi hàng</p>
-                            <div class="form-one">
-                                <form method="POST">
-                                    @csrf
-                                    <input type="text" name="shipping_email" class="shipping_email"
-                                        placeholder="Điền email">
-                                    <input type="text" name="shipping_name" class="shipping_name"
-                                        placeholder="Họ và tên ">
-                                    <input type="text" name="shipping_address" class="shipping_address"
-                                        placeholder="Địa chỉ gửi hàng">
-                                    <input type="text" name="shipping_phone" class="shipping_phone"
-                                        placeholder="Số điện thoại">
-                                    <textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>
+                            <div class="form-container">
+                                <div class="form-one">
+                                    <form method="POST">
+                                        @csrf
+                                        <input type="text" name="shipping_email" class="shipping_email"
+                                            placeholder="Điền email">
+                                        <input type="text" name="shipping_name" class="shipping_name"
+                                            placeholder="Họ và tên">
+                                        <input type="text" name="shipping_address" class="shipping_address"
+                                            placeholder="Địa chỉ gửi hàng">
+                                        <input type="text" name="shipping_phone" class="shipping_phone"
+                                            placeholder="Số điện thoại">
+                                        <textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>
 
-                                    {{-- Fee --}}
-                                    @if (Session::get('fee'))
-                                        <input type="hidden" name="order_fee" class="order_fee"
-                                            value="{{ Session::get('fee') }}">
-                                    @else
-                                        <input type="hidden" name="order_fee" class="order_fee" value="20000">
-                                    @endif
-                                    {{-- Coupon --}}
-                                    @if (Session::get('coupon'))
-                                        @foreach (Session::get('coupon') as $key => $cou)
-                                            <input type="hidden" name="order_coupon" class="order_coupon"
-                                                value="{{ $cou['coupon_code'] }}">
-                                        @endforeach
-                                    @else
-                                        <input type="hidden" name="order_coupon" class="order_coupon" value="no">
-                                    @endif
+                                        {{-- Fee --}}
+                                        @if (Session::get('fee'))
+                                            <input type="hidden" name="order_fee" class="order_fee"
+                                                value="{{ Session::get('fee') }}">
+                                        @else
+                                            <input type="hidden" name="order_fee" class="order_fee" value="20000">
+                                        @endif
+                                        {{-- Coupon --}}
+                                        @if (Session::get('coupon'))
+                                            @foreach (Session::get('coupon') as $key => $cou)
+                                                <input type="hidden" name="order_coupon" class="order_coupon"
+                                                    value="{{ $cou['coupon_code'] }}">
+                                            @endforeach
+                                        @else
+                                            <input type="hidden" name="order_coupon" class="order_coupon" value="no">
+                                        @endif
 
-
-
-                                    <div class="">
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1">Chọn hình thức thanh toán</label>
+                                            <label for="payment_select">Chọn hình thức thanh toán</label>
                                             <select name="payment_select"
                                                 class="form-control input-sm m-bot15 payment_select">
                                                 <option value="0">Qua chuyển khoản</option>
                                                 <option value="1">Tiền mặt</option>
                                             </select>
                                         </div>
+                                        <input type="button" value="Xác nhận đơn hàng" name="send_order"
+                                            class="btn btn-primary btn-sm send_order">
+                                    </form>
+                                </div>
+
+                                <div class="form-two">
+                                    <form >
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="city">Chọn thành phố</label>
+                                            <select name="city" id="city"
+                                                class="form-control input-sm m-bot15 choose city">
+                                                <option value="">--Chọn tỉnh thành phố--</option>
+                                                @foreach ($city as $key => $ci)
+                                                    <option value="{{ $ci->matp }}">{{ $ci->name_city }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="province">Chọn quận huyện</label>
+                                            <select name="province" id="province"
+                                                class="form-control input-sm m-bot15 province choose">
+                                                <option value="">--Chọn quận huyện--</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="wards">Chọn xã phường</label>
+                                            <select name="wards" id="wards"
+                                                class="form-control input-sm m-bot15 wards">
+                                                <option value="">--Chọn xã phường--</option>
+                                            </select>
+                                        </div>
+
+                                        <input type="button" value="Tính phí vận chuyển" name="calculate_order"
+                                            class="btn btn-primary btn-sm calculate_delivery">
+                                    </form>
+
+                                    @if (Session::get('cart'))
+                                        <tr>
+                                            <td>
+
+                                                <form method="POST" action="{{ url('/check-coupon') }}">
+                                                    @csrf
+                                                    <input type="text" class="form-control" name="coupon"
+                                                        placeholder="Nhập mã giảm giá"><br>
+                                                    <input style="background-color: orange" type="submit" class="btn btn-default check_coupon"
+                                                        name="check_coupon" value="Tính mã giảm giá">
+
+
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    <button onclick="showCouponTable()" id="show-coupons-btn">Xem toàn bộ mã giảm
+                                        giá</button>
+
+                                    <!-- Nút ẩn bảng mã giảm giá (mặc định bị ẩn) -->
+                                    <button onclick="hideCouponTable()" id="hide-coupons-btn" style="display: none;">Ẩn
+                                        bảng mã giảm giá</button>
+                                    <div id="coupon-warning" style="display: none; color: red; margin-top: 10px;">
+                                        <p>Chỉ được sử dụng một mã giảm giá cho mỗi đơn hàng!</p>
+                                        <p>Có thể đổi sang mã khác !</p>
                                     </div>
-                                    <input type="button" value="Xác nhận đơn hàng" name="send_order"
-                                        class="btn btn-primary btn-sm send_order">
-                                </form>
+                                    <!-- Bảng mã giảm giá -->
 
-
-                                <form>
-                                    @csrf
-
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Chọn thành phố</label>
-                                        <select name="city" id="city"
-                                            class="form-control input-sm m-bot15 choose city">
-
-                                            <option value="">--Chọn tỉnh thành phố--</option>
-                                            @foreach ($city as $key => $ci)
-                                                <option value="{{ $ci->matp }}">{{ $ci->name_city }}</option>
+                                    <div id="coupon-table" class="coupon-table" style="display: none;">
+                                        <h3>Các mã giảm giá hiện có</h3>
+                                        <table>
+                                            <tr>
+                                                <th>Tên Mã Giảm Giá</th>
+                                                <th>Mã giảm giá</th>
+                                                <th>Giảm</th>
+                                                <th>Ngày hết hạn</th>
+                                            </tr>
+                                            @foreach ($coupons as $coupon)
+                                                <tr>
+                                                    <td>{{ $coupon->coupon_name }}</td>
+                                                    <td>{{ $coupon->coupon_code }}</td>
+                                                    <td>
+                                                        @if ($coupon->coupon_condition == 1)
+                                                            {{ $coupon->coupon_number }} %
+                                                        @else
+                                                            {{ number_format($coupon->coupon_number, 0, ',', '.') }} VND
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $coupon->coupon_date_end }}</td>
+                                                </tr>
                                             @endforeach
-
-                                        </select>
+                                        </table>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Chọn quận huyện</label>
-                                        <select name="province" id="province"
-                                            class="form-control input-sm m-bot15 province choose">
-                                            <option value="">--Chọn quận huyện--</option>
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Chọn xã phường</label>
-                                        <select name="wards" id="wards" class="form-control input-sm m-bot15 wards">
-                                            <option value="">--Chọn xã phường--</option>
-                                        </select>
-                                    </div>
-
-
-                                    <input type="button" value="Tính phí vận chuyển" name="calculate_order"
-                                        class="btn btn-primary btn-sm calculate_delivery">
-
-
-                                </form>
-
+                                </div>
                             </div>
-
                         </div>
                     </div>
+
                     <div class="col-sm-12 clearfix">
                         @if (session()->has('message'))
                             <div class="alert alert-success">
@@ -288,7 +361,7 @@
 
 
                             </form>
-                            @if (Session::get('cart'))
+                            {{-- @if (Session::get('cart'))
                                 <tr>
                                     <td>
 
@@ -303,7 +376,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endif
+                            @endif --}}
 
                             </table>
 
@@ -320,13 +393,13 @@
 
         </div>
         <!-- Nút hiển thị bảng mã giảm giá -->
-        <button onclick="showCouponTable()" id="show-coupons-btn">Xem toàn bộ mã giảm giá</button>
+        {{-- <button onclick="showCouponTable()" id="show-coupons-btn">Xem toàn bộ mã giảm giá</button>
 
         <!-- Nút ẩn bảng mã giảm giá (mặc định bị ẩn) -->
         <button onclick="hideCouponTable()" id="hide-coupons-btn" style="display: none;">Ẩn bảng mã giảm giá</button>
         <div id="coupon-warning" style="display: none; color: red; margin-top: 10px;">
             <p>Chỉ được sử dụng một mã giảm giá cho mỗi đơn hàng!</p>
-            <p >Có thể đổi sang mã khác !</p>
+            <p>Có thể đổi sang mã khác !</p>
         </div>
         <!-- Bảng mã giảm giá -->
 
@@ -354,7 +427,7 @@
                     </tr>
                 @endforeach
             </table>
-        </div>
+        </div> --}}
 
         <script>
             // Hiển thị bảng mã giảm giá và thanh thông báo
