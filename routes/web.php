@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryProduct;
+use App\Http\Controllers\ForgetPassController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\CategoryPost;
@@ -115,8 +116,14 @@ Route::post('/load-comment', [ProductController::class, 'load_comment']);
 // Contact
 Route::get('/lienhe',[ContactController::class,'lien_he']);
 
+// Forget Password
+Route::get('/forget-pass', [ForgetPassController::class, 'showForm']);
 
+// Route xử lý form quên mật khẩu (gửi email)
+Route::post('/forget-pass', [ForgetPassController::class, 'resetPassword']);
 
+Route::get('/change-pass', [ForgetPassController::class, 'showChangePasswordForm'])->name('showChangePasswordForm');
+Route::post('/change-pass', [ForgetPassController::class, 'changePassword'])->name('changePassword');
 
 
 

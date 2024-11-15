@@ -14,8 +14,37 @@
                                 <input type="checkbox" class="checkbox">
                                 Ghi nhớ đăng nhập
                             </span>
+                            <br>
+                            <span>
+                                <a href="{{ url('/forget-pass') }}">Quên mật khẩu</a>
+                                <a href="{{ url('/change-pass') }}">Đổi mật khẩu</a>
+                            </span>
                             <button type="submit" class="btn btn-default">Đăng nhập</button>
                         </form>
+                        <style>
+                            /* Định dạng cho hai liên kết trong form đăng nhập */
+                            .login-form span a {
+                                color: #337ab7;
+                                /* Màu xanh */
+                                text-decoration: none;
+                                padding: 0 10px;
+                                /* Khoảng cách ngang giữa các liên kết */
+                                font-size: 14px;
+                            }
+
+                            .login-form span a:hover {
+                                color: #23527c;
+                                /* Màu khi di chuột */
+                                text-decoration: underline;
+                                /* Gạch chân khi di chuột */
+                            }
+
+                            /* Khoảng cách giữa checkbox và liên kết */
+                            .login-form span {
+                                display: inline-block;
+                                margin-top: 10px;
+                            }
+                        </style>
                     </div><!--/login form-->
                 </div>
                 <div class="col-sm-1">
@@ -36,5 +65,6 @@
                 </div>
             </div>
         </div>
+
     </section><!--/form-->
 @endsection
