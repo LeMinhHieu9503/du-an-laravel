@@ -188,14 +188,26 @@ class VNPayController extends Controller
 
     // public function momo_payment_qr(Request $request)
     // {
-    //     $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+    //    // Lấy giá trị total_momo từ form
+    //    $usdAmount = $request->input('total_momo_qr'); // Giá trị từ form là USD
+
+    //    // Kiểm tra nếu amount không hợp lệ
+    //    if (!$usdAmount || !is_numeric($usdAmount) || $usdAmount <= 0) {
+    //        return redirect()->back()->with('error', 'Số tiền thanh toán không hợp lệ.');
+    //    }
+
+    //    // Tỷ giá hối đoái USD -> VND (ví dụ: 1 USD = 23,500 VND)
+    //    $exchangeRate = 25418;
+       
+    //    $amount = $usdAmount * $exchangeRate; // Chuyển đổi sang VND
+    //    $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
 
     //     $partnerCode = 'MOMOBKUN20180529';
     //     $accessKey = 'klm05TvNBzhg7h7j';
     //     $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
     //     $orderInfo = "Thanh toán qua MoMo";
-    //     $amount = "10000";
+    //     // $amount = "10000";
     //     $orderId = time() . "";
     //     $redirectUrl = "http://127.0.0.1:8000/history";
     //     $ipnUrl = "http://127.0.0.1:8000/history";
@@ -225,7 +237,7 @@ class VNPayController extends Controller
     //     );
     //     $result = $this->execPostRequest($endpoint, json_encode($data));
     //     $jsonResult = json_decode($result, true);  // decode json
-
+    //     // dd($result);
     //     //Just a example, please check more in there
     //     return redirect()->to($jsonResult['payUrl']);
 
