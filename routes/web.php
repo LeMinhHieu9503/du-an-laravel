@@ -134,6 +134,8 @@ Route::get('/view-hisstory-order/{order_code}',[OrderController::class,'view_his
 
 // VNPAY
 Route::post('/vnpay_payment',[VNPayController::class,'vnpay_payment']);
+Route::post('/momo_payment',[VNPayController::class,'momo_payment']);
+Route::post('/momo_payment_qr',[VNPayController::class,'momo_payment_qr']);
 
 //                                       BACK-END
 

@@ -214,6 +214,18 @@
                         <input type="hidden" name="total_vnpay" value="{{ $total_coupon }}">
                         <button type="submit" class="btn btn-default check_out" name="redirect">Thanh toán VNPay</button>
                     </form>
+
+                    <form action="{{ url('/momo_payment') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="total_momo" value="{{ $total_coupon }}">
+                        <button type="submit" class="btn btn-default check_out" name="payUrl">Thanh toán MOMO</button>
+                    </form>
+
+                    <form action="{{ url('/momo_payment_qr') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="total_momo_qr" value="">
+                        <button type="submit" class="btn btn-default check_out" name="payUrl">Thanh toán MOMO QR</button>
+                    </form>
                 @endif
             </div>
 
