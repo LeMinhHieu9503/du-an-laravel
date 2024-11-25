@@ -524,6 +524,8 @@
     <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
     <script src="{{ asset('frontend/js/prettify.js') }}"></script>
 
+    
+
     <script type="text/javascript">
         function view() {
             if (localStorage.getItem('data') != null) {

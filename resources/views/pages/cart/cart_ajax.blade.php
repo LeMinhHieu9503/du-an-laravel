@@ -157,7 +157,7 @@
                             </td>
 
                             <td>
-                                @if (Session::get('customer'))
+                                @if (Session::get('customer_id'))
                                     <a class="btn btn-default check_out" href="{{ url('/checkout') }}">Đặt hàng</a>
                                 @else
                                     <a class="btn btn-default check_out" href="{{ url('/login-checkout') }}">Đặt hàng</a>

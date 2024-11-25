@@ -4,7 +4,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Xem chi tiết đơn hàng đã đặt 
+                Xem chi tiết đơn hàng đã đặt
             </div>
 
             <div class="table-responsive">
@@ -17,7 +17,7 @@
                 ?>
                 <table class="table table-striped b-t b-light">
                     <thead>
-                        
+
                         <tr>
 
                             <th>Tên đăng nhập</th>
@@ -134,7 +134,7 @@
                                 $i++;
                                 $product_price = (float) $details->product_price; // Ép kiểu về float
                                 $product_quantity = (int) $details->product_sales_quantity; // Ép kiểu về int
-                                $subtotal = ($product_price) * $product_quantity;
+                                $subtotal = $product_price * $product_quantity;
                                 $total += $subtotal;
                             @endphp
                             <tr class="color_qty_{{ $details->product_id }}">
@@ -149,9 +149,10 @@
                                             Không mã
                                         @endif
                                     </span></td>
-                                <td>{{ ($details->product_feeship) }}$</td>
+                                <td>{{ $details->product_feeship }}$</td>
                                 <td>
-                                    <input type="number" min="1" readonly  {{ $order_status == 2 ? 'disabled' : '' }}
+                                    <input type="number" min="1" readonly
+                                        {{ $order_status == 2 ? 'disabled' : '' }}
                                         value="{{ $details->product_sales_quantity }}" name="product_sales_quantity"
                                         class="order_qty_{{ $details->product_id }}">
 
@@ -164,10 +165,9 @@
 
                                     <input type="hidden" name="order_product_id" value="{{ $details->product_id }}"
                                         class="order_product_id">
-                                    
+
                                 </td>
-                                <td><span
-                                        class="text-ellipsis">{{ ($details->product_price) }}$</span>
+                                <td><span class="text-ellipsis">{{ $details->product_price }}$</span>
                                 </td>
 
                                 <td><span class="text-ellipsis">{{ number_format($subtotal, 0, ',', '.') }}$</span>
@@ -181,7 +181,7 @@
                                     $total_coupon = 0;
                                     $total_after_coupon = 0;
                                 @endphp
-                        
+
                                 @if ($coupon_condition == 1)
                                     @php
                                         // Giảm giá theo phần trăm
@@ -197,15 +197,24 @@
                                     Tiền coupon giảm: {{ number_format($coupon_number, 0, ',', '.') }}$
                                 @endif
                                 <br>
-                        
+
                                 Phí ship: {{ number_format($details->product_feeship ?? 0, 0, ',', '.') }}$
                                 <br>
                                 Thanh toán: {{ number_format($total_coupon, 0, ',', '.') }}$
                             </td>
                         </tr>
-                        
+
                     </tbody>
+
                 </table>
+                
+                @if ($shipping->shipping_method == 0)
+                    <form action="{{ url('/vnpay_payment') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="total_vnpay" value="{{ $total_coupon }}">
+                        <button type="submit" class="btn btn-default check_out" name="redirect">Thanh toán VNPay</button>
+                    </form>
+                @endif
             </div>
 
         </div>

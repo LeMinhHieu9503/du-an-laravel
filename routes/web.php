@@ -13,12 +13,14 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MomoController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatiscalController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VNPayController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -129,6 +131,9 @@ Route::post('/change-pass', [ForgetPassController::class, 'changePassword'])->na
 // oder-old
 Route::get('/history',[OrderController::class,'history']);
 Route::get('/view-hisstory-order/{order_code}',[OrderController::class,'view_history_order']);
+
+// VNPAY
+Route::post('/vnpay_payment',[VNPayController::class,'vnpay_payment']);
 
 //                                       BACK-END
 

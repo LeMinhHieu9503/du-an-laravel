@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="form-two">
-                                    <form >
+                                    <form>
                                         @csrf
                                         <div class="form-group">
                                             <label for="city">Chọn thành phố</label>
@@ -136,8 +136,9 @@
                                                     @csrf
                                                     <input type="text" class="form-control" name="coupon"
                                                         placeholder="Nhập mã giảm giá"><br>
-                                                    <input style="background-color: orange" type="submit" class="btn btn-default check_coupon"
-                                                        name="check_coupon" value="Tính mã giảm giá">
+                                                    <input style="background-color: orange" type="submit"
+                                                        class="btn btn-default check_coupon" name="check_coupon"
+                                                        value="Tính mã giảm giá">
 
 
                                                 </form>
@@ -262,6 +263,7 @@
                                                         class="check_out btn btn-default btn-sm"></td>
                                                 <td><a class="btn btn-default check_out"
                                                         href="{{ url('/del-all-product') }}">Xóa tất cả</a></td>
+
                                                 <td>
                                                     @if (Session::get('coupon'))
                                                         <a class="btn btn-default check_out"
@@ -354,13 +356,31 @@
                                                         @endphp
                                                     </center>
                                                 </td>
+
+
                                             </tr>
                                         @endif
+
                                     </tbody>
 
 
 
                             </form>
+                            {{-- <td>
+                                {{-- <form action="{{ url('/vnpay_payment') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="total_vnpay" value="{{$total_after}}">
+                                    <button type="submit" class="btn btn-default check_out" name="redirect">Thanh toán
+                                        VNPay</button>
+                                </form> --}}
+
+                                {{-- <form action="{{ url('/momo_payment') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="total_momo" value="{{$total_after}}">
+                                    <button type="submit" class="btn btn-default check_out" name="payUrl">Thanh toán
+                                        MOMO</button>
+                                </form> --}}
+                            {{-- </td> --}}
                             {{-- @if (Session::get('cart'))
                                 <tr>
                                     <td>
