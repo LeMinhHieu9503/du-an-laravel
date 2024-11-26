@@ -113,7 +113,7 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <form >
+                            <form>
                                 @csrf
                                 <input type="hidden" name="" value="{{ $product->product_id }}"
                                     class="cart_product_id_{{ $product->product_id }}">
@@ -131,6 +131,9 @@
                                 <input type="hidden" name="" value="{{ number_format($product->product_price) }}"
                                     id="wishlist_productprice{{ $product->product_id }}"
                                     class="cart_product_price_{{ $product->product_id }}">
+
+                                <input type="hidden" name="" value="{{ $product->product_content }}"
+                                    id="wishlist_productcontent{{ $product->product_id }}">
 
                                 <input type="hidden" name="" value="1"
                                     class="cart_product_qty_{{ $product->product_id }}">
@@ -190,7 +193,56 @@
                                         </button>
                                     </i>
                                 </a></li>
-                            <li><a href="#"><i class="fa fa-plus-square"></i>So sánh</a></li>
+                            <li>
+                                <a style="cursor: pointer;" onclick="add_compare({{ $product->product_id }}) ">
+                                    <i class="fa fa-plus-square"></i>So sánh
+                                </a>
+                            </li>
+
+                            <div class="container">
+                                <!-- Modal -->
+                                <div class="modal fade" id="sosanh" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">
+                                                    <span id="title-compare"></span>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                {{-- <div id="row_compare"></div> --}}
+                                                <table class="table table-hover" id="row_compare">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên sản phẩm</th>
+                                                            <th>Giá</th>
+                                                            <th>Hình ảnh</th>
+                                                            <th>Thông số kĩ thuật</th>
+                                                            <th>Xem sản phẩm</th>
+                                                            <th>Xóa so sánh</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </ul>
                     </div>
                 </div>

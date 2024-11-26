@@ -1,0 +1,14 @@
+ <tr id="row_compare ` + id + ` ">
+                        //     <td> ` + newItem.name + ` </td>
+                        //     <td> ` + newItem.price + ` </td>
+                        //     <td>
+                        //         <img style="width:200px;" src="` + image + `" alt="Product Image">
+                        //     </td>
+                        //     <td></td>
+                        //     <td></td>
+                        //     <td></td>
+                        //     <td><a href="` + newItem.url + `" >Xem sản phẩm</a> </td>
+                        //     <td onclick="delete_compare(` + id + `)">
+                        //         <a style="cursor:pointer;">Xóa so sánh</a>
+                        //     </td>
+                        // </tr>
