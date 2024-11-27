@@ -127,7 +127,7 @@
 
                                 <li><a href="{{ URL::to('/gio-hang') }}"><i class="fa fa-shopping-cart"></i>
                                         Giỏ hàng
-                                        <span class="badges">   
+                                        <span class="badges">
                                             <span id="show-cart"></span>
                                         </span>
 
@@ -541,6 +541,39 @@
     <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
     <script src="{{ asset('frontend/js/prettify.js') }}"></script>
 
+    {{-- Hủy đơn hàng --}}
+    {{-- Cách này đang lỗi chỉ hủy đơn đầu --}}
+    {{-- <script type="text/javascript">
+        function Huydonhang(id) {
+            var order_code = id;
+            var lydo = $('.lydohuydon').val();
+            var _token = $('input[name="_token"]').val();
+
+            // Kiểm tra lý do
+            if (!lydo.trim()) {
+                alert('Vui lòng nhập lý do hủy đơn hàng!');
+                return;
+            }
+
+            // Gửi AJAX
+            $.ajax({
+                url: '{{ url('/huy-don-hang') }}',
+                method: "POST",
+                data: {
+                    order_code: order_code,
+                    lydo: lydo,
+                    _token: _token
+                },
+                success: function(data) {
+                    alert('Hủy đơn hàng thành công');
+                    location.reload(); // Làm mới trang sau khi hủy thành công
+                },
+                error: function(xhr, status, error) {
+                    alert('Có lỗi xảy ra, vui lòng thử lại!');
+                }
+            });
+        }
+    </script> --}}
     <script type="text/javascript">
         function delete_compare(id) {
             // alert(id);

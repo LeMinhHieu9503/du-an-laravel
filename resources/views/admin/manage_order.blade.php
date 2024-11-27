@@ -23,6 +23,7 @@
                             <th>Mã đơn hàng</th>
                             <th>Ngày tháng đặt hàng</th>
                             <th>Tình trạng đơn hàng</th>
+                            <th>Lý do hủy</th>
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
@@ -42,22 +43,26 @@
                                 <td><span class="text-ellipsis">{{ $ord->created_at }}</span></td>
                                 <td><span class="text-ellipsis">
                                         @if ($ord->order_status == 1)
-                                            Đơn hàng chưa xử lý
+                                            <span class="text text-info">Đơn hàng mới</span>
                                         @elseif($ord->order_status == 2)
-                                            Đơn hàng đã xử lý
+                                            <span class="text text-success">Đơn hàng đã xử lý</span>
                                         @else
-                                            Đơn hàng đã hủy - tạm giữ
+                                            <span class="text text-danger">Đơn hàng đã bị hủy</span>
                                         @endif
                                     </span></td>
-
+                                <td>
+                                    @if ($ord->order_status == 3)
+                                        {{ $ord->order_destroy }}
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ URL::to('/view-order/' . $ord->order_code) }}" class="active styling-edit"
                                         ui-toggle-class="">
                                         <i class="fa fa-eye text-success text-active"></i>
                                     </a>
                                     <a onclick="return confirm('Bạn có chắc là muốn xóa đơn hàng này ko?')"
-                                        href="{{ URL::to('/delete-order/' . $ord->order_code) }}" class="active styling-edit"
-                                        ui-toggle-class="">
+                                        href="{{ URL::to('/delete-order/' . $ord->order_code) }}"
+                                        class="active styling-edit" ui-toggle-class="">
                                         <i class="fa fa-times text-danger text"></i>
                                     </a>
                                 </td>

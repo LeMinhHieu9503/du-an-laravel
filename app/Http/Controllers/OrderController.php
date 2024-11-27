@@ -234,4 +234,36 @@ class OrderController extends Controller
                 ->with('order_status', $order_status);
         }
     }
+
+    // Hủy đơn hàng 
+    public function huy_don_hang(Request $request)
+    {
+        // Cách này đang lỗi auto hủy đơn đầu
+        // $data = $request->all();
+        // $order = Order::where('order_code',$data['order_code'])->first();
+        // $order->order_destroy = $data['lydo'];
+        // $order->order_status = 3;
+        // $order->save();
+
+
+        $orderCode = $request->input('order_code');
+        $reason = $request->input('lydo');
+
+        // Tìm đơn hàng theo mã đơn
+        $order = Order::where('order_code', $orderCode)->first();
+
+        // Kiểm tra nếu đơn hàng tồn tại và trạng thái là chưa xử lý
+        if ($order && $order->order_status == 1) {
+            // Cập nhật trạng thái đơn hàng thành hủy
+            $order->order_status = 3; // 3 là trạng thái "Đơn hàng đã bị hủy"
+            $order->order_destroy = $reason; // Lưu lý do hủy đơn (nếu cần)
+            $order->save();
+
+            // Gửi thông báo thành công
+            return redirect()->back()->with('message', 'Đơn hàng đã bị hủy thành công.');
+        } else {
+            // Trường hợp không tìm thấy đơn hàng hoặc đơn hàng không thể hủy
+            return redirect()->back()->with('message', 'Đơn hàng không thể hủy.');
+        }
+    }
 }

@@ -83,6 +83,7 @@ Route::get('/del-fee', [CheckoutController::class, 'del_fee']);
 
 //ORDER
 Route::post('/order-place', [CheckoutController::class, 'order_place']);
+Route::post('/huy-don-hang', [OrderController::class, 'huy_don_hang'])->name('huy-don-hang');
 
 
 //Login-Customer
@@ -139,6 +140,9 @@ Route::post('/momo_payment_qr',[VNPayController::class,'momo_payment_qr']);
 
 // Show-cart-quantity
 Route::get('/show-cart-qty',[CartController::class,'show_cart_qty']);
+
+// Hủy đơn
+
 
 //                                       BACK-END
 

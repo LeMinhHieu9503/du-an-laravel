@@ -15,7 +15,8 @@ class Order extends Model
         'customer_id',
         'shipping_id',
         'order_status',
-        'order_code'
+        'order_code',
+        'order_destroy'
     ];
 
     public function shipping()
