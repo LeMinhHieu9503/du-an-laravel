@@ -122,9 +122,9 @@ class CartController extends Controller
         $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
 
-        
+
         $url_canonical = $request->url();
-        $coupons = Coupon::all(); 
+        $coupons = Coupon::all();
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -206,7 +206,7 @@ class CartController extends Controller
 
         $today = Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y');
         $data = $request->all();
-        $coupon = Coupon::where('coupon_code', $data['coupon'])->where('coupon_status', 1)->where('coupon_date_end','>=',$today)->first();
+        $coupon = Coupon::where('coupon_code', $data['coupon'])->where('coupon_status', 1)->where('coupon_date_end', '>=', $today)->first();
         if ($coupon) {
             $count_coupon = $coupon->count();
             if ($count_coupon > 0) {
@@ -237,5 +237,32 @@ class CartController extends Controller
         } else {
             return redirect()->back()->with('error', 'Mã giảm giá không đúng hoặc đã hết hạn');
         }
+    }
+
+    public function show_cart_qty()
+    {
+        $cart = count(Session::get('cart'));
+        echo $cart;
+        // Trên thanh menu , khó nhìn (option khác)
+
+        // $output = '';
+        // if($cart>0){
+        // $output .= '
+        //     <li><a href="' . url('/gio-hang') . '"><i class="fa fa-shopping-cart"></i>
+        //                                 Giỏ hàng
+        //                                 <span class="badges">'.$cart.'</span>
+        //                             </a></li>
+        // ';
+        // }else{
+        //     $output .= '
+        //     <li><a href="' . url('/gio-hang') . '"><i class="fa fa-shopping-cart"></i>
+        //                                 Giỏ hàng
+        //                                 <span class="badges">0</span>
+        //                             </a></li>
+        // ';
+        // }
+
+
+        // echo $output;
     }
 }

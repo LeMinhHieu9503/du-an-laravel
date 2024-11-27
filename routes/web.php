@@ -137,6 +137,9 @@ Route::post('/vnpay_payment',[VNPayController::class,'vnpay_payment']);
 Route::post('/momo_payment',[VNPayController::class,'momo_payment']);
 Route::post('/momo_payment_qr',[VNPayController::class,'momo_payment_qr']);
 
+// Show-cart-quantity
+Route::get('/show-cart-qty',[CartController::class,'show_cart_qty']);
+
 //                                       BACK-END
 
 

@@ -48,10 +48,39 @@
                                     </span></td>
 
                                 <td>
-                                    <a href="{{ URL::to('/view-hisstory-order/' . $ord->order_code) }}" class="active styling-edit"
-                                        ui-toggle-class="">
+                                    <a href="{{ URL::to('/view-hisstory-order/' . $ord->order_code) }}"
+                                        class="active styling-edit" ui-toggle-class="">
                                         <i class="fa fa-eye text-success text-active"></i>
                                     </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                                        data-target="#huydon">Hủy đơn hàng</button>
+
+                                    <!-- Modal -->
+                                    <div id="huydon" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Lý do hủy đơn hàng: </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        <textarea required placeholder="Lý do hủy đơn hàng .....(Bắt buộc)" rows="5"></textarea>
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-info" data-dismiss="modal">Đóng</button>
+                                                    <button type="button" class="btn btn-success">Gửi lí do</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -60,14 +89,14 @@
             </div>
 
             <footer class="panel-footer">
-              <div class="row">
-                <div class=""></div>
-                <div class="col-sm-7 text-right text-center-xs">
-                  <ul class="pagination pagination-sm m-t-none m-b-none">
-                    {{$order->links()}}
-                  </ul>
+                <div class="row">
+                    <div class=""></div>
+                    <div class="col-sm-7 text-right text-center-xs">
+                        <ul class="pagination pagination-sm m-t-none m-b-none">
+                            {{ $order->links() }}
+                        </ul>
+                    </div>
                 </div>
-              </div>
             </footer>
         </div>
     </div>
