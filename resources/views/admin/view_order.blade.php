@@ -225,7 +225,7 @@
                                         </form>
                                     @elseif($or->order_status == 2)
                                         <form action="">
-                                            @csrf
+                                             @csrf
                                             <select class="form-control order_details" id="">
                                                 <option value="">-----Chọn hình thức đơn hàng-----</option>
                                                 <option id="{{ $or->order_id }}" value="1">Chưa xử lý</option>

@@ -130,24 +130,25 @@ class VNPayController extends Controller
     {
         // Lấy giá trị total_momo từ form
         $usdAmount = $request->input('total_momo'); // Giá trị từ form là USD
-
+        
         // Kiểm tra nếu amount không hợp lệ
         if (!$usdAmount || !is_numeric($usdAmount) || $usdAmount <= 0) {
             return redirect()->back()->with('error', 'Số tiền thanh toán không hợp lệ.');
         }
 
         // Tỷ giá hối đoái USD -> VND (ví dụ: 1 USD = 23,500 VND)
-        $exchangeRate = 25418;
-        
+        $exchangeRate = 25000;
+      
         $amount = $usdAmount * $exchangeRate; // Chuyển đổi sang VND
+        // dd($amount);
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-
+        // dd(25000)
 
         $partnerCode = 'MOMOBKUN20180529';
         $accessKey = 'klm05TvNBzhg7h7j';
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
         $orderInfo = "Thanh toán qua ATM MoMo";
-        // $amount = "10000";
+        // $amount = 10000.6;
         // $amount = $data['total_momo'] * 2541800;
 
         $orderId = time() . "";
@@ -180,67 +181,17 @@ class VNPayController extends Controller
         );
         $result = $this->execPostRequest($endpoint, json_encode($data));
         $jsonResult = json_decode($result, true);  // decode json
+
+        // dd($jsonResult);
+
+        // return redirect()->to( isset($jsonResult['payUrl']) ? $jsonResult['payUrl'] : 'https://github.com/momo-wallet/payment/blob/master/php/PayMoMo/init_payment.php' );
         // dd($result);
+        // dd($signature);
+        // dd($jsonResult);
         //Just a example, please check more in there
         return redirect()->to($jsonResult['payUrl']);
         // header('Location: ' . $jsonResult['payUrl']);
     }
 
-    // public function momo_payment_qr(Request $request)
-    // {
-    //    // Lấy giá trị total_momo từ form
-    //    $usdAmount = $request->input('total_momo_qr'); // Giá trị từ form là USD
-
-    //    // Kiểm tra nếu amount không hợp lệ
-    //    if (!$usdAmount || !is_numeric($usdAmount) || $usdAmount <= 0) {
-    //        return redirect()->back()->with('error', 'Số tiền thanh toán không hợp lệ.');
-    //    }
-
-    //    // Tỷ giá hối đoái USD -> VND (ví dụ: 1 USD = 23,500 VND)
-    //    $exchangeRate = 25418;
-       
-    //    $amount = $usdAmount * $exchangeRate; // Chuyển đổi sang VND
-    //    $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-
-
-    //     $partnerCode = 'MOMOBKUN20180529';
-    //     $accessKey = 'klm05TvNBzhg7h7j';
-    //     $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
-    //     $orderInfo = "Thanh toán qua MoMo";
-    //     // $amount = "10000";
-    //     $orderId = time() . "";
-    //     $redirectUrl = "http://127.0.0.1:8000/history";
-    //     $ipnUrl = "http://127.0.0.1:8000/history";
-    //     $extraData = "";
-
-
-    //     $requestId = time() . "";
-    //     $requestType = "captureWallet";
-    //     // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
-    //     //before sign HMAC SHA256 signature
-    //     $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
-    //     $signature = hash_hmac("sha256", $rawHash, $secretKey);
-    //     $data = array(
-    //         'partnerCode' => $partnerCode,
-    //         'partnerName' => "Test",
-    //         "storeId" => "MomoTestStore",
-    //         'requestId' => $requestId,
-    //         'amount' => $amount,
-    //         'orderId' => $orderId,
-    //         'orderInfo' => $orderInfo,
-    //         'redirectUrl' => $redirectUrl,
-    //         'ipnUrl' => $ipnUrl,
-    //         'lang' => 'vi',
-    //         'extraData' => $extraData,
-    //         'requestType' => $requestType,
-    //         'signature' => $signature
-    //     );
-    //     $result = $this->execPostRequest($endpoint, json_encode($data));
-    //     $jsonResult = json_decode($result, true);  // decode json
-    //     // dd($result);
-    //     //Just a example, please check more in there
-    //     return redirect()->to($jsonResult['payUrl']);
-
-    //     // header('Location: ' . $jsonResult['payMoMo']);
-    // }
+    
 }

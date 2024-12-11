@@ -82,6 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </header>
         <!--header end-->
+        
         <!--sidebar start-->
         <aside>
             <div id="sidebar" class="nav-collapse">
@@ -252,6 +253,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </aside>
         <!--sidebar end-->
+        
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper">

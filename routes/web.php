@@ -136,7 +136,6 @@ Route::get('/view-hisstory-order/{order_code}',[OrderController::class,'view_his
 // VNPAY
 Route::post('/vnpay_payment',[VNPayController::class,'vnpay_payment']);
 Route::post('/momo_payment',[VNPayController::class,'momo_payment']);
-Route::post('/momo_payment_qr',[VNPayController::class,'momo_payment_qr']);
 
 // Show-cart-quantity
 Route::get('/show-cart-qty',[CartController::class,'show_cart_qty']);
@@ -152,6 +151,7 @@ Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/dashboard', [AdminController::class, 'show_dashboard']);
 Route::get('/logout', [AdminController::class, 'logout']);
 Route::post('/admin-dashboard', [AdminController::class, 'dashboard']);
+
 
 //Authentication Roles - Admin
 Route::get('/register-auth', [AuthController::class, 'register_auth']);

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\City;
 use App\Models\Coupon;
+use App\Models\Customer;
 use App\Models\Province;
 use App\Models\Wards;
 use App\Models\Feeship;
@@ -72,7 +73,11 @@ class CheckoutController extends Controller
     {
         $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
         $category_post = CatePost::orderBy('cate_post_id', 'DESC')->get();
+        // Lấy ID khách hàng từ session
+        $customer_id = Session::get('customer_id');
 
+        // Tìm khách hàng dựa theo ID
+        $customer = Customer::find($customer_id);
         $cate_product = DB::table('tbl_category_product')
             ->where('category_status', '0')
             ->orderBy('category_id', 'desc')->get();
@@ -90,7 +95,8 @@ class CheckoutController extends Controller
             ->with('category_post', $category_post)
             ->with('city', $city)
             ->with('coupons', $coupons)
-            ->with('slider', $slider);
+            ->with('slider', $slider)
+            ->with('customer',$customer);
     }
 
     public function save_checkout_customer(Request $request)

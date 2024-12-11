@@ -57,13 +57,13 @@
                                     <form method="POST">
                                         @csrf
                                         <input type="text" name="shipping_email" class="shipping_email"
-                                            placeholder="Điền email">
+                                            placeholder="Điền email" value="{{ $customer->customer_email ?? '' }}"  >
                                         <input type="text" name="shipping_name" class="shipping_name"
-                                            placeholder="Họ và tên">
+                                            placeholder="Họ và tên" value="{{ $customer->customer_name ?? '' }}" >
                                         <input type="text" name="shipping_address" class="shipping_address"
-                                            placeholder="Địa chỉ gửi hàng">
+                                            placeholder="Địa chỉ gửi hàng" >
                                         <input type="text" name="shipping_phone" class="shipping_phone"
-                                            placeholder="Số điện thoại">
+                                            placeholder="Số điện thoại"value="{{ $customer->customer_phone ?? '' }}"  >
                                         <textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>
 
                                         {{-- Fee --}}
@@ -374,7 +374,7 @@
                                         VNPay</button>
                                 </form> --}}
 
-                                {{-- <form action="{{ url('/momo_payment') }}" method="POST">
+                            {{-- <form action="{{ url('/momo_payment') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="total_momo" value="{{$total_after}}">
                                     <button type="submit" class="btn btn-default check_out" name="payUrl">Thanh toán
